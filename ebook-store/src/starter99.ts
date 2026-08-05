@@ -1,6 +1,39 @@
 const section = document.querySelector<HTMLElement>('#books');
 const flagship = section?.querySelector('article');
 
+const params = new URLSearchParams(window.location.search);
+if (params.get('payment') === 'success') {
+  const orderId = sessionStorage.getItem('delionaryo_order_id') || '';
+  const buyerEmail = sessionStorage.getItem('delionaryo_buyer_email') || '';
+  const product = sessionStorage.getItem('delionaryo_product') || '';
+  const isStarterReturn = product === 'survival-to-stability-99' || orderId.startsWith('DLN99-');
+  if (isStarterReturn) {
+    const success = document.createElement('section');
+    success.id = 'payment-success';
+    success.className = 'border-b border-amber-500/20 bg-stone-900';
+    success.innerHTML = `<div class="max-w-4xl mx-auto px-5 py-12 text-center">
+      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-400 text-3xl font-black text-stone-950">✓</div>
+      <p class="mt-6 text-amber-400 font-black tracking-widest text-sm">PAYMENT RECEIVED</p>
+      <h2 class="mt-2 text-3xl md:text-5xl font-black">Thank you for your purchase.</h2>
+      <p class="mt-4 text-lg text-stone-300">Your <strong>From Survival to Stability</strong> eBook will be delivered to your email after PayMongo confirms the payment.</p>
+      ${buyerEmail ? `<p class="mt-3 text-stone-400">Delivery email: <strong class="text-stone-200">${buyerEmail.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</strong></p>` : ''}
+      ${orderId ? `<p class="mt-2 text-sm text-stone-500">Order ID: ${orderId.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>` : ''}
+      <div class="mt-7 rounded-2xl border border-amber-500/30 bg-stone-950 p-5 text-left">
+        <p class="font-black text-amber-300">What happens next?</p>
+        <p class="mt-2 text-stone-400">1. PayMongo confirms your payment.</p>
+        <p class="mt-1 text-stone-400">2. DELIONARYO automatically emails your eBook.</p>
+        <p class="mt-1 text-stone-400">3. Open the email and tap <strong class="text-stone-200">OPEN YOUR EBOOK</strong>.</p>
+        <p class="mt-3 text-sm text-stone-500">If you do not see the email, check Spam or Junk. Keep your Order ID for support.</p>
+      </div>
+      <a href="#books" class="mt-7 inline-flex rounded-xl bg-amber-400 px-7 py-4 font-black text-stone-950 hover:bg-amber-300 transition">BACK TO EBOOK STORE</a>
+    </div>`;
+    const header = document.querySelector('header');
+    header?.insertAdjacentElement('afterend', success);
+    setTimeout(() => success.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    history.replaceState({}, '', `${window.location.pathname}#payment-success`);
+  }
+}
+
 if (section && flagship) {
   const starter = document.createElement('article');
   starter.className = 'mt-10 overflow-hidden rounded-3xl border border-stone-700 bg-gradient-to-br from-stone-900 to-stone-950';
