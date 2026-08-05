@@ -1,5 +1,5 @@
 import './styles.css';
-
+import './socialChannels';
 const pay = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
