@@ -23,7 +23,7 @@ if (section && flagship) {
   flagship.parentElement?.insertBefore(starter, flagship);
 
   const btn = starter.querySelector<HTMLButtonElement>('#starter-buy')!;
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', async () => {
     const name = starter.querySelector<HTMLInputElement>('#starter-buyer-name')!;
     const email = starter.querySelector<HTMLInputElement>('#starter-buyer-email')!;
     const msg = starter.querySelector<HTMLParagraphElement>('#starter-message')!;
@@ -32,13 +32,29 @@ if (section && flagship) {
 
     const fullName = name.value.trim();
     const buyerEmail = email.value.trim().toLowerCase();
-    sessionStorage.setItem('delionaryo_buyer_name', fullName);
-    sessionStorage.setItem('delionaryo_buyer_email', buyerEmail);
-    sessionStorage.setItem('delionaryo_product', 'survival-to-stability-99');
-
+    const orderId = 'DLN99-' + Date.now().toString(36).toUpperCase() + '-' + crypto.randomUUID().slice(0,8).toUpperCase();
     btn.disabled = true;
-    btn.textContent = 'OPENING PAYMENT...';
-    msg.textContent = 'Opening secure ₱99 PayMongo payment...';
-    window.location.href = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
+    btn.textContent = 'SAVING ORDER...';
+    msg.textContent = 'Saving your order before secure payment...';
+
+    try {
+      const response = await fetch('https://tordvwlrtwxlbuuzgklt.supabase.co/functions/v1/create-pending-order', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({full_name:fullName,email:buyerEmail,order_id:orderId,status:'pending',created_at:new Date().toISOString()})
+      });
+      if (!response.ok) throw new Error('order');
+      sessionStorage.setItem('delionaryo_buyer_name', fullName);
+      sessionStorage.setItem('delionaryo_buyer_email', buyerEmail);
+      sessionStorage.setItem('delionaryo_order_id', orderId);
+      sessionStorage.setItem('delionaryo_product', 'survival-to-stability-99');
+      btn.textContent = 'OPENING PAYMENT...';
+      msg.textContent = 'Order saved. Opening secure ₱99 PayMongo payment...';
+      window.location.href = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'BUY FOR ₱99 →';
+      msg.textContent = 'Unable to save your order. Please try again.';
+      msg.className = 'mt-3 text-sm font-bold text-red-400';
+    }
   });
 }
