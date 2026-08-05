@@ -1,6 +1,7 @@
 import './styles.css';
 import './dailyJourney';
 import './youtubeChannel';
+import './membershipPlans';
 
 const pay = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/59ILChx';
 const app = document.querySelector<HTMLDivElement>('#app')!;
