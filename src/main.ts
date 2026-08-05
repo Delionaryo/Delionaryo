@@ -3,9 +3,40 @@ import './styles.css';
 const pay = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
-app.innerHTML = `<main class="min-h-screen bg-stone-950 text-stone-100"><section class="max-w-5xl mx-auto px-5 py-20"><p class="text-amber-400 font-black tracking-widest">DELIONARYO EBOOK STORE</p><h1 class="mt-4 text-5xl font-black">FROM SURVIVAL TO <span class="text-amber-400">STABILITY</span></h1><p class="mt-4 text-stone-300">A practical starting guide for moving beyond survival mode.</p><p class="mt-8 text-4xl font-black text-amber-400">₱99</p><p class="text-stone-300">Digital eBook</p><div class="mt-8 max-w-xl rounded-2xl border border-amber-500/30 bg-stone-950 p-5"><p class="font-black text-amber-300">Ready to get your eBook?</p><p class="mt-1 text-sm text-stone-400">Click below to proceed directly to secure PayMongo payment.</p><button id="paid-buy" type="button" class="mt-5 w-full rounded-xl bg-amber-400 px-7 py-4 font-black text-stone-950 hover:bg-amber-300 transition">BUY FOR ₱99 →</button><p class="mt-3 text-sm text-stone-400">You’ll be redirected directly to the secure ₱99 PayMongo checkout.</p></div></section></main>`;
+app.innerHTML = `
+<main class="min-h-screen bg-stone-950 text-stone-100">
+  <nav class="sticky top-0 z-50 border-b border-white/10 bg-stone-950/90 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <a href="#top" class="font-black tracking-[.18em] text-amber-400">DELIONARYO</a>
+      <div class="hidden gap-6 text-sm font-bold text-stone-300 md:flex">
+        <a href="#system">SYSTEM</a><a href="#mission">MISSION</a><a href="#store">EBOOK</a>
+      </div>
+      <a href="#start" class="rounded-lg bg-amber-400 px-4 py-2 text-sm font-black text-stone-950">START</a>
+    </div>
+  </nav>
 
-const paidBuy = document.querySelector<HTMLButtonElement>('#paid-buy');
-paidBuy?.addEventListener('click', () => {
-  window.location.href = pay;
-});
+  <section id="top" class="hero-grid border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-5 py-24 md:py-32">
+      <p class="inline-flex rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-2 text-xs font-black tracking-widest text-amber-300">DELIONARYO TRANSFORMATION PLATFORM</p>
+      <h1 class="mt-7 max-w-5xl text-5xl font-black leading-[.95] md:text-7xl">Be One in a Million.<br><span class="text-amber-400">Graduate From Poverty.</span></h1>
+      <p class="mt-7 max-w-2xl text-lg leading-8 text-stone-300">Learn, execute, measure your results, and grow in stewardship. A practical transformation platform built to help Filipinos move from survival toward stability, ownership, and sovereignty.</p>
+      <div class="mt-9 flex flex-wrap gap-3"><a href="#start" class="rounded-xl bg-amber-400 px-6 py-4 font-black text-stone-950">START MY TRANSFORMATION →</a><a href="#mission" class="rounded-xl border border-white/20 px-6 py-4 font-black">SEE THE 1 MILLION MISSION</a></div>
+    </div>
+  </section>
+
+  <section id="mission" class="mx-auto max-w-6xl px-5 py-20">
+    <p class="text-xs font-black tracking-[.25em] text-amber-400">OUR NORTH STAR</p>
+    <div class="mt-5 grid gap-8 md:grid-cols-2 md:items-end"><h2 class="text-4xl font-black md:text-5xl">1,000,000 Filipinos moving toward financial transformation.</h2><p class="text-lg leading-8 text-stone-400">DELIONARYO exists to turn knowledge into disciplined action. The goal is not merely inspiration—it is measurable personal transformation.</p></div>
+    <div class="mt-12 grid gap-4 md:grid-cols-3"><div class="card"><b>LEARN</b><p>Understand the principles and systems behind transformation.</p></div><div class="card"><b>EXECUTE</b><p>Turn lessons into practical daily and weekly actions.</p></div><div class="card"><b>MEASURE</b><p>Track progress, improve decisions, and build momentum.</p></div></div>
+  </section>
+
+  <section id="system" class="border-y border-white/10 bg-stone-900/40"><div class="mx-auto max-w-6xl px-5 py-20"><p class="text-xs font-black tracking-[.25em] text-amber-400">THE TRANSFORMATION SYSTEM</p><h2 class="mt-4 text-4xl font-black">M.O.N.E.Y Transformation</h2><div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5"><div class="step"><span>M</span><b>Mind</b><p>Transform how you think.</p></div><div class="step"><span>O</span><b>Orientation</b><p>Align heart and direction.</p></div><div class="step"><span>N</span><b>Narrative</b><p>Change the words and story.</p></div><div class="step"><span>E</span><b>Execution</b><p>Move through disciplined action.</p></div><div class="step"><span>Y</span><b>Yield</b><p>Measure real results.</p></div></div></div></section>
+
+  <section id="store" class="mx-auto max-w-6xl px-5 py-20"><div class="overflow-hidden rounded-3xl border border-amber-400/20 bg-gradient-to-br from-stone-900 to-stone-950 p-8 md:p-12"><p class="text-xs font-black tracking-[.25em] text-amber-400">DELIONARYO EBOOK STORE</p><div class="mt-5 grid gap-10 md:grid-cols-2 md:items-center"><div><h2 class="text-4xl font-black">From Survival to <span class="text-amber-400">Stability</span></h2><p class="mt-4 leading-7 text-stone-400">A practical starting guide for moving beyond survival mode.</p></div><div class="rounded-2xl border border-white/10 bg-black/30 p-6"><p class="text-4xl font-black text-amber-400">₱99</p><p class="mt-1 text-stone-400">Digital eBook</p><button id="paid-buy" class="mt-6 w-full rounded-xl bg-amber-400 px-6 py-4 font-black text-stone-950">BUY SECURELY WITH PAYMONGO →</button></div></div></div></section>
+
+  <section id="start" class="border-t border-white/10"><div class="mx-auto max-w-4xl px-5 py-24 text-center"><p class="text-xs font-black tracking-[.25em] text-amber-400">YOUR NEXT MOVE</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Transformation begins with execution.</h2><p class="mx-auto mt-5 max-w-2xl text-stone-400">Start with one lesson, one decision, and one measurable action. Build the system step by step.</p><a href="#store" class="mt-8 inline-block rounded-xl bg-amber-400 px-7 py-4 font-black text-stone-950">GET STARTED →</a></div></section>
+
+  <footer class="border-t border-white/10 px-5 py-8 text-center text-sm text-stone-500">© 2026 DELIONARYO · Transformation through knowledge, execution and stewardship.</footer>
+</main>`;
+
+document.querySelector<HTMLButtonElement>('#paid-buy')?.addEventListener('click', () => { window.location.href = pay; });
