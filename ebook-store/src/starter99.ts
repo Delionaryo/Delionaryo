@@ -29,13 +29,16 @@ if (section && flagship) {
     const msg = starter.querySelector<HTMLParagraphElement>('#starter-message')!;
     if (!name.value.trim()) { name.reportValidity(); return; }
     if (!email.checkValidity()) { email.reportValidity(); return; }
-    const orderId = 'DLN99-' + Date.now().toString(36).toUpperCase() + '-' + crypto.randomUUID().slice(0,8).toUpperCase();
+
     const fullName = name.value.trim();
     const buyerEmail = email.value.trim().toLowerCase();
-    btn.disabled = true; btn.textContent = 'SAVING ORDER...'; msg.textContent = 'Creating your secure order before payment...';
-    fetch('https://tordvwlrtwxlbuuzgklt.supabase.co/functions/v1/create-pending-order', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({full_name:fullName,email:buyerEmail,order_id:orderId,status:'pending',created_at:new Date().toISOString()})})
-      .then(async r => { if(!r.ok) throw new Error('order'); msg.textContent='Order created. Creating ₱99 PayMongo checkout...'; btn.textContent='OPENING PAYMENT...'; const c=await fetch('https://tordvwlrtwxlbuuzgklt.supabase.co/functions/v1/create-checkout-99',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_id:orderId,full_name:fullName,email:buyerEmail})}); if(!c.ok) throw new Error('checkout'); return c.json(); })
-      .then(data => { if(!data.checkout_url) throw new Error('checkout'); sessionStorage.setItem('delionaryo_buyer_name',fullName); sessionStorage.setItem('delionaryo_buyer_email',buyerEmail); sessionStorage.setItem('delionaryo_order_id',orderId); sessionStorage.setItem('delionaryo_product','survival-to-stability-99'); window.location.href=data.checkout_url; })
-      .catch(() => { btn.disabled=false; btn.textContent='BUY FOR ₱99 →'; msg.textContent='Unable to create checkout right now. Please try again.'; msg.className='mt-3 text-sm font-bold text-red-400'; });
+    sessionStorage.setItem('delionaryo_buyer_name', fullName);
+    sessionStorage.setItem('delionaryo_buyer_email', buyerEmail);
+    sessionStorage.setItem('delionaryo_product', 'survival-to-stability-99');
+
+    btn.disabled = true;
+    btn.textContent = 'OPENING PAYMENT...';
+    msg.textContent = 'Opening secure ₱99 PayMongo payment...';
+    window.location.href = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
   });
 }
