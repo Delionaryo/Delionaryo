@@ -1,0 +1,52 @@
+const membershipPlans = [
+  {
+    name: 'COMMUNITY',
+    price: '₱100',
+    description: 'Join the DELIONARYO community for accountability, member discussions, updates and community chat.',
+    features: ['Community access', 'Member discussions', 'Community chat', 'Accountability & updates'],
+  },
+  {
+    name: 'TRAINING',
+    price: '₱300',
+    description: 'Build your financial transformation skills with video lessons and training, plus community access.',
+    features: ['Video training library', 'Financial transformation lessons', 'Community access', 'Community chat'],
+  },
+  {
+    name: 'PREMIUM',
+    price: '₱500',
+    description: 'The complete DELIONARYO learning experience with premium training, resources and community access.',
+    features: ['Full training access', 'Premium sessions & resources', 'Community access', 'Community chat'],
+  },
+];
+
+const store = document.querySelector('#books');
+if (store && !document.querySelector('#membership')) {
+  const section = document.createElement('section');
+  section.id = 'membership';
+  section.className = 'border-y border-amber-500/20 bg-stone-900';
+  section.innerHTML = `
+    <div class="max-w-7xl mx-auto px-5 py-20">
+      <div class="text-center max-w-3xl mx-auto">
+        <p class="text-amber-400 font-black tracking-widest text-sm">DELIONARYO MEMBERSHIP</p>
+        <h2 class="mt-3 text-4xl md:text-5xl font-black">Learn together. Grow together.</h2>
+        <p class="mt-4 text-lg leading-8 text-stone-400">Choose the level of community and training that fits your transformation journey.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-3 gap-5">
+        ${membershipPlans.map((plan, index) => `
+          <article class="rounded-3xl border ${index === 2 ? 'border-amber-500/50 bg-gradient-to-br from-stone-950 to-amber-950/30' : 'border-stone-700 bg-stone-950'} p-7 flex flex-col">
+            <p class="text-amber-400 font-black tracking-widest text-sm">${plan.name}</p>
+            <div class="mt-4"><span class="text-5xl font-black">${plan.price}</span><span class="text-stone-500 font-bold"> / month</span></div>
+            <p class="mt-4 text-stone-400 leading-7">${plan.description}</p>
+            <ul class="mt-6 space-y-3 flex-1">
+              ${plan.features.map(feature => `<li class="text-stone-300">✓ ${feature}</li>`).join('')}
+            </ul>
+            <button type="button" disabled class="mt-8 w-full rounded-xl border border-amber-500/40 px-6 py-4 font-black text-amber-300 opacity-80 cursor-not-allowed">COMING NEXT UPDATE</button>
+          </article>`).join('')}
+      </div>
+      <div class="mt-8 max-w-3xl mx-auto rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 text-center">
+        <p class="font-black text-amber-300">SUBSCRIPTION ENROLLMENT COMING SOON</p>
+        <p class="mt-2 text-sm leading-6 text-stone-400">These plans are displayed for preview. Payment and recurring billing are not active yet. The next update will connect secure subscription checkout, verified membership activation, training access and member community chat.</p>
+      </div>
+    </div>`;
+  store.parentElement?.insertBefore(section, store);
+}
