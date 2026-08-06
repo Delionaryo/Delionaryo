@@ -2,25 +2,26 @@ const youtubeChannelUrl = 'https://www.youtube.com/channel/UC8tBAhLFySPo7vp9cBUh
 const tiktokUrl = 'https://www.tiktok.com/@rrl6980?_r=1&_t=ZS-98clQNSR9KH';
 const facebookUrl = 'https://www.facebook.com/Delionaryo09';
 const mondayMindPlaylistUrl = 'https://www.youtube.com/playlist?list=PLbLe7g_8n8L8';
+const tuesdayOrientationPlaylistUrl = 'https://www.youtube.com/playlist?list=PLEZcxEc5NjjE';
 
-function connectMondayMind() {
+function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
   const today = document.querySelector('#today');
   if (!today) return false;
 
-  const mondayLabel = Array.from(today.querySelectorAll('p')).find(
-    (el) => el.textContent?.trim() === 'MONDAY'
+  const dayLabel = Array.from(today.querySelectorAll('p')).find(
+    (el) => el.textContent?.trim() === day
   );
-  const card = mondayLabel?.parentElement as HTMLElement | null;
+  const card = dayLabel?.parentElement as HTMLElement | null;
   if (!card) return false;
   if (card.dataset.playlistConnected === 'true') return true;
 
   card.dataset.playlistConnected = 'true';
   card.setAttribute('role', 'link');
   card.setAttribute('tabindex', '0');
-  card.setAttribute('aria-label', 'Open Monday MIND YouTube playlist');
+  card.setAttribute('aria-label', `Open ${day} ${title} YouTube playlist`);
   card.classList.add('cursor-pointer', 'hover:border-amber-400', 'transition');
 
-  const openPlaylist = () => window.open(mondayMindPlaylistUrl, '_blank', 'noopener,noreferrer');
+  const openPlaylist = () => window.open(playlistUrl, '_blank', 'noopener,noreferrer');
   card.addEventListener('click', openPlaylist);
   card.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -31,7 +32,7 @@ function connectMondayMind() {
 
   const hint = document.createElement('p');
   hint.className = 'mt-4 text-xs font-black text-amber-400';
-  hint.textContent = 'WATCH MONDAY MIND PLAYLIST →';
+  hint.textContent = `WATCH ${day} ${title} PLAYLIST →`;
   card.appendChild(hint);
   return true;
 }
@@ -60,9 +61,10 @@ function renderSocialChannels() {
 }
 
 function initializeEnhancements() {
-  const mondayReady = connectMondayMind();
+  const mondayReady = connectDayPlaylist('MONDAY', 'MIND', mondayMindPlaylistUrl);
+  const tuesdayReady = connectDayPlaylist('TUESDAY', 'ORIENTATION', tuesdayOrientationPlaylistUrl);
   const socialReady = renderSocialChannels() || Boolean(document.querySelector('#social-channels'));
-  return mondayReady && socialReady;
+  return mondayReady && tuesdayReady && socialReady;
 }
 
 if (!initializeEnhancements()) {
