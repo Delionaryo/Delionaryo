@@ -9,6 +9,7 @@ const fridayYieldPlaylistUrl = 'https://www.youtube.com/playlist?list=PLS4Q524LS
 const saturdayPlaylistUrl = 'https://www.youtube.com/playlist?list=PLdkURstUGJus';
 const sundayPlaylistUrl = 'https://www.youtube.com/playlist?list=PLeZy8es56BcA';
 const aiContentCreationPlaylistUrl = 'https://www.youtube.com/playlist?list=PLTFRVsx4BizQ';
+const financialLiteracyPlaylistUrl = 'https://www.youtube.com/playlist?list=PLUc1LU9edXfI';
 
 function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
   const today = document.querySelector('#today');
@@ -41,7 +42,6 @@ function renderFreeTraining() {
   if (document.querySelector('#free-training-paths')) return true;
   const today = document.querySelector('#today');
   if (!today) return false;
-
   const section = document.createElement('section');
   section.id = 'free-training-paths';
   section.className = 'border-t border-amber-500/20 bg-stone-950';
@@ -59,10 +59,12 @@ function renderFreeTraining() {
           <p class="mt-3 text-stone-400 leading-7">Learn AI content creation, prompts, images, video workflows, editing and publishing.</p>
           <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
         </a>
-        <div class="rounded-2xl border border-stone-700 bg-stone-900 p-6 opacity-70">
-          <p class="text-stone-500 text-xs font-black tracking-widest">COMING NEXT</p>
+        <a href="${financialLiteracyPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition">
+          <p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p>
           <h3 class="mt-3 text-2xl font-black">FINANCIAL LITERACY</h3>
-        </div>
+          <p class="mt-3 text-stone-400 leading-7">Learn practical money management, saving, budgeting, income and wealth-building principles.</p>
+          <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
+        </a>
         <div class="rounded-2xl border border-stone-700 bg-stone-900 p-6 opacity-70">
           <p class="text-stone-500 text-xs font-black tracking-widest">COMING NEXT</p>
           <h3 class="mt-3 text-2xl font-black">SPEND & EARN</h3>
