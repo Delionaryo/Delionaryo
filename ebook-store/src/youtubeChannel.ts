@@ -1,6 +1,40 @@
 const youtubeChannelUrl = 'https://www.youtube.com/channel/UC8tBAhLFySPo7vp9cBUh4fA';
 const tiktokUrl = 'https://www.tiktok.com/@rrl6980?_r=1&_t=ZS-98clQNSR9KH';
 const facebookUrl = 'https://www.facebook.com/Delionaryo09';
+const mondayMindPlaylistUrl = 'https://www.youtube.com/playlist?list=PLbLe7g_8n8L8';
+
+function connectMondayMind() {
+  const today = document.querySelector('#today');
+  if (!today) return false;
+
+  const mondayLabel = Array.from(today.querySelectorAll('p')).find(
+    (el) => el.textContent?.trim() === 'MONDAY'
+  );
+  const card = mondayLabel?.parentElement as HTMLElement | null;
+  if (!card) return false;
+  if (card.dataset.playlistConnected === 'true') return true;
+
+  card.dataset.playlistConnected = 'true';
+  card.setAttribute('role', 'link');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', 'Open Monday MIND YouTube playlist');
+  card.classList.add('cursor-pointer', 'hover:border-amber-400', 'transition');
+
+  const openPlaylist = () => window.open(mondayMindPlaylistUrl, '_blank', 'noopener,noreferrer');
+  card.addEventListener('click', openPlaylist);
+  card.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openPlaylist();
+    }
+  });
+
+  const hint = document.createElement('p');
+  hint.className = 'mt-4 text-xs font-black text-amber-400';
+  hint.textContent = 'WATCH MONDAY MIND PLAYLIST →';
+  card.appendChild(hint);
+  return true;
+}
 
 function renderSocialChannels() {
   const footer = document.querySelector('footer');
@@ -25,9 +59,15 @@ function renderSocialChannels() {
   return true;
 }
 
-if (!renderSocialChannels()) {
+function initializeEnhancements() {
+  const mondayReady = connectMondayMind();
+  const socialReady = renderSocialChannels() || Boolean(document.querySelector('#social-channels'));
+  return mondayReady && socialReady;
+}
+
+if (!initializeEnhancements()) {
   const observer = new MutationObserver(() => {
-    if (renderSocialChannels()) observer.disconnect();
+    if (initializeEnhancements()) observer.disconnect();
   });
   observer.observe(document.body, { childList: true, subtree: true });
 }
