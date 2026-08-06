@@ -2,8 +2,10 @@ const youtubeChannelUrl = 'https://www.youtube.com/channel/UC8tBAhLFySPo7vp9cBUh
 const tiktokUrl = 'https://www.tiktok.com/@rrl6980?_r=1&_t=ZS-98clQNSR9KH';
 const facebookUrl = 'https://www.facebook.com/Delionaryo09';
 
-const footer = document.querySelector('footer');
-if (footer && !document.querySelector('#social-channels')) {
+function renderSocialChannels() {
+  const footer = document.querySelector('footer');
+  if (!footer || document.querySelector('#social-channels')) return false;
+
   const social = document.createElement('section');
   social.id = 'social-channels';
   social.className = 'border-t border-amber-500/20 bg-stone-900';
@@ -20,4 +22,12 @@ if (footer && !document.querySelector('#social-channels')) {
       <p class="mt-4 text-sm text-stone-500">Subscribe and follow to receive new DELIONARYO content.</p>
     </div>`;
   footer.parentElement?.insertBefore(social, footer);
+  return true;
+}
+
+if (!renderSocialChannels()) {
+  const observer = new MutationObserver(() => {
+    if (renderSocialChannels()) observer.disconnect();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
 }
