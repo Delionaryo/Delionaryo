@@ -12,6 +12,7 @@ const aiContentCreationPlaylistUrl = 'https://www.youtube.com/playlist?list=PLTF
 const financialLiteracyPlaylistUrl = 'https://www.youtube.com/playlist?list=PLUc1LU9edXfI';
 const spiritualityPlaylistUrl = 'https://www.youtube.com/playlist?list=PLAYcY7Ryu4yc';
 const affiliateMarketingPlaylistUrl = 'https://www.youtube.com/playlist?list=PLWjgT_qZUUwQ';
+const rootsOfPovertyPlaylistUrl = 'https://www.youtube.com/playlist?list=PLaSRC5y51q3c';
 
 function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
   const today = document.querySelector('#today');
@@ -55,30 +56,16 @@ function renderFreeTraining() {
         <p class="mt-4 max-w-3xl mx-auto text-lg leading-8 text-stone-400">Access practical DELIONARYO training playlists and keep learning as new lessons are added.</p>
       </div>
       <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <a href="${aiContentCreationPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition">
-          <p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p>
-          <h3 class="mt-3 text-2xl font-black">AI CONTENT CREATION</h3>
-          <p class="mt-3 text-stone-400 leading-7">Learn AI content creation, prompts, images, video workflows, editing and publishing.</p>
-          <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
-        </a>
-        <a href="${financialLiteracyPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition">
-          <p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p>
-          <h3 class="mt-3 text-2xl font-black">FINANCIAL LITERACY</h3>
-          <p class="mt-3 text-stone-400 leading-7">Learn practical money management, saving, budgeting, income and wealth-building principles.</p>
-          <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
-        </a>
-        <a href="${affiliateMarketingPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition">
-          <p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p>
-          <h3 class="mt-3 text-2xl font-black">SPEND & EARN</h3>
-          <p class="mt-3 text-stone-400 leading-7">Learn affiliate marketing, product content, recommendations and practical ways to turn spending knowledge into earning opportunities.</p>
-          <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
-        </a>
-        <a href="${spiritualityPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition">
-          <p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p>
-          <h3 class="mt-3 text-2xl font-black">SPIRITUALITY</h3>
-          <p class="mt-3 text-stone-400 leading-7">Explore spiritual growth, purpose, stewardship and Kingdom-centered principles for transformation.</p>
-          <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
-        </a>
+        <a href="${aiContentCreationPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition"><p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p><h3 class="mt-3 text-2xl font-black">AI CONTENT CREATION</h3><p class="mt-3 text-stone-400 leading-7">Learn AI content creation, prompts, images, video workflows, editing and publishing.</p><p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p></a>
+        <a href="${financialLiteracyPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition"><p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p><h3 class="mt-3 text-2xl font-black">FINANCIAL LITERACY</h3><p class="mt-3 text-stone-400 leading-7">Learn practical money management, saving, budgeting, income and wealth-building principles.</p><p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p></a>
+        <a href="${affiliateMarketingPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition"><p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p><h3 class="mt-3 text-2xl font-black">SPEND & EARN</h3><p class="mt-3 text-stone-400 leading-7">Learn affiliate marketing, product content, recommendations and practical ways to turn spending knowledge into earning opportunities.</p><p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p></a>
+        <a href="${spiritualityPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition"><p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p><h3 class="mt-3 text-2xl font-black">SPIRITUALITY</h3><p class="mt-3 text-stone-400 leading-7">Explore spiritual growth, purpose, stewardship and Kingdom-centered principles for transformation.</p><p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p></a>
+      </div>
+      <div class="mt-8 rounded-3xl border border-amber-400/50 bg-stone-900 p-7 md:p-10 text-center">
+        <p class="text-amber-400 text-xs font-black tracking-widest">START HERE • FREE VIDEO SERIES</p>
+        <h3 class="mt-3 text-3xl md:text-4xl font-black">6 ROOTS OF POVERTY</h3>
+        <p class="mt-4 max-w-2xl mx-auto text-stone-400 leading-7">Discover the hidden roots that can keep people trapped in poverty and begin the journey toward lasting transformation.</p>
+        <a href="${rootsOfPovertyPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="mt-7 inline-flex items-center justify-center rounded-xl bg-amber-400 px-8 py-4 font-black text-stone-950 hover:bg-amber-300 transition">WATCH FREE SERIES →</a>
       </div>
     </div>`;
   today.insertAdjacentElement('afterend', section);
@@ -91,18 +78,7 @@ function renderSocialChannels() {
   const social = document.createElement('section');
   social.id = 'social-channels';
   social.className = 'border-t border-amber-500/20 bg-stone-900';
-  social.innerHTML = `
-    <div class="max-w-6xl mx-auto px-5 py-16 text-center">
-      <p class="text-amber-400 font-black tracking-widest text-sm">FOLLOW DELIONARYO</p>
-      <h2 class="mt-3 text-4xl md:text-5xl font-black">Continue Your Transformation.</h2>
-      <p class="mt-4 max-w-3xl mx-auto text-lg leading-8 text-stone-400">Follow DELIONARYO for financial transformation lessons, practical guidance, short-form education and new videos.</p>
-      <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <a href="${youtubeChannelUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-amber-400 px-8 py-4 font-black text-stone-950 hover:bg-amber-300 transition">YOUTUBE →</a>
-        <a href="${tiktokUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl border border-amber-400 px-8 py-4 font-black text-amber-400 hover:bg-amber-400 hover:text-stone-950 transition">TIKTOK →</a>
-        <a href="${facebookUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl border border-amber-400 px-8 py-4 font-black text-amber-400 hover:bg-amber-400 hover:text-stone-950 transition">FACEBOOK →</a>
-      </div>
-      <p class="mt-4 text-sm text-stone-500">Subscribe and follow to receive new DELIONARYO content.</p>
-    </div>`;
+  social.innerHTML = `<div class="max-w-6xl mx-auto px-5 py-16 text-center"><p class="text-amber-400 font-black tracking-widest text-sm">FOLLOW DELIONARYO</p><h2 class="mt-3 text-4xl md:text-5xl font-black">Continue Your Transformation.</h2><p class="mt-4 max-w-3xl mx-auto text-lg leading-8 text-stone-400">Follow DELIONARYO for financial transformation lessons, practical guidance, short-form education and new videos.</p><div class="mt-8 flex flex-wrap justify-center gap-4"><a href="${youtubeChannelUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-amber-400 px-8 py-4 font-black text-stone-950 hover:bg-amber-300 transition">YOUTUBE →</a><a href="${tiktokUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl border border-amber-400 px-8 py-4 font-black text-amber-400 hover:bg-amber-400 hover:text-stone-950 transition">TIKTOK →</a><a href="${facebookUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl border border-amber-400 px-8 py-4 font-black text-amber-400 hover:bg-amber-400 hover:text-stone-950 transition">FACEBOOK →</a></div><p class="mt-4 text-sm text-stone-500">Subscribe and follow to receive new DELIONARYO content.</p></div>`;
   footer.parentElement?.insertBefore(social, footer);
   return true;
 }
@@ -121,8 +97,6 @@ function initializeEnhancements() {
 }
 
 if (!initializeEnhancements()) {
-  const observer = new MutationObserver(() => {
-    if (initializeEnhancements()) observer.disconnect();
-  });
+  const observer = new MutationObserver(() => { if (initializeEnhancements()) observer.disconnect(); });
   observer.observe(document.body, { childList: true, subtree: true });
 }
