@@ -5,6 +5,7 @@ const mondayMindPlaylistUrl = 'https://www.youtube.com/playlist?list=PLbLe7g_8n8
 const tuesdayOrientationPlaylistUrl = 'https://www.youtube.com/playlist?list=PLEZcxEc5NjjE';
 const wednesdayNarrativePlaylistUrl = 'https://www.youtube.com/playlist?list=PLRAOblnZblB8';
 const thursdayExecutionPlaylistUrl = 'https://www.youtube.com/playlist?list=PLOPvZb7ghfOM';
+const fridayYieldPlaylistUrl = 'https://www.youtube.com/playlist?list=PLS4Q524LSbLY';
 
 function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
   const today = document.querySelector('#today');
@@ -60,8 +61,9 @@ function initializeEnhancements() {
   const tuesdayReady = connectDayPlaylist('TUESDAY', 'ORIENTATION', tuesdayOrientationPlaylistUrl);
   const wednesdayReady = connectDayPlaylist('WEDNESDAY', 'NARRATIVE', wednesdayNarrativePlaylistUrl);
   const thursdayReady = connectDayPlaylist('THURSDAY', 'EXECUTION', thursdayExecutionPlaylistUrl);
+  const fridayReady = connectDayPlaylist('FRIDAY', 'YIELD', fridayYieldPlaylistUrl);
   const socialReady = renderSocialChannels() || Boolean(document.querySelector('#social-channels'));
-  return mondayReady && tuesdayReady && wednesdayReady && thursdayReady && socialReady;
+  return mondayReady && tuesdayReady && wednesdayReady && thursdayReady && fridayReady && socialReady;
 }
 
 if (!initializeEnhancements()) {
