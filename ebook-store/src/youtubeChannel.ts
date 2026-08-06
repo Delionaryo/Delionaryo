@@ -10,6 +10,7 @@ const saturdayPlaylistUrl = 'https://www.youtube.com/playlist?list=PLdkURstUGJus
 const sundayPlaylistUrl = 'https://www.youtube.com/playlist?list=PLeZy8es56BcA';
 const aiContentCreationPlaylistUrl = 'https://www.youtube.com/playlist?list=PLTFRVsx4BizQ';
 const financialLiteracyPlaylistUrl = 'https://www.youtube.com/playlist?list=PLUc1LU9edXfI';
+const spiritualityPlaylistUrl = 'https://www.youtube.com/playlist?list=PLAYcY7Ryu4yc';
 
 function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
   const today = document.querySelector('#today');
@@ -69,10 +70,12 @@ function renderFreeTraining() {
           <p class="text-stone-500 text-xs font-black tracking-widest">COMING NEXT</p>
           <h3 class="mt-3 text-2xl font-black">SPEND & EARN</h3>
         </div>
-        <div class="rounded-2xl border border-stone-700 bg-stone-900 p-6 opacity-70">
-          <p class="text-stone-500 text-xs font-black tracking-widest">COMING NEXT</p>
+        <a href="${spiritualityPlaylistUrl}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl border border-amber-500/30 bg-stone-900 p-6 hover:border-amber-400 transition">
+          <p class="text-amber-400 text-xs font-black tracking-widest">FREE TRAINING</p>
           <h3 class="mt-3 text-2xl font-black">SPIRITUALITY</h3>
-        </div>
+          <p class="mt-3 text-stone-400 leading-7">Explore spiritual growth, purpose, stewardship and Kingdom-centered principles for transformation.</p>
+          <p class="mt-5 text-amber-400 font-black">WATCH PLAYLIST →</p>
+        </a>
       </div>
     </div>`;
   today.insertAdjacentElement('afterend', section);
