@@ -3,24 +3,20 @@ const tiktokUrl = 'https://www.tiktok.com/@rrl6980?_r=1&_t=ZS-98clQNSR9KH';
 const facebookUrl = 'https://www.facebook.com/Delionaryo09';
 const mondayMindPlaylistUrl = 'https://www.youtube.com/playlist?list=PLbLe7g_8n8L8';
 const tuesdayOrientationPlaylistUrl = 'https://www.youtube.com/playlist?list=PLEZcxEc5NjjE';
+const wednesdayNarrativePlaylistUrl = 'https://www.youtube.com/playlist?list=PLRAOblnZblB8';
 
 function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
   const today = document.querySelector('#today');
   if (!today) return false;
-
-  const dayLabel = Array.from(today.querySelectorAll('p')).find(
-    (el) => el.textContent?.trim() === day
-  );
+  const dayLabel = Array.from(today.querySelectorAll('p')).find((el) => el.textContent?.trim() === day);
   const card = dayLabel?.parentElement as HTMLElement | null;
   if (!card) return false;
   if (card.dataset.playlistConnected === 'true') return true;
-
   card.dataset.playlistConnected = 'true';
   card.setAttribute('role', 'link');
   card.setAttribute('tabindex', '0');
   card.setAttribute('aria-label', `Open ${day} ${title} YouTube playlist`);
   card.classList.add('cursor-pointer', 'hover:border-amber-400', 'transition');
-
   const openPlaylist = () => window.open(playlistUrl, '_blank', 'noopener,noreferrer');
   card.addEventListener('click', openPlaylist);
   card.addEventListener('keydown', (event) => {
@@ -29,7 +25,6 @@ function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
       openPlaylist();
     }
   });
-
   const hint = document.createElement('p');
   hint.className = 'mt-4 text-xs font-black text-amber-400';
   hint.textContent = `WATCH ${day} ${title} PLAYLIST →`;
@@ -40,7 +35,6 @@ function connectDayPlaylist(day: string, title: string, playlistUrl: string) {
 function renderSocialChannels() {
   const footer = document.querySelector('footer');
   if (!footer || document.querySelector('#social-channels')) return false;
-
   const social = document.createElement('section');
   social.id = 'social-channels';
   social.className = 'border-t border-amber-500/20 bg-stone-900';
@@ -63,8 +57,9 @@ function renderSocialChannels() {
 function initializeEnhancements() {
   const mondayReady = connectDayPlaylist('MONDAY', 'MIND', mondayMindPlaylistUrl);
   const tuesdayReady = connectDayPlaylist('TUESDAY', 'ORIENTATION', tuesdayOrientationPlaylistUrl);
+  const wednesdayReady = connectDayPlaylist('WEDNESDAY', 'NARRATIVE', wednesdayNarrativePlaylistUrl);
   const socialReady = renderSocialChannels() || Boolean(document.querySelector('#social-channels'));
-  return mondayReady && tuesdayReady && socialReady;
+  return mondayReady && tuesdayReady && wednesdayReady && socialReady;
 }
 
 if (!initializeEnhancements()) {
