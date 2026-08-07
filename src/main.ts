@@ -7,7 +7,8 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 
 const lessons = [
   { id:'2KNvsRzkrZE', label:'EXCLUSIVE LESSON 01', title:'DELIONARYO Transformation Lesson 1' },
-  { id:'0Y22DDoZQu0', label:'EXCLUSIVE LESSON 02', title:'DELIONARYO Transformation Lesson 2' }
+  { id:'0Y22DDoZQu0', label:'EXCLUSIVE LESSON 02', title:'DELIONARYO Transformation Lesson 2' },
+  { id:'VyqE80DtCCs', label:'EXCLUSIVE LESSON 03', title:'DELIONARYO Transformation Lesson 3' }
 ];
 
 const days = [
