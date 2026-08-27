@@ -125,54 +125,50 @@ async function openMemberPortal(){
   await renderMemberPortal(session.user);
 }
 
+function courseCard(c:any,index:number,owned:boolean){
+  const title=escapeHtml(c?.title||'DELIONARYO Course');
+  const description=escapeHtml(c?.description||'Continue your transformation journey.');
+  const slug=escapeHtml(c?.slug||'');
+  const badge=owned?'ENROLLED / OWNED':'AVAILABLE PROGRAM';
+  const action=owned?'CONTINUE COURSE':'VIEW PROGRAM';
+  return `<article class="campus-course-card ${owned?'owned-course':'available-course'}"><div class="course-art"><span>${String(index+1).padStart(2,'0')}</span><div><p>${badge}</p><h3>${title}</h3></div></div><div class="course-body"><p>${description}</p>${owned?`<div class="course-progress"><div><span>Course progress</span><b>0%</b></div><div class="course-track"><i style="width:0%"></i></div></div>`:`<div class="course-access-note"><span>LOCKED</span><small>Purchase or enroll to unlock protected lessons.</small></div>`}<button class="course-open ${owned?'':'available-open'}" data-course="${slug}" data-owned="${owned?'1':'0'}">${action} <span>→</span></button></div></article>`;
+}
+
 async function renderMemberPortal(user:any){
   currentUser = user;
-  const existing = document.querySelector('#member-portal');
-  existing?.remove();
+  document.querySelector('#member-portal')?.remove();
   document.body.classList.add('member-mode');
+  const firstName=(user.user_metadata?.full_name||user.email?.split('@')[0]||'Learner').split(/[ ._-]/)[0];
 
-  const firstName = (user.user_metadata?.full_name || user.email?.split('@')[0] || 'Learner').split(/[ ._-]/)[0];
-  const {data: enrollments} = await supabase
-    .from('learning_enrollments')
-    .select('course_id,status,enrolled_at,learning_courses(title,description,slug)')
-    .eq('status','active')
-    .order('enrolled_at',{ascending:false});
+  const [{data: enrollments},{data: allCourses}] = await Promise.all([
+    supabase.from('learning_enrollments').select('course_id,status,enrolled_at,learning_courses(id,title,description,slug)').eq('status','active').order('enrolled_at',{ascending:false}),
+    supabase.from('learning_courses').select('id,title,description,slug').order('title',{ascending:true})
+  ]);
 
-  const courses = enrollments || [];
-  const courseCards = courses.length ? courses.map((row:any,index:number)=>{
-    const c = Array.isArray(row.learning_courses) ? row.learning_courses[0] : row.learning_courses;
-    const title = escapeHtml(c?.title || 'DELIONARYO Course');
-    const description = escapeHtml(c?.description || 'Continue your transformation journey.');
-    return `<article class="campus-course-card"><div class="course-art"><span>${String(index+1).padStart(2,'0')}</span><div><p>ACTIVE PROGRAM</p><h3>${title}</h3></div></div><div class="course-body"><p>${description}</p><div class="course-progress"><div><span>Course progress</span><b>0%</b></div><div class="course-track"><i style="width:0%"></i></div></div><button class="course-open" data-course="${escapeHtml(c?.slug || '')}">ENTER COURSE <span>→</span></button></div></article>`;
-  }).join('') : `<article class="campus-empty"><span class="empty-mark">◇</span><p class="eyebrow">ACCOUNT READY</p><h3>Your private campus is ready.</h3><p>No paid program is connected to this account yet. Once a purchase or enrollment is verified, it will appear here automatically.</p><button id="browse-store">EXPLORE PROGRAMS →</button></article>`;
+  const purchased=(enrollments||[]).map((row:any)=>Array.isArray(row.learning_courses)?row.learning_courses[0]:row.learning_courses).filter(Boolean);
+  const ownedIds=new Set((enrollments||[]).map((r:any)=>String(r.course_id)));
+  const available=(allCourses||[]).filter((c:any)=>!ownedIds.has(String(c.id)));
+  const purchasedCards=purchased.length?purchased.map((c:any,i:number)=>courseCard(c,i,true)).join(''):`<article class="campus-empty"><span class="empty-mark">◇</span><p class="eyebrow">NO PURCHASED COURSE YET</p><h3>Your campus account is ready.</h3><p>Programs you purchase or enroll in will appear here automatically.</p></article>`;
+  const availableCards=available.length?available.map((c:any,i:number)=>courseCard(c,i,false)).join(''):`<article class="campus-empty"><span class="empty-mark">✓</span><p class="eyebrow">ALL AVAILABLE PROGRAMS OWNED</p><h3>You are fully enrolled.</h3><p>New programs will appear here when they are released.</p></article>`;
 
-  const portal = document.createElement('div');
-  portal.id = 'member-portal';
-  portal.innerHTML = `<div class="campus-shell">
-    <aside class="campus-sidebar">
-      <div><div class="campus-brand"><span>D</span><div><strong>DELIONARYO</strong><small>LEARNING CAMPUS</small></div></div>
-      <nav class="campus-nav"><button class="active">⌂ <span>Dashboard</span></button><button>▣ <span>My Courses</span></button><button>◫ <span>Resources</span></button><button>✓ <span>Progress</span></button></nav></div>
-      <div class="campus-account"><div class="avatar">${escapeHtml(firstName.charAt(0).toUpperCase())}</div><div><strong>${escapeHtml(firstName)}</strong><small>${escapeHtml(user.email || '')}</small></div><button id="campus-logout" title="Logout">↗</button></div>
-    </aside>
-
-    <main class="campus-main">
-      <header class="campus-topbar"><button id="campus-menu" class="campus-menu">☰</button><div class="mobile-campus-brand">DELIONARYO <span>LEARNING</span></div><div class="campus-top-actions"><span class="secure-pill">● MEMBER ACCESS</span><button id="campus-account-button">${escapeHtml(firstName.charAt(0).toUpperCase())}</button></div></header>
-
-      <section class="campus-hero"><div class="hero-copy"><p class="eyebrow">PRIVATE LEARNING CAMPUS</p><h1>Welcome back,<br><span>${escapeHtml(firstName)}.</span></h1><p>Continue building knowledge into disciplined execution, measurable progress and wiser stewardship.</p></div><div class="hero-monogram"><span>M</span><small>TRANSFORMATION<br>IN MOTION</small></div></section>
-
-      <section class="campus-stats"><article><small>ACTIVE PROGRAMS</small><strong>${courses.length}</strong><span>Enrolled courses</span></article><article><small>LESSONS COMPLETED</small><strong>0</strong><span>Your learning record</span></article><article><small>OVERALL PROGRESS</small><strong>0%</strong><span>Across active programs</span></article></section>
-
-      <section class="campus-section"><div class="section-heading"><div><p class="eyebrow">CONTINUE LEARNING</p><h2>Your Programs</h2></div><span>${courses.length ? `${courses.length} active` : 'No active program yet'}</span></div><div class="campus-course-grid">${courseCards}</div></section>
-
-      <section class="campus-section campus-roadmap"><div class="section-heading"><div><p class="eyebrow">YOUR TRANSFORMATION PATH</p><h2>Learn → Execute → Measure → Advance</h2></div></div><div class="roadmap-line"><article><i>01</i><h3>Learn</h3><p>Understand the principle.</p></article><article><i>02</i><h3>Execute</h3><p>Apply it in real life.</p></article><article><i>03</i><h3>Measure</h3><p>Track the result.</p></article><article><i>04</i><h3>Advance</h3><p>Move to the next level.</p></article></div></section>
-    </main>
-  </div>`;
+  const portal=document.createElement('div');
+  portal.id='member-portal';
+  portal.innerHTML=`<div class="campus-shell">
+    <aside class="campus-sidebar"><div><div class="campus-brand"><span>D</span><div><strong>DELIONARYO</strong><small>LEARNING CAMPUS</small></div></div><nav class="campus-nav"><button class="active" data-target="campus-dashboard">⌂ <span>Dashboard</span></button><button data-target="my-purchased-courses">▣ <span>My Courses</span></button><button data-target="available-programs">＋ <span>Available</span></button><button data-target="campus-resources">◫ <span>Resources</span></button><button data-target="campus-progress">✓ <span>Progress</span></button></nav></div><div class="campus-account"><div class="avatar">${escapeHtml(firstName.charAt(0).toUpperCase())}</div><div><strong>${escapeHtml(firstName)}</strong><small>${escapeHtml(user.email||'')}</small></div><button id="campus-logout" title="Logout">↗</button></div></aside>
+    <main class="campus-main" id="campus-dashboard"><header class="campus-topbar"><button id="campus-menu" class="campus-menu">☰</button><div class="mobile-campus-brand">DELIONARYO <span>LEARNING</span></div><div class="campus-top-actions"><span class="secure-pill">● MEMBER ACCESS</span><button id="campus-account-button">${escapeHtml(firstName.charAt(0).toUpperCase())}</button></div></header>
+      <section class="campus-hero"><div class="hero-copy"><p class="eyebrow">PRIVATE LEARNING CAMPUS</p><h1>Welcome back,<br><span>${escapeHtml(firstName)}.</span></h1><p>Your dashboard now separates what you already own from programs still available to you.</p></div><div class="hero-monogram"><span>M</span><small>PERSONAL<br>LEARNING PATH</small></div></section>
+      <section class="campus-stats" id="campus-progress"><article><small>PURCHASED COURSES</small><strong>${purchased.length}</strong><span>Owned and unlocked</span></article><article><small>AVAILABLE PROGRAMS</small><strong>${available.length}</strong><span>Programs you can still enroll in</span></article><article><small>OVERALL PROGRESS</small><strong>0%</strong><span>Across purchased programs</span></article></section>
+      <section class="campus-section" id="my-purchased-courses"><div class="section-heading"><div><p class="eyebrow">MY PURCHASED COURSES</p><h2>Owned & Unlocked</h2></div><span>${purchased.length} owned</span></div><div class="campus-course-grid">${purchasedCards}</div></section>
+      <section class="campus-section" id="available-programs"><div class="section-heading"><div><p class="eyebrow">AVAILABLE PROGRAMS</p><h2>Continue Your Growth</h2></div><span>${available.length} available</span></div><div class="campus-course-grid">${availableCards}</div></section>
+      <section class="campus-section campus-roadmap" id="campus-resources"><div class="section-heading"><div><p class="eyebrow">YOUR TRANSFORMATION PATH</p><h2>Learn → Execute → Measure → Advance</h2></div></div><div class="roadmap-line"><article><i>01</i><h3>Learn</h3><p>Study your unlocked lessons.</p></article><article><i>02</i><h3>Execute</h3><p>Apply the required action.</p></article><article><i>03</i><h3>Measure</h3><p>Track progress and results.</p></article><article><i>04</i><h3>Advance</h3><p>Unlock the next milestone.</p></article></div></section>
+    </main></div>`;
   document.body.appendChild(portal);
 
-  document.querySelector('#campus-logout')?.addEventListener('click', async()=>{ await supabase.auth.signOut(); window.location.href='/'; });
-  document.querySelector('#browse-store')?.addEventListener('click',()=>{ portal.remove(); document.body.classList.remove('member-mode'); document.querySelector('#books')?.scrollIntoView({behavior:'smooth'}); });
+  document.querySelector('#campus-logout')?.addEventListener('click',async()=>{await supabase.auth.signOut();window.location.href='/';});
   document.querySelector('#campus-menu')?.addEventListener('click',()=>document.querySelector('.campus-sidebar')?.classList.toggle('open'));
   document.querySelector('#campus-account-button')?.addEventListener('click',()=>document.querySelector('.campus-sidebar')?.classList.toggle('open'));
+  document.querySelectorAll<HTMLElement>('.campus-nav button[data-target]').forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.target;document.querySelector(`#${id}`)?.scrollIntoView({behavior:'smooth'});document.querySelectorAll('.campus-nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelector('.campus-sidebar')?.classList.remove('open');}));
+  document.querySelectorAll<HTMLButtonElement>('.course-open').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.owned==='1'){document.querySelector('#my-purchased-courses')?.scrollIntoView({behavior:'smooth'});}else{portal.remove();document.body.classList.remove('member-mode');document.querySelector('#books')?.scrollIntoView({behavior:'smooth'});}}));
 }
 
 async function render(user:any){
@@ -181,15 +177,9 @@ async function render(user:any){
   const copy=document.querySelector<HTMLElement>('#learning-copy');
   if(top) top.textContent=user?'MY LEARNING':'LOGIN';
   if(copy) copy.textContent=user?'Your account is active. Open your private DELIONARYO Learning Campus.':'Login or create an account to access your paid courses.';
-  if(user){ await renderMemberPortal(user); }
+  if(user){await renderMemberPortal(user);}
 }
 
-async function boot(){
-  const {data}=await supabase.auth.getSession();
-  await render(data.session?.user||null);
-  supabase.auth.onAuthStateChange((_e,s)=>{ currentUser=s?.user||null; if(!currentUser) document.body.classList.remove('member-mode'); });
-}
-
-function escapeHtml(value:string){ return value.replace(/[&<>'"]/g,(char)=>({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;' }[char]||char)); }
-
+async function boot(){const {data}=await supabase.auth.getSession();await render(data.session?.user||null);supabase.auth.onAuthStateChange((_e,s)=>{currentUser=s?.user||null;if(!currentUser)document.body.classList.remove('member-mode');});}
+function escapeHtml(value:string){return value.replace(/[&<>'"]/g,(char)=>({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;' }[char]||char));}
 if(!initAuth()){const observer=new MutationObserver(()=>{if(initAuth())observer.disconnect();});observer.observe(document.documentElement,{childList:true,subtree:true});}
