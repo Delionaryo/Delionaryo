@@ -4,6 +4,7 @@ const supabase = createClient(
   'https://tordvwlrtwxlbuuzgklt.supabase.co',
   'sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW'
 );
+const AUTH_REDIRECT_URL = 'https://delionaryo.vercel.app/';
 
 let currentUser: any = null;
 
@@ -113,14 +114,14 @@ async function submitAuth(e:SubmitEvent){
   setBusy(true);
   try {
     if(mode==='forgot'){
-      const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+      const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT_URL});
       return showMessage(error?error.message:'Reset link sent. Check your email inbox and spam folder.', error?'error':'success');
     }
     if(mode==='register'){
-      const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin}});
+      const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT_URL}});
       if(error) return showMessage(error.message);
       if(data.session){ showMessage('Account created successfully. You are now signed in.','success'); setTimeout(closeModal,900); return; }
-      showMessage('Account created. Check your email for the confirmation link, then come back and login.','success');
+      showMessage('Account created. Check your email and tap Confirm Email. You will return to DELIONARYO automatically.','success');
       return;
     }
     const {error}=await supabase.auth.signInWithPassword({email,password});
