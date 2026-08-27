@@ -34,13 +34,23 @@ function initAuth() {
 function createModal() {
   const modal = document.createElement('div');
   modal.id = 'learning-auth-modal';
-  modal.className = 'fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-5';
-  modal.innerHTML = `<div class="w-full max-w-md rounded-3xl border border-amber-500/30 bg-stone-950 p-6"><div class="flex justify-between gap-4"><div><p class="text-amber-400 font-black text-sm">DELIONARYO ACCOUNT</p><h2 id="auth-title" class="mt-1 text-3xl font-black">Login</h2></div><button id="auth-close" class="text-stone-400">✕</button></div><form id="auth-form" class="mt-6 space-y-4"><input id="auth-email" type="email" required autocomplete="email" placeholder="Email" class="w-full rounded-xl border border-stone-700 bg-stone-900 px-4 py-3"><input id="auth-password" type="password" minlength="6" autocomplete="current-password" placeholder="Password" class="w-full rounded-xl border border-stone-700 bg-stone-900 px-4 py-3"><p id="auth-message" class="hidden rounded-xl bg-stone-900 p-3 text-sm text-stone-300"></p><button id="auth-submit" class="w-full rounded-xl bg-amber-400 px-5 py-4 font-black text-stone-950">LOGIN</button></form><div class="mt-4 flex justify-between gap-3 text-sm font-bold"><button id="auth-switch" class="text-amber-400">Create account</button><button id="auth-forgot" class="text-stone-400">Forgot password?</button></div></div>`;
+  modal.className = 'fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-4 overflow-y-auto';
+  modal.innerHTML = `<div class="my-6 w-full max-w-md rounded-3xl border border-amber-500/30 bg-stone-950 p-6 shadow-2xl"><div class="flex justify-between gap-4"><div><p class="text-amber-400 font-black text-sm tracking-widest">DELIONARYO ACCOUNT</p><h2 id="auth-title" class="mt-1 text-3xl font-black">Login</h2><p id="auth-help" class="mt-2 text-sm text-stone-400">Use the email address connected to your DELIONARYO account.</p></div><button id="auth-close" type="button" class="self-start rounded-lg border border-stone-800 px-3 py-2 text-stone-400">✕</button></div>
+  <form id="auth-form" class="mt-6 space-y-4" novalidate>
+    <label class="block"><span class="text-sm font-bold text-stone-300">Email address</span><input id="auth-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" class="mt-2 w-full rounded-xl border border-stone-700 bg-stone-900 px-4 py-3 text-stone-100 outline-none focus:border-amber-400"></label>
+    <label id="auth-password-wrap" class="block"><span class="text-sm font-bold text-stone-300">Password</span><div class="relative mt-2"><input id="auth-password" type="password" autocomplete="current-password" placeholder="At least 6 characters" class="w-full rounded-xl border border-stone-700 bg-stone-900 px-4 py-3 pr-20 text-stone-100 outline-none focus:border-amber-400"><button id="toggle-password" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-black text-amber-400">SHOW</button></div></label>
+    <label id="auth-confirm-wrap" class="hidden"><span class="text-sm font-bold text-stone-300">Confirm password</span><input id="auth-confirm" type="password" autocomplete="new-password" placeholder="Repeat password" class="mt-2 w-full rounded-xl border border-stone-700 bg-stone-900 px-4 py-3 text-stone-100 outline-none focus:border-amber-400"></label>
+    <p id="auth-message" class="hidden rounded-xl border border-stone-800 bg-stone-900 p-3 text-sm text-stone-300" aria-live="polite"></p>
+    <button id="auth-submit" type="submit" class="w-full rounded-xl bg-amber-400 px-5 py-4 font-black text-stone-950 disabled:opacity-60">LOGIN</button>
+  </form>
+  <div class="mt-4 flex flex-wrap justify-between gap-3 text-sm font-bold"><button id="auth-switch" type="button" class="text-amber-400">Create account</button><button id="auth-forgot" type="button" class="text-stone-400">Forgot password?</button></div></div>`;
   document.body.appendChild(modal);
   document.querySelector('#auth-close')?.addEventListener('click', closeModal);
   document.querySelector('#auth-switch')?.addEventListener('click', () => openModal(modal.dataset.mode === 'register' ? 'login' : 'register'));
   document.querySelector('#auth-forgot')?.addEventListener('click', () => openModal('forgot'));
+  document.querySelector('#toggle-password')?.addEventListener('click', togglePassword);
   document.querySelector<HTMLFormElement>('#auth-form')?.addEventListener('submit', submitAuth);
+  modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
 }
 
 function openModal(mode: 'login'|'register'|'forgot') {
@@ -49,27 +59,77 @@ function openModal(mode: 'login'|'register'|'forgot') {
   modal.dataset.mode = mode;
   modal.classList.remove('hidden'); modal.classList.add('flex');
   const title = document.querySelector<HTMLElement>('#auth-title');
+  const help = document.querySelector<HTMLElement>('#auth-help');
   const submit = document.querySelector<HTMLButtonElement>('#auth-submit');
-  const pass = document.querySelector<HTMLInputElement>('#auth-password');
+  const passWrap = document.querySelector<HTMLElement>('#auth-password-wrap');
+  const confirmWrap = document.querySelector<HTMLElement>('#auth-confirm-wrap');
   const sw = document.querySelector<HTMLButtonElement>('#auth-switch');
   const forgot = document.querySelector<HTMLButtonElement>('#auth-forgot');
-  if (mode === 'login') { if(title) title.textContent='Login'; if(submit) submit.textContent='LOGIN'; if(pass){pass.classList.remove('hidden');pass.required=true;} if(sw) sw.textContent='Create account'; forgot?.classList.remove('hidden'); }
-  if (mode === 'register') { if(title) title.textContent='Create Account'; if(submit) submit.textContent='REGISTER'; if(pass){pass.classList.remove('hidden');pass.required=true;} if(sw) sw.textContent='Already registered? Login'; forgot?.classList.add('hidden'); }
-  if (mode === 'forgot') { if(title) title.textContent='Reset Password'; if(submit) submit.textContent='SEND RESET LINK'; if(pass){pass.classList.add('hidden');pass.required=false;} if(sw) sw.textContent='Back to login'; forgot?.classList.add('hidden'); }
+  const message = document.querySelector<HTMLElement>('#auth-message');
+  if (message) { message.textContent=''; message.classList.add('hidden'); message.classList.remove('text-red-300','text-emerald-300'); }
+  if (mode === 'login') {
+    if(title) title.textContent='Login';
+    if(help) help.textContent='Enter your email and password to open My Learning.';
+    if(submit) submit.textContent='LOGIN';
+    passWrap?.classList.remove('hidden'); confirmWrap?.classList.add('hidden');
+    if(sw) sw.textContent='Create account'; forgot?.classList.remove('hidden');
+  }
+  if (mode === 'register') {
+    if(title) title.textContent='Create Account';
+    if(help) help.textContent='Use a complete email address. This email will be linked to your course purchases.';
+    if(submit) submit.textContent='CREATE MY ACCOUNT';
+    passWrap?.classList.remove('hidden'); confirmWrap?.classList.remove('hidden');
+    if(sw) sw.textContent='Already registered? Login'; forgot?.classList.add('hidden');
+  }
+  if (mode === 'forgot') {
+    if(title) title.textContent='Reset Password';
+    if(help) help.textContent='Enter your registered email address and we will send a reset link.';
+    if(submit) submit.textContent='SEND RESET LINK';
+    passWrap?.classList.add('hidden'); confirmWrap?.classList.add('hidden');
+    if(sw) sw.textContent='Back to login'; forgot?.classList.add('hidden');
+  }
+  setTimeout(() => document.querySelector<HTMLInputElement>('#auth-email')?.focus(), 50);
 }
 
 function closeModal(){ const m=document.querySelector<HTMLElement>('#learning-auth-modal'); m?.classList.add('hidden'); m?.classList.remove('flex'); }
-function showMessage(text:string){ const el=document.querySelector<HTMLElement>('#auth-message'); if(el){el.textContent=text;el.classList.remove('hidden');} }
+function showMessage(text:string, kind:'error'|'success'='error'){ const el=document.querySelector<HTMLElement>('#auth-message'); if(el){el.textContent=text;el.classList.remove('hidden','text-red-300','text-emerald-300');el.classList.add(kind==='error'?'text-red-300':'text-emerald-300');} }
+function setBusy(busy:boolean){ const button=document.querySelector<HTMLButtonElement>('#auth-submit'); if(button){button.disabled=busy; if(busy) button.dataset.label=button.textContent||''; button.textContent=busy?'PLEASE WAIT…':(button.dataset.label||button.textContent||'CONTINUE');} }
+function togglePassword(){ const input=document.querySelector<HTMLInputElement>('#auth-password'); const btn=document.querySelector<HTMLButtonElement>('#toggle-password'); if(!input||!btn)return; const show=input.type==='password'; input.type=show?'text':'password'; btn.textContent=show?'HIDE':'SHOW'; }
+function validEmail(email:string){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
 
 async function submitAuth(e:SubmitEvent){
   e.preventDefault();
   const modal=document.querySelector<HTMLElement>('#learning-auth-modal');
-  const email=document.querySelector<HTMLInputElement>('#auth-email')?.value.trim()||'';
+  const email=document.querySelector<HTMLInputElement>('#auth-email')?.value.trim().toLowerCase()||'';
   const password=document.querySelector<HTMLInputElement>('#auth-password')?.value||'';
+  const confirm=document.querySelector<HTMLInputElement>('#auth-confirm')?.value||'';
   const mode=modal?.dataset.mode||'login';
-  if(mode==='forgot'){const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin}); return showMessage(error?error.message:'Reset link sent. Check your email.');}
-  if(mode==='register'){const {data,error}=await supabase.auth.signUp({email,password}); if(error)return showMessage(error.message); if(!data.session)return showMessage('Account created. Check your email to confirm, then login.'); closeModal(); return;}
-  const {error}=await supabase.auth.signInWithPassword({email,password}); if(error)return showMessage(error.message); closeModal();
+
+  if(!email) return showMessage('Please enter your email address.');
+  if(!validEmail(email)) return showMessage('Please enter a complete email address, for example name@gmail.com.');
+  if(mode!=='forgot' && password.length<6) return showMessage('Password must have at least 6 characters.');
+  if(mode==='register' && password!==confirm) return showMessage('Passwords do not match. Please type the same password twice.');
+
+  setBusy(true);
+  try {
+    if(mode==='forgot'){
+      const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+      return showMessage(error?error.message:'Reset link sent. Check your email inbox and spam folder.', error?'error':'success');
+    }
+    if(mode==='register'){
+      const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin}});
+      if(error) return showMessage(error.message);
+      if(data.session){ showMessage('Account created successfully. You are now signed in.','success'); setTimeout(closeModal,900); return; }
+      showMessage('Account created. Check your email for the confirmation link, then come back and login.','success');
+      return;
+    }
+    const {error}=await supabase.auth.signInWithPassword({email,password});
+    if(error)return showMessage(error.message);
+    showMessage('Login successful. Opening My Learning…','success');
+    setTimeout(()=>{closeModal();document.querySelector('#my-learning')?.scrollIntoView({behavior:'smooth'});},700);
+  } catch {
+    showMessage('Unable to connect right now. Please check your internet connection and try again.');
+  } finally { setBusy(false); }
 }
 
 async function render(user:any){
