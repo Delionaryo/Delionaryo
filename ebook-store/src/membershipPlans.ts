@@ -1,4 +1,5 @@
 import './learningLibraryRoutes';
+import './paymentCenterStoreRoute';
 
 const membershipPlans = [
   {
