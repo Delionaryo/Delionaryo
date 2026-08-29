@@ -1,6 +1,7 @@
 import './learningLibraryRoutes';
 import './paymentCenterStoreRoute';
 import './verifiedPurchaseClaim';
+import './verifiedBuyerOnboarding';
 
 const membershipPlans = [
   {
