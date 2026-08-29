@@ -4,6 +4,7 @@ import './verifiedPurchaseClaim';
 import './verifiedBuyerOnboarding';
 import './repeatPurchaseUnlock';
 import './publicPageCleanup';
+import './premiumJourneyCampus';
 
 const membershipPlans = [
   {name:'COMMUNITY',price:'₱100',description:'Join the DELIONARYO community for accountability, member discussions, updates and community chat.',features:['Community access','Member discussions','Community chat','Accountability & updates']},
