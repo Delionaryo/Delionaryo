@@ -1,5 +1,5 @@
 const DIGITAL_EBOOK_LIBRARY_URL = 'https://delionaryo-ebook-library.vercel.app/';
-const AI_COMMAND_LIBRARY_URL = 'https://delionaryo-ai.vercel.app/ai-command-library';
+const AI_COMMAND_LIBRARY_URL = 'https://delionaryo-video-uploader.vercel.app/ai-command-library';
 
 function libraryDestination(slug: string | undefined): string | null {
   if (slug === 'digital-ebook-library') return DIGITAL_EBOOK_LIBRARY_URL;
