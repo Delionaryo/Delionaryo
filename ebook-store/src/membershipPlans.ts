@@ -1,3 +1,5 @@
+import './learningLibraryRoutes';
+
 const membershipPlans = [
   {
     name: 'COMMUNITY',
