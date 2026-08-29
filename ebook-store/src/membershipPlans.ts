@@ -1,5 +1,6 @@
 import './learningLibraryRoutes';
 import './paymentCenterStoreRoute';
+import './verifiedPurchaseClaim';
 
 const membershipPlans = [
   {
