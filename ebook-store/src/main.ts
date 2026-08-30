@@ -18,8 +18,15 @@ app.innerHTML = `<main class="min-h-screen bg-stone-950 text-stone-100">
 
 import('./starter99');
 import('./dailyJourney');
-
+import('./delionaryoAICoach');
 const submitBtn=document.querySelector<HTMLButtonElement>('#lead-submit');
+const aiCoachBtn = document.querySelector<HTMLButtonElement>('#ai-coach-btn');
+
+if(aiCoachBtn){
+  aiCoachBtn.addEventListener('click',()=>{
+    window.dispatchEvent(new CustomEvent('open-ai-coach'));
+  });
+}
 if(submitBtn){submitBtn.addEventListener('click',()=>{const nameInput=document.querySelector<HTMLInputElement>('#lead-name');const emailInput=document.querySelector<HTMLInputElement>('#lead-email');const messageEl=document.querySelector<HTMLParagraphElement>('#lead-message');const unlock=document.querySelector<HTMLElement>('#ebook-unlock');if(!nameInput||!emailInput||!messageEl)return;if(!nameInput.value.trim()){nameInput.reportValidity();return}if(!emailInput.checkValidity()){emailInput.reportValidity();return}submitBtn.disabled=true;submitBtn.textContent='SENDING...';messageEl.textContent='Saving your signup...';const xhr=new XMLHttpRequest();xhr.open('POST','https://tordvwlrtwxlbuuzgklt.supabase.co/functions/v1/capture-lead');xhr.setRequestHeader('Content-Type','application/json');xhr.onload=()=>{submitBtn.disabled=false;submitBtn.textContent='GET MY FREE EBOOK';if(xhr.status>=200&&xhr.status<300){messageEl.textContent='Success! Your free eBook is ready below.';messageEl.className='text-sm font-bold text-amber-400';if(unlock)unlock.classList.remove('hidden')}else{messageEl.textContent='Unable to save your signup right now. Please try again.';messageEl.className='text-sm font-bold text-red-400'}};xhr.onerror=()=>{submitBtn.disabled=false;submitBtn.textContent='GET MY FREE EBOOK';messageEl.textContent='Unable to save your signup right now. Please try again.';messageEl.className='text-sm font-bold text-red-400'};xhr.send(JSON.stringify({first_name:nameInput.value.trim(),email:emailInput.value.trim(),source:'delionaryo-ebook-store'}))})}
 
 const paidBuy=document.querySelector<HTMLButtonElement>('#paid-buy');
