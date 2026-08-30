@@ -1,10 +1,12 @@
 import './styles.css';
 import './portal';
+import { mountAICoach } from './delionaryoAICoach';
 const pay = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
 const youtube = 'https://www.youtube.com/channel/UC8tBAhLFySPo7vp9cBUh4fA';
 const tiktok = 'https://www.tiktok.com/@rrl6980?_r=1&_t=ZS-98clQNSR9KH';
 const facebook = 'https://www.facebook.com/Delionaryo09';
 const app = document.querySelector<HTMLDivElement>('#app')!;
+mountAICoach();
 const lessons = [
   { id:'2KNvsRzkrZE', label:'EXCLUSIVE LESSON 01', title:'DELIONARYO Transformation Lesson 1' },
   { id:'0Y22DDoZQu0', label:'EXCLUSIVE LESSON 02', title:'DELIONARYO Transformation Lesson 2' },
