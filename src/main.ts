@@ -1,8 +1,6 @@
 import './styles.css';
 import './portal';
-import('./delionaryoAICoach').then(({ mountAICoach }) => {
-  mountAICoach();
-});
+import('./delionaryoAICoach').then(({ mountAICoach }) 
 const pay = 'https://pm.link/org-X97pkZ9v7uKBjxNAvYsmuL37/ttJb7q0';
 const youtube = 'https://www.youtube.com/channel/UC8tBAhLFySPo7vp9cBUh4fA';
 const tiktok = 'https://www.tiktok.com/@rrl6980?_r=1&_t=ZS-98clQNSR9KH';
