@@ -25,22 +25,35 @@ export async function askDelionaryoCoach(message: string, context = {}) {
 
   return { message, context, remaining: used.data[0].remaining };
 }
-export function mountAICoach(){
-  const app = document.querySelector('#app');
-  if(!app) return;
+
+export function mountAICoach() {
+  if (document.querySelector('#ai-coach-btn')) return;
+
+  const campus = document.querySelector('.member-portal, #member-portal, .journey-command-center, #app');
+  if (!campus) return;
 
   const card = document.createElement('button');
   card.id = 'ai-coach-btn';
-  card.className = 'p-5 rounded-xl bg-amber-400 text-stone-950';
-  card.innerHTML = `
-    🤖 DELIONARYO AI Coach
-    <br/>
-    <small>Personal Money Transformation Guide</small>
-  `;
+  card.type = 'button';
+  card.setAttribute('aria-label', 'Open DELIONARYO AI Coach');
+  card.style.cssText = 'position:fixed;right:22px;bottom:22px;z-index:9999;border:1px solid rgba(251,191,36,.45);border-radius:18px;background:#fbbf24;color:#1c1917;padding:14px 18px;font-weight:900;box-shadow:0 16px 40px rgba(0,0,0,.35);cursor:pointer;text-align:left';
+  card.innerHTML = '<span style="display:block;font-size:14px">✦ DELIONARYO AI COACH</span><small style="display:block;margin-top:3px;font-weight:700">Personal Transformation Guide</small>';
 
-  card.onclick = () => {
+  card.addEventListener('click', () => {
     window.dispatchEvent(new CustomEvent('open-ai-coach'));
-  };
+  });
 
-  app.appendChild(card);
+  document.body.appendChild(card);
+}
+
+function bootAICoach() {
+  mountAICoach();
+  const observer = new MutationObserver(() => mountAICoach());
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootAICoach, { once: true });
+} else {
+  bootAICoach();
 }
