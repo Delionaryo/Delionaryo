@@ -25,3 +25,22 @@ export async function askDelionaryoCoach(message: string, context = {}) {
 
   return { message, context, remaining: used.data[0].remaining };
 }
+export function mountAICoach(){
+  const app = document.querySelector('#app');
+  if(!app) return;
+
+  const card = document.createElement('button');
+  card.id = 'ai-coach-btn';
+  card.className = 'p-5 rounded-xl bg-amber-400 text-stone-950';
+  card.innerHTML = `
+    🤖 DELIONARYO AI Coach
+    <br/>
+    <small>Personal Money Transformation Guide</small>
+  `;
+
+  card.onclick = () => {
+    window.dispatchEvent(new CustomEvent('open-ai-coach'));
+  };
+
+  app.appendChild(card);
+}
