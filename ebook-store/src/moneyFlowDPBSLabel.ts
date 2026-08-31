@@ -23,6 +23,7 @@ function clarifyDPBSAllocation(){
     message.innerHTML=`
       <div class="money-flow-seed-kicker">MONEY FLOW · KINGDOM STEWARDSHIP</div>
       <h2>HUWAG UBUSIN ANG BUNGA. MAGTABI NG BINHI.</h2>
+      <div class="money-flow-header-wisdom"><strong>PLAN DILIGENTLY · PROTECT WITH WISDOM</strong><span>PROVERBS 21:5 · ECCLESIASTES 7:12</span></div>
       <p class="money-flow-seed-lead">Sa DELIONARYO framework, treat your income like a fruit: may bahagi para sa obligations, household needs at protection, at may <strong>seed portion</strong> na pinipreserve para magkaroon ng resources for future responsible multiplication.</p>
       <div class="money-flow-seed-flow"><span>WORK</span><b>→</b><span>FRUIT</span><b>→</b><span>PRESERVE SEED</span><b>→</b><span>PLAN</span><b>→</b><span>SOW</span><b>→</b><span>HARVEST</span><b>→</b><span>MULTIPLY</span></div>
       <div class="money-flow-scriptures">
