@@ -6,7 +6,10 @@ const supabase = createClient(
 );
 
 const SITE_URL = 'https://delionaryo.vercel.app';
+const OFFICIAL_CAMPUS_URL = 'https://delionaryo-learning-campus.vercel.app/';
 let currentUser: any = null;
+
+function goToOfficialCampus(){ window.location.href=OFFICIAL_CAMPUS_URL; }
 
 function initAuth() {
   const headerRow = document.querySelector<HTMLElement>('header > div');
@@ -17,15 +20,15 @@ function initAuth() {
   button.id = 'learning-login-top';
   button.className = 'rounded-xl border border-amber-400 px-4 py-2 text-sm font-black text-amber-400';
   button.textContent = 'LOGIN';
-  button.addEventListener('click', () => currentUser ? openMemberPortal() : openModal('login'));
+  button.addEventListener('click', () => currentUser ? goToOfficialCampus() : openModal('login'));
   headerRow.querySelector('div:last-child')?.appendChild(button);
 
   const section = document.createElement('section');
   section.id = 'my-learning';
   section.className = 'border-y border-amber-500/20 bg-stone-900';
-  section.innerHTML = `<div class="max-w-7xl mx-auto px-5 py-14"><p class="text-amber-400 font-black tracking-widest text-sm">DELIONARYO E-LEARNING HUB</p><div class="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-5"><div><h2 class="text-4xl md:text-5xl font-black">My Learning</h2><p id="learning-copy" class="mt-3 text-stone-400">Login or create an account to access your paid courses.</p></div><div class="flex gap-3"><button id="learning-login" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / REGISTER</button></div></div><div id="learning-grid" class="mt-8 grid md:grid-cols-3 gap-4"><article class="rounded-2xl border border-stone-800 bg-stone-950 p-6"><p class="text-amber-400 font-black text-sm">MEMBER ACCESS</p><h3 class="mt-2 text-xl font-black">Your private learning campus.</h3><p class="mt-2 text-stone-400 text-sm">Paid courses, protected lessons, progress and resources live inside your member portal.</p></article></div></div>`;
+  section.innerHTML = `<div class="max-w-7xl mx-auto px-5 py-14"><p class="text-amber-400 font-black tracking-widest text-sm">DELIONARYO LEARNING CAMPUS</p><div class="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-5"><div><h2 class="text-4xl md:text-5xl font-black">My Learning</h2><p id="learning-copy" class="mt-3 text-stone-400">Login or create an account to access your official Learning Campus.</p></div><div class="flex gap-3"><button id="learning-login" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / REGISTER</button></div></div><div id="learning-grid" class="mt-8 grid md:grid-cols-3 gap-4"><article class="rounded-2xl border border-stone-800 bg-stone-950 p-6"><p class="text-amber-400 font-black text-sm">MEMBER ACCESS</p><h3 class="mt-2 text-xl font-black">One official Learning Campus.</h3><p class="mt-2 text-stone-400 text-sm">Courses, Journey, Nation, AI Coach and financial execution tools are centralized in the official DELIONARYO Learning Campus.</p></article></div></div>`;
   books.parentElement?.insertBefore(section, books);
-  document.querySelector('#learning-login')?.addEventListener('click', () => openModal('login'));
+  document.querySelector('#learning-login')?.addEventListener('click', () => currentUser ? goToOfficialCampus() : openModal('login'));
   createModal();
   boot();
   return true;
@@ -68,7 +71,7 @@ function openModal(mode: 'login'|'register'|'forgot') {
   const message = document.querySelector<HTMLElement>('#auth-message');
   if (message) { message.textContent=''; message.classList.add('hidden'); message.classList.remove('text-red-300','text-emerald-300'); }
   if (mode === 'login') {
-    if(title) title.textContent='Login'; if(help) help.textContent='Enter your email and password to open your private Learning Campus.'; if(submit) submit.textContent='LOGIN';
+    if(title) title.textContent='Login'; if(help) help.textContent='Enter your email and password to continue to the official Learning Campus.'; if(submit) submit.textContent='LOGIN';
     passWrap?.classList.remove('hidden'); confirmWrap?.classList.add('hidden'); if(sw) sw.textContent='Create account'; forgot?.classList.remove('hidden');
   }
   if (mode === 'register') {
@@ -108,13 +111,13 @@ async function submitAuth(e:SubmitEvent){
     if(mode==='register'){
       const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:`${SITE_URL}/`}});
       if(error) return showMessage(error.message);
-      if(data.session){ showMessage('Account created. Opening your Learning Campus…','success'); setTimeout(()=>{closeModal();openMemberPortal();},700); return; }
-      showMessage('Account created. Confirm your email, then return here and login.','success'); return;
+      if(data.session){ showMessage('Account created. Opening the official Learning Campus…','success'); setTimeout(()=>goToOfficialCampus(),700); return; }
+      showMessage('Account created. Confirm your email, then login to enter the Learning Campus.','success'); return;
     }
     const {error}=await supabase.auth.signInWithPassword({email,password});
     if(error)return showMessage(error.message);
-    showMessage('Login successful. Opening your Learning Campus…','success');
-    setTimeout(()=>{closeModal();openMemberPortal();},500);
+    showMessage('Login successful. Opening the official Learning Campus…','success');
+    setTimeout(()=>goToOfficialCampus(),500);
   } catch { showMessage('Unable to connect right now. Please check your internet connection and try again.'); }
   finally { setBusy(false); }
 }
@@ -122,64 +125,20 @@ async function submitAuth(e:SubmitEvent){
 async function openMemberPortal(){
   const {data:{session}} = await supabase.auth.getSession();
   if(!session?.user){ openModal('login'); return; }
-  await renderMemberPortal(session.user);
-}
-
-function courseCard(c:any,index:number,owned:boolean){
-  const title=escapeHtml(c?.title||'DELIONARYO Course');
-  const description=escapeHtml(c?.description||'Continue your transformation journey.');
-  const slug=escapeHtml(c?.slug||'');
-  const badge=owned?'ENROLLED / OWNED':'AVAILABLE PROGRAM';
-  const action=owned?'CONTINUE COURSE':'VIEW PROGRAM';
-  return `<article class="campus-course-card ${owned?'owned-course':'available-course'}"><div class="course-art"><span>${String(index+1).padStart(2,'0')}</span><div><p>${badge}</p><h3>${title}</h3></div></div><div class="course-body"><p>${description}</p>${owned?`<div class="course-progress"><div><span>Course progress</span><b>0%</b></div><div class="course-track"><i style="width:0%"></i></div></div>`:`<div class="course-access-note"><span>LOCKED</span><small>Purchase or enroll to unlock protected lessons.</small></div>`}<button class="course-open ${owned?'':'available-open'}" data-course="${slug}" data-owned="${owned?'1':'0'}">${action} <span>→</span></button></div></article>`;
-}
-
-async function renderMemberPortal(user:any){
-  currentUser = user;
-  document.querySelector('#member-portal')?.remove();
-  document.body.classList.add('member-mode');
-  const firstName=(user.user_metadata?.full_name||user.email?.split('@')[0]||'Learner').split(/[ ._-]/)[0];
-
-  const [{data: enrollments},{data: allCourses}] = await Promise.all([
-    supabase.from('learning_enrollments').select('course_id,status,enrolled_at,learning_courses(id,title,description,slug)').eq('status','active').order('enrolled_at',{ascending:false}),
-    supabase.from('learning_courses').select('id,title,description,slug').order('title',{ascending:true})
-  ]);
-
-  const purchased=(enrollments||[]).map((row:any)=>Array.isArray(row.learning_courses)?row.learning_courses[0]:row.learning_courses).filter(Boolean);
-  const ownedIds=new Set((enrollments||[]).map((r:any)=>String(r.course_id)));
-  const available=(allCourses||[]).filter((c:any)=>!ownedIds.has(String(c.id)));
-  const purchasedCards=purchased.length?purchased.map((c:any,i:number)=>courseCard(c,i,true)).join(''):`<article class="campus-empty"><span class="empty-mark">◇</span><p class="eyebrow">NO PURCHASED COURSE YET</p><h3>Your campus account is ready.</h3><p>Programs you purchase or enroll in will appear here automatically.</p></article>`;
-  const availableCards=available.length?available.map((c:any,i:number)=>courseCard(c,i,false)).join(''):`<article class="campus-empty"><span class="empty-mark">✓</span><p class="eyebrow">ALL AVAILABLE PROGRAMS OWNED</p><h3>You are fully enrolled.</h3><p>New programs will appear here when they are released.</p></article>`;
-
-  const portal=document.createElement('div');
-  portal.id='member-portal';
-  portal.innerHTML=`<div class="campus-shell">
-    <aside class="campus-sidebar"><div><div class="campus-brand"><span>D</span><div><strong>DELIONARYO</strong><small>LEARNING CAMPUS</small></div></div><nav class="campus-nav"><button class="active" data-target="campus-dashboard">⌂ <span>Dashboard</span></button><button data-target="my-purchased-courses">▣ <span>My Courses</span></button><button data-target="available-programs">＋ <span>Available</span></button><button data-target="campus-resources">◫ <span>Resources</span></button><button data-target="campus-progress">✓ <span>Progress</span></button></nav></div><div class="campus-account"><div class="avatar">${escapeHtml(firstName.charAt(0).toUpperCase())}</div><div><strong>${escapeHtml(firstName)}</strong><small>${escapeHtml(user.email||'')}</small></div><button id="campus-logout" title="Logout">↗</button></div></aside>
-    <main class="campus-main" id="campus-dashboard"><header class="campus-topbar"><button id="campus-menu" class="campus-menu">☰</button><div class="mobile-campus-brand">DELIONARYO <span>LEARNING</span></div><div class="campus-top-actions"><span class="secure-pill">● MEMBER ACCESS</span><button id="campus-account-button">${escapeHtml(firstName.charAt(0).toUpperCase())}</button></div></header>
-      <section class="campus-hero"><div class="hero-copy"><p class="eyebrow">PRIVATE LEARNING CAMPUS</p><h1>Welcome back,<br><span>${escapeHtml(firstName)}.</span></h1><p>Your dashboard now separates what you already own from programs still available to you.</p></div><div class="hero-monogram"><span>M</span><small>PERSONAL<br>LEARNING PATH</small></div></section>
-      <section class="campus-stats" id="campus-progress"><article><small>PURCHASED COURSES</small><strong>${purchased.length}</strong><span>Owned and unlocked</span></article><article><small>AVAILABLE PROGRAMS</small><strong>${available.length}</strong><span>Programs you can still enroll in</span></article><article><small>OVERALL PROGRESS</small><strong>0%</strong><span>Across purchased programs</span></article></section>
-      <section class="campus-section" id="my-purchased-courses"><div class="section-heading"><div><p class="eyebrow">MY PURCHASED COURSES</p><h2>Owned & Unlocked</h2></div><span>${purchased.length} owned</span></div><div class="campus-course-grid">${purchasedCards}</div></section>
-      <section class="campus-section" id="available-programs"><div class="section-heading"><div><p class="eyebrow">AVAILABLE PROGRAMS</p><h2>Continue Your Growth</h2></div><span>${available.length} available</span></div><div class="campus-course-grid">${availableCards}</div></section>
-      <section class="campus-section campus-roadmap" id="campus-resources"><div class="section-heading"><div><p class="eyebrow">YOUR TRANSFORMATION PATH</p><h2>Learn → Execute → Measure → Advance</h2></div></div><div class="roadmap-line"><article><i>01</i><h3>Learn</h3><p>Study your unlocked lessons.</p></article><article><i>02</i><h3>Execute</h3><p>Apply the required action.</p></article><article><i>03</i><h3>Measure</h3><p>Track progress and results.</p></article><article><i>04</i><h3>Advance</h3><p>Unlock the next milestone.</p></article></div></section>
-    </main></div>`;
-  document.body.appendChild(portal);
-
-  document.querySelector('#campus-logout')?.addEventListener('click',async()=>{await supabase.auth.signOut();window.location.href='/';});
-  document.querySelector('#campus-menu')?.addEventListener('click',()=>document.querySelector('.campus-sidebar')?.classList.toggle('open'));
-  document.querySelector('#campus-account-button')?.addEventListener('click',()=>document.querySelector('.campus-sidebar')?.classList.toggle('open'));
-  document.querySelectorAll<HTMLElement>('.campus-nav button[data-target]').forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.target;document.querySelector(`#${id}`)?.scrollIntoView({behavior:'smooth'});document.querySelectorAll('.campus-nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelector('.campus-sidebar')?.classList.remove('open');}));
-  document.querySelectorAll<HTMLButtonElement>('.course-open').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.owned==='1'){document.querySelector('#my-purchased-courses')?.scrollIntoView({behavior:'smooth'});}else{portal.remove();document.body.classList.remove('member-mode');document.querySelector('#books')?.scrollIntoView({behavior:'smooth'});}}));
+  goToOfficialCampus();
 }
 
 async function render(user:any){
   currentUser=user;
+  document.querySelector('#member-portal')?.remove();
+  document.body.classList.remove('member-mode');
   const top=document.querySelector<HTMLButtonElement>('#learning-login-top');
   const copy=document.querySelector<HTMLElement>('#learning-copy');
-  if(top) top.textContent=user?'MY LEARNING':'LOGIN';
-  if(copy) copy.textContent=user?'Your account is active. Open your private DELIONARYO Learning Campus.':'Login or create an account to access your paid courses.';
-  if(user){await renderMemberPortal(user);}
+  const entry=document.querySelector<HTMLButtonElement>('#learning-login');
+  if(top) top.textContent=user?'OPEN CAMPUS':'LOGIN';
+  if(entry) entry.textContent=user?'OPEN LEARNING CAMPUS':'LOGIN / REGISTER';
+  if(copy) copy.textContent=user?'Your account is active. Continue in the official DELIONARYO Learning Campus.':'Login or create an account to access the official Learning Campus.';
 }
 
-async function boot(){const {data}=await supabase.auth.getSession();await render(data.session?.user||null);supabase.auth.onAuthStateChange((_e,s)=>{currentUser=s?.user||null;if(!currentUser)document.body.classList.remove('member-mode');});}
-function escapeHtml(value:string){return value.replace(/[&<>'"]/g,(char)=>({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;' }[char]||char));}
+async function boot(){const {data}=await supabase.auth.getSession();await render(data.session?.user||null);supabase.auth.onAuthStateChange((_e,s)=>{currentUser=s?.user||null;render(currentUser);});}
 if(!initAuth()){const observer=new MutationObserver(()=>{if(initAuth())observer.disconnect();});observer.observe(document.documentElement,{childList:true,subtree:true});}
