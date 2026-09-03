@@ -1,229 +1,48 @@
-import { createClient, type User } from '@supabase/supabase-js';
+const CAMPUS='https://delionaryo-learning-campus.vercel.app';
+const LIBRARY='https://delionaryo-ebook-library.vercel.app';
 
-const supabase = createClient(
-  'https://tordvwlrtwxlbuuzgklt.supabase.co',
-  'sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW'
-);
+let initialized=false;
 
-let initialized = false;
-let currentUser: User | null = null;
+function mountPublicMemberGateway(){
+  if(initialized)return true;
+  const navInner=document.querySelector<HTMLElement>('nav > div');
+  const store=document.querySelector<HTMLElement>('#store');
+  if(!navInner||!store)return false;
+  initialized=true;
 
-function shell() {
-  if (initialized) return true;
-  const store = document.querySelector<HTMLElement>('#store');
-  const navInner = document.querySelector<HTMLElement>('nav > div');
-  if (!store || !navInner) return false;
-  initialized = true;
+  const login=document.createElement('a');
+  login.id='learning-account-button';
+  login.href=CAMPUS;
+  login.className='rounded-lg border border-amber-400/50 px-4 py-2 text-sm font-black text-amber-300';
+  login.textContent='LOGIN';
+  login.setAttribute('aria-label','Login to DELIONARYO Learning Campus');
+  navInner.insertBefore(login,navInner.lastElementChild);
 
-  const accountButton = document.createElement('button');
-  accountButton.id = 'learning-account-button';
-  accountButton.className = 'rounded-lg border border-amber-400/50 px-4 py-2 text-sm font-black text-amber-300';
-  accountButton.textContent = 'LOGIN';
-  accountButton.addEventListener('click', () => currentUser ? scrollToLearning() : openAuth('login'));
-  navInner.insertBefore(accountButton, navInner.lastElementChild);
-
-  const section = document.createElement('section');
-  section.id = 'my-learning';
-  section.className = 'border-y border-white/10 bg-stone-900/40';
-  section.innerHTML = `
+  const section=document.createElement('section');
+  section.id='my-learning';
+  section.className='border-y border-white/10 bg-stone-900/40';
+  section.innerHTML=`
     <div class="mx-auto max-w-6xl px-5 py-20">
       <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <p class="text-xs font-black tracking-[.25em] text-amber-400">DELIONARYO E-LEARNING HUB</p>
-          <h2 class="mt-4 text-4xl font-black md:text-5xl">My Learning</h2>
-          <p id="learning-account-copy" class="mt-4 max-w-3xl leading-7 text-stone-400">Login to see the paid courses and lessons available to your account.</p>
+          <p class="text-xs font-black tracking-[.25em] text-amber-400">DELIONARYO MEMBER ACCESS</p>
+          <h2 class="mt-4 text-4xl font-black md:text-5xl">Your learning lives in the Learning Campus.</h2>
+          <p class="mt-4 max-w-3xl leading-7 text-stone-400">The public DELIONARYO app is your gateway. Verified purchases are delivered to the official Learning Campus, where your ebooks, courses, workbooks, journey and last-read progress are kept together.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-          <button id="learning-login" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / REGISTER</button>
-          <button id="learning-logout" class="hidden rounded-xl border border-white/20 px-6 py-3 font-black">LOGOUT</button>
+          <a href="${CAMPUS}" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / OPEN CAMPUS →</a>
+          <a href="${LIBRARY}" class="rounded-xl border border-amber-400/50 px-6 py-3 font-black text-amber-300">BROWSE STORE →</a>
         </div>
       </div>
-      <div id="learning-status" class="mt-8 hidden rounded-2xl border border-white/10 bg-stone-950 p-5 text-sm text-stone-300"></div>
-      <div id="learning-course-grid" class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3"></div>
+      <div class="mt-8 rounded-2xl border border-white/10 bg-stone-950 p-5 text-sm leading-7 text-stone-300">
+        <b class="text-amber-300">OFFICIAL FLOW</b><br>Digital Library → Purchase Verification → Learning Campus Delivery → Read / Continue Reading.
+      </div>
     </div>`;
-  store.parentElement?.insertBefore(section, store);
-
-  document.querySelector<HTMLButtonElement>('#learning-login')?.addEventListener('click', () => openAuth('login'));
-  document.querySelector<HTMLButtonElement>('#learning-logout')?.addEventListener('click', signOut);
-  createModal();
-  bootSession();
+  store.parentElement?.insertBefore(section,store);
   return true;
 }
 
-function scrollToLearning() {
-  document.querySelector('#my-learning')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function createModal() {
-  const modal = document.createElement('div');
-  modal.id = 'learning-auth-modal';
-  modal.className = 'fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-5 backdrop-blur-sm';
-  modal.innerHTML = `
-    <div class="w-full max-w-md rounded-3xl border border-amber-400/20 bg-stone-950 p-7 shadow-2xl">
-      <div class="flex items-start justify-between gap-4">
-        <div><p class="text-xs font-black tracking-[.2em] text-amber-400">DELIONARYO ACCOUNT</p><h2 id="auth-title" class="mt-2 text-3xl font-black">Login</h2></div>
-        <button id="auth-close" class="rounded-lg border border-white/10 px-3 py-2 text-stone-400">✕</button>
-      </div>
-      <form id="auth-form" class="mt-7 space-y-4">
-        <label class="block text-sm font-bold text-stone-300">Email<input id="auth-email" type="email" required autocomplete="email" class="mt-2 w-full rounded-xl border border-white/10 bg-stone-900 px-4 py-3 text-white outline-none focus:border-amber-400" /></label>
-        <label id="auth-password-wrap" class="block text-sm font-bold text-stone-300">Password<input id="auth-password" type="password" minlength="6" autocomplete="current-password" class="mt-2 w-full rounded-xl border border-white/10 bg-stone-900 px-4 py-3 text-white outline-none focus:border-amber-400" /></label>
-        <div id="auth-message" class="hidden rounded-xl border border-white/10 bg-stone-900 p-3 text-sm text-stone-300"></div>
-        <button id="auth-submit" type="submit" class="w-full rounded-xl bg-amber-400 px-5 py-4 font-black text-stone-950">LOGIN</button>
-      </form>
-      <div class="mt-5 flex flex-wrap justify-between gap-3 text-sm font-bold">
-        <button id="auth-switch" class="text-amber-400">Create an account</button>
-        <button id="auth-forgot" class="text-stone-400">Forgot password?</button>
-      </div>
-    </div>`;
-  document.body.appendChild(modal);
-  document.querySelector('#auth-close')?.addEventListener('click', closeAuth);
-  modal.addEventListener('click', (event) => { if (event.target === modal) closeAuth(); });
-  document.querySelector<HTMLButtonElement>('#auth-switch')?.addEventListener('click', () => openAuth(modal.dataset.mode === 'register' ? 'login' : 'register'));
-  document.querySelector<HTMLButtonElement>('#auth-forgot')?.addEventListener('click', () => openAuth('forgot'));
-  document.querySelector<HTMLFormElement>('#auth-form')?.addEventListener('submit', submitAuth);
-}
-
-function openAuth(mode: 'login' | 'register' | 'forgot') {
-  const modal = document.querySelector<HTMLElement>('#learning-auth-modal');
-  if (!modal) return;
-  modal.dataset.mode = mode;
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-  const title = document.querySelector<HTMLElement>('#auth-title');
-  const submit = document.querySelector<HTMLButtonElement>('#auth-submit');
-  const passwordWrap = document.querySelector<HTMLElement>('#auth-password-wrap');
-  const password = document.querySelector<HTMLInputElement>('#auth-password');
-  const switcher = document.querySelector<HTMLButtonElement>('#auth-switch');
-  const forgot = document.querySelector<HTMLButtonElement>('#auth-forgot');
-  const message = document.querySelector<HTMLElement>('#auth-message');
-  if (message) { message.classList.add('hidden'); message.textContent = ''; }
-  if (mode === 'login') {
-    if (title) title.textContent = 'Login';
-    if (submit) submit.textContent = 'LOGIN';
-    passwordWrap?.classList.remove('hidden');
-    if (password) password.required = true;
-    if (switcher) switcher.textContent = 'Create an account';
-    forgot?.classList.remove('hidden');
-  } else if (mode === 'register') {
-    if (title) title.textContent = 'Create Account';
-    if (submit) submit.textContent = 'REGISTER';
-    passwordWrap?.classList.remove('hidden');
-    if (password) password.required = true;
-    if (switcher) switcher.textContent = 'Already have an account? Login';
-    forgot?.classList.add('hidden');
-  } else {
-    if (title) title.textContent = 'Reset Password';
-    if (submit) submit.textContent = 'SEND RESET LINK';
-    passwordWrap?.classList.add('hidden');
-    if (password) password.required = false;
-    if (switcher) switcher.textContent = 'Back to login';
-    forgot?.classList.add('hidden');
-  }
-}
-
-function closeAuth() {
-  const modal = document.querySelector<HTMLElement>('#learning-auth-modal');
-  modal?.classList.add('hidden');
-  modal?.classList.remove('flex');
-}
-
-function authMessage(text: string, isError = false) {
-  const message = document.querySelector<HTMLElement>('#auth-message');
-  if (!message) return;
-  message.textContent = text;
-  message.classList.remove('hidden');
-  message.classList.toggle('text-red-300', isError);
-}
-
-async function submitAuth(event: SubmitEvent) {
-  event.preventDefault();
-  const modal = document.querySelector<HTMLElement>('#learning-auth-modal');
-  const email = document.querySelector<HTMLInputElement>('#auth-email')?.value.trim() || '';
-  const password = document.querySelector<HTMLInputElement>('#auth-password')?.value || '';
-  const mode = modal?.dataset.mode || 'login';
-  if (!email) return;
-  if (mode === 'forgot') {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/` });
-    if (error) return authMessage(error.message, true);
-    authMessage('Password reset link sent. Check your email.');
-    return;
-  }
-  if (mode === 'register') {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) return authMessage(error.message, true);
-    if (!data.session) {
-      authMessage('Account created. Check your email to confirm your account, then login.');
-      return;
-    }
-    closeAuth();
-    return;
-  }
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return authMessage(error.message, true);
-  closeAuth();
-}
-
-async function signOut() {
-  await supabase.auth.signOut();
-}
-
-async function bootSession() {
-  const { data } = await supabase.auth.getSession();
-  await renderUser(data.session?.user ?? null);
-  supabase.auth.onAuthStateChange((_event, session) => { void renderUser(session?.user ?? null); });
-}
-
-async function renderUser(user: User | null) {
-  currentUser = user;
-  const accountButton = document.querySelector<HTMLButtonElement>('#learning-account-button');
-  const loginButton = document.querySelector<HTMLButtonElement>('#learning-login');
-  const logoutButton = document.querySelector<HTMLButtonElement>('#learning-logout');
-  const copy = document.querySelector<HTMLElement>('#learning-account-copy');
-  const grid = document.querySelector<HTMLElement>('#learning-course-grid');
-  const status = document.querySelector<HTMLElement>('#learning-status');
-  if (!grid || !status) return;
-  grid.innerHTML = '';
-  status.classList.add('hidden');
-  if (!user) {
-    if (accountButton) accountButton.textContent = 'LOGIN';
-    loginButton?.classList.remove('hidden');
-    logoutButton?.classList.add('hidden');
-    if (copy) copy.textContent = 'Login to see the paid courses and lessons available to your account.';
-    grid.innerHTML = `<article class="rounded-2xl border border-white/10 bg-stone-950 p-6"><span class="text-xs font-black tracking-widest text-amber-400">MEMBER ACCESS</span><h3 class="mt-3 text-xl font-black">Your courses will appear here.</h3><p class="mt-3 text-sm leading-6 text-stone-400">After a verified purchase or enrollment, the course is connected to your DELIONARYO account.</p></article>`;
-    return;
-  }
-  if (accountButton) accountButton.textContent = 'MY LEARNING';
-  loginButton?.classList.add('hidden');
-  logoutButton?.classList.remove('hidden');
-  if (copy) copy.textContent = `Signed in as ${user.email || 'DELIONARYO learner'}. Your active courses are shown below.`;
-
-  const { data, error } = await supabase
-    .from('learning_enrollments')
-    .select('course_id,status,enrolled_at,learning_courses(title,description,slug)')
-    .eq('status', 'active')
-    .order('enrolled_at', { ascending: false });
-
-  if (error) {
-    status.textContent = 'We could not load your courses right now. Please try again.';
-    status.classList.remove('hidden');
-    return;
-  }
-  if (!data?.length) {
-    grid.innerHTML = `<article class="rounded-2xl border border-amber-400/20 bg-stone-950 p-6"><span class="text-xs font-black tracking-widest text-amber-400">NO ACTIVE COURSE YET</span><h3 class="mt-3 text-xl font-black">Your account is ready.</h3><p class="mt-3 text-sm leading-6 text-stone-400">When a paid course is purchased and verified, it will automatically appear in My Learning.</p><a href="#store" class="mt-5 inline-flex rounded-xl border border-amber-400/50 px-5 py-3 font-black text-amber-300">BROWSE STORE →</a></article>`;
-    return;
-  }
-
-  grid.innerHTML = data.map((row: any) => {
-    const course = Array.isArray(row.learning_courses) ? row.learning_courses[0] : row.learning_courses;
-    return `<article class="rounded-2xl border border-amber-400/20 bg-stone-950 p-6"><span class="text-xs font-black tracking-widest text-amber-400">ACTIVE COURSE</span><h3 class="mt-3 text-xl font-black">${escapeHtml(course?.title || 'DELIONARYO Course')}</h3><p class="mt-3 text-sm leading-6 text-stone-400">${escapeHtml(course?.description || 'Continue your DELIONARYO learning journey.')}</p><button class="mt-5 rounded-xl bg-amber-400 px-5 py-3 font-black text-stone-950" disabled>COURSE ACCESS READY</button></article>`;
-  }).join('');
-}
-
-function escapeHtml(value: string) {
-  return value.replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char] || char));
-}
-
-if (!shell()) {
-  const observer = new MutationObserver(() => { if (shell()) observer.disconnect(); });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+if(!mountPublicMemberGateway()){
+  const observer=new MutationObserver(()=>{if(mountPublicMemberGateway())observer.disconnect()});
+  observer.observe(document.documentElement,{childList:true,subtree:true});
 }
