@@ -1,50 +1,49 @@
 const PAYMENT_CENTER_URL = 'https://delionaryo-payment-center.vercel.app/';
 
-function bindLocalStoreRoute() {
+function removeOldStoreLink() {
   const header = document.querySelector('header');
   if (!header) return;
 
   header.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
-    if (link.textContent?.trim().toUpperCase() !== 'STORE') return;
-    if (link.dataset.localStoreBound === '1') return;
-
-    link.dataset.localStoreBound = '1';
-    link.href = '#books';
-    link.removeAttribute('target');
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const store = document.querySelector<HTMLElement>('#books');
-      if (store) {
-        store.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.replaceState(null, '', '#books');
-      } else {
-        window.location.href = '/#books';
-      }
-    });
+    if (link.dataset.paymentCenterStore === '1') return;
+    if (link.textContent?.trim().toUpperCase() === 'STORE') link.remove();
   });
 }
 
-function ensureLivePaymentButton() {
+function ensureStorePaymentButton() {
   const header = document.querySelector('header');
-  if (!header || header.querySelector('[data-payment-center-live="1"]')) return;
+  if (!header) return;
 
   const nav = header.querySelector('div.flex.items-center.gap-4') || header.querySelector('div.flex.items-center');
   if (!nav) return;
 
-  const live = document.createElement('a');
-  live.dataset.paymentCenterLive = '1';
-  live.href = PAYMENT_CENTER_URL;
-  live.target = '_blank';
-  live.rel = 'noopener noreferrer';
-  live.textContent = 'LIVE';
-  live.setAttribute('aria-label', 'Open DELIONARYO Payment Center');
-  live.className = 'inline-flex items-center justify-center rounded-xl border border-amber-400 px-3 py-2 text-xs font-black tracking-wider text-amber-400 hover:bg-amber-400 hover:text-stone-950 transition';
-  nav.appendChild(live);
+  const existingLive = header.querySelector<HTMLAnchorElement>('[data-payment-center-live="1"]');
+  if (existingLive) {
+    existingLive.dataset.paymentCenterStore = '1';
+    delete existingLive.dataset.paymentCenterLive;
+    existingLive.href = PAYMENT_CENTER_URL;
+    existingLive.target = '_blank';
+    existingLive.rel = 'noopener noreferrer';
+    existingLive.textContent = 'STORE';
+    existingLive.setAttribute('aria-label', 'Open DELIONARYO Store and Payment Center');
+    return;
+  }
+
+  if (header.querySelector('[data-payment-center-store="1"]')) return;
+  const store = document.createElement('a');
+  store.dataset.paymentCenterStore = '1';
+  store.href = PAYMENT_CENTER_URL;
+  store.target = '_blank';
+  store.rel = 'noopener noreferrer';
+  store.textContent = 'STORE';
+  store.setAttribute('aria-label', 'Open DELIONARYO Store and Payment Center');
+  store.className = 'inline-flex items-center justify-center rounded-xl border border-amber-400 px-3 py-2 text-xs font-black tracking-wider text-amber-400 hover:bg-amber-400 hover:text-stone-950 transition';
+  nav.appendChild(store);
 }
 
 function refreshHeaderRoutes() {
-  bindLocalStoreRoute();
-  ensureLivePaymentButton();
+  ensureStorePaymentButton();
+  removeOldStoreLink();
 }
 
 const headerRouteObserver = new MutationObserver(refreshHeaderRoutes);
