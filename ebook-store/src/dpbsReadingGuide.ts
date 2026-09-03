@@ -1,3 +1,4 @@
+import './distinctAppRoutes';
 const GUIDE_ID='dpbs-reading-guide';
 function mountGuide(){
   const view=document.querySelector<HTMLElement>('#dpbs-private-view');
