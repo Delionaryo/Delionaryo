@@ -1,22 +1,29 @@
-const PAYMENT_CENTER_URL = 'https://delionaryo-payment-center.vercel.app/';
-
-function bindPaymentCenterStoreRoute() {
+function bindLocalStoreRoute() {
   const header = document.querySelector('header');
   if (!header) return;
 
-  header.querySelectorAll<HTMLAnchorElement>('a[href="#books"]').forEach((link) => {
-    if (link.dataset.paymentCenterBound === '1') return;
-    link.dataset.paymentCenterBound = '1';
-    link.href = PAYMENT_CENTER_URL;
+  header.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
+    if (link.textContent?.trim().toUpperCase() !== 'STORE') return;
+    if (link.dataset.localStoreBound === '1') return;
+
+    link.dataset.localStoreBound = '1';
+    link.href = '#books';
+    link.removeAttribute('target');
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      window.location.href = PAYMENT_CENTER_URL;
+      const store = document.querySelector<HTMLElement>('#books');
+      if (store) {
+        store.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#books');
+      } else {
+        window.location.href = '/#books';
+      }
     });
   });
 }
 
-const paymentCenterStoreObserver = new MutationObserver(bindPaymentCenterStoreRoute);
-paymentCenterStoreObserver.observe(document.documentElement, { childList: true, subtree: true });
-bindPaymentCenterStoreRoute();
+const localStoreObserver = new MutationObserver(bindLocalStoreRoute);
+localStoreObserver.observe(document.documentElement, { childList: true, subtree: true });
+bindLocalStoreRoute();
 
 export {};
