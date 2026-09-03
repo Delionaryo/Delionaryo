@@ -1,0 +1,29 @@
+type Root = { id:number; poverty:string; wealth:string; question:string; action:string };
+
+const roots:Root[]=[
+{id:1,poverty:'Resource Insufficiency & Income Fragility',wealth:'Earning Capacity & Value Creation',question:'How reliably does your current income protect essential needs without repeated emergency borrowing or support?',action:'Build an earning-capacity plan: identify one useful skill or value offer and one realistic income pathway to strengthen over the next 30–90 days.'},
+{id:2,poverty:'Financial Capability & Information Gap',wealth:'Financial Intelligence & Decision Quality',question:'How confidently can you track cash flow, understand debt/costs, evaluate business economics, and test financial claims before deciding?',action:'Complete money-flow and financial-intelligence learning, then demonstrate the calculations using your own real numbers.'},
+{id:3,poverty:'Resource Leakage & Weak Control Systems',wealth:'Resource Control & Productive Allocation',question:'How consistently are incoming resources tracked, allocated to priorities, protected from avoidable leakage, and reviewed?',action:'Establish a weekly money-flow review, priority allocation rules, and a sustainable productive-resource discipline where feasible.'},
+{id:4,poverty:'Capability-to-Market & Opportunity Constraint',wealth:'Opportunity Access & Enterprise Execution',question:'How effectively can you connect your skills or offers to employers, customers, marketplaces, tools, networks, or other legitimate opportunities?',action:'Choose one execution channel and produce real market evidence through applications, offers, customer conversations, product/service listings, or equivalent activity.'},
+{id:5,poverty:'Behavioral, Psychological & Execution Friction',wealth:'Agency, Discipline & Adaptive Execution',question:'How consistently do you follow through on realistic financial actions, manage triggers, review mistakes, and correct your next decision?',action:'Use a weekly execution tracker and one simple decision rule. Record completion, obstacles, and corrections instead of relying on motivation.'},
+{id:6,poverty:'Protection, Social-System & Stewardship Fragility',wealth:'Resilience, Stewardship & Legacy Capacity',question:'How well is your progress protected against shocks, fraud, harmful obligations, weak records, household misalignment, and other foreseeable risks?',action:'Identify the most serious vulnerability and complete one protection or mitigation action, then document the remaining risk.'}
+];
+
+const key='delionaryo-layer1-root-assessment';
+const scale=['Severe constraint / no system','High constraint / rarely demonstrated','Developing / inconsistent','Functional / usually demonstrated','Strong / consistently demonstrated'];
+
+export function mountRootTransformation(){
+ const host=document.querySelector<HTMLElement>('#root-transformation'); if(!host)return;
+ const saved=JSON.parse(localStorage.getItem(key)||'{}') as Record<string,number>;
+ host.innerHTML=`<div class="root-shell"><p class="root-kicker">GRADUATION · LAYER 1</p><h2>Root Transformation</h2><p class="root-lead">Survival → Stability Foundation. This educational assessment identifies constraints; it is not a credit score, clinical test, or judgment of character.</p><div class="root-flow">Baseline → Diagnose → Build Wealth Roots → Execute → Evidence → Reassess → Graduate</div><div class="root-list">${roots.map(r=>`<article class="root-card"><div class="root-number">0${r.id}</div><div><p class="root-label">POVERTY ROOT</p><h3>${r.poverty}</h3><p class="root-arrow">→ ${r.wealth}</p><p>${r.question}</p><div class="root-scale" data-root="${r.id}">${scale.map((s,i)=>`<button type="button" data-score="${i}" class="${saved[r.id]===i?'selected':''}"><b>${i}</b><span>${s}</span></button>`).join('')}</div></div></article>`).join('')}</div><button id="root-result" class="root-result-btn">VIEW MY ROOT PROFILE →</button><div id="root-profile"></div><p class="root-note">Scores are diagnostic signals only. Structural constraints, essential needs, health, family responsibilities, access, and local conditions must be considered before prescribing action.</p></div>`;
+ host.querySelectorAll<HTMLButtonElement>('[data-score]').forEach(btn=>btn.addEventListener('click',()=>{const wrap=btn.closest<HTMLElement>('[data-root]')!;wrap.querySelectorAll('button').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');saved[wrap.dataset.root!]=Number(btn.dataset.score);localStorage.setItem(key,JSON.stringify(saved));}));
+ host.querySelector<HTMLButtonElement>('#root-result')?.addEventListener('click',()=>renderProfile(host,saved));
+}
+
+function renderProfile(host:HTMLElement,scores:Record<string,number>){
+ const profile=host.querySelector<HTMLElement>('#root-profile')!;
+ if(roots.some(r=>scores[r.id]===undefined)){profile.innerHTML='<div class="root-profile warning"><b>Complete all six roots first.</b><p>Each root needs a baseline response before a priority can be identified.</p></div>';return;}
+ const ranked=[...roots].sort((a,b)=>scores[a.id]-scores[b.id]); const p=ranked[0]; const avg=roots.reduce((n,r)=>n+scores[r.id],0)/roots.length;
+ profile.innerHTML=`<div class="root-profile"><p class="root-label">BASELINE ROOT PROFILE</p><h3>Priority signal: ${p.poverty}</h3><p><b>Wealth root to develop:</b> ${p.wealth}</p><p>${p.action}</p><div class="root-score-grid">${roots.map(r=>`<div><span>Root ${r.id}</span><b>${scores[r.id]}/4</b></div>`).join('')}</div><p><b>Baseline average:</b> ${avg.toFixed(1)}/4</p><p class="root-note">Priority is a first-pass signal only. In the full graduation system, urgency, essential-stability impact, dependency, structural barriers, and feasibility will also determine intervention order.</p></div>`;
+ profile.scrollIntoView({behavior:'smooth',block:'center'});
+}
