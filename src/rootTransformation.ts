@@ -1,3 +1,4 @@
+import './rootTransformation.css';
 type Root = { id:number; poverty:string; wealth:string; question:string; action:string; campus:string; tool:string };
 type Evidence = { note?:string; completed?:boolean; updatedAt?:string };
 
