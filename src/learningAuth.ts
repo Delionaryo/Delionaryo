@@ -1,3 +1,5 @@
+import './rootGraduationCloudSync';
+
 const CAMPUS='https://delionaryo-learning-campus.vercel.app';
 const LIBRARY='https://delionaryo-ebook-library.vercel.app';
 
