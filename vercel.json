@@ -6,5 +6,11 @@
       "destination": "https://hub.gapcreation.space",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/start",
+      "destination": "https://rodelrobleslegaspi.systeme.io/4db06933"
+    }
   ]
 }
