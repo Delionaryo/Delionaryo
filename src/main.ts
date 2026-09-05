@@ -1,5 +1,8 @@
 import './styles.css';
 import './portal';
+import './watchEarn';
+import './watchEarnDraftEditor';
+import './watchEarnOwner';
 import { mountCampus } from './campus';
 import { mountRootTransformation } from './rootTransformation';
 import('./delionaryoAICoach').then(({ mountAICoach }) => mountAICoach());

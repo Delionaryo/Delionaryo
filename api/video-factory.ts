@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ success: false, error: 'Method not allowed. Use POST.' });
   }
 
-  const webhookUrl = process.env.N8N_VIDEO_FACTORY_WEBHOOK_URL;
+  const webhookUrl = (globalThis as any).process?.env?.N8N_VIDEO_FACTORY_WEBHOOK_URL;
   if (!webhookUrl) {
     return res.status(500).json({
       success: false,
