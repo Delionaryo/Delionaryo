@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/login",
+      "destination": "https://hub.gapcreation.space",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/start",
