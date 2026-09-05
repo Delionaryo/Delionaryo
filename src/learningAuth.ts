@@ -1,6 +1,6 @@
 import './rootGraduationCloudSync';
 
-const HUB='https://hub.gapcreation.space';
+const LOGIN_ROUTE='/login';
 const CAMPUS='https://campus.gapcreation.space';
 const LIBRARY='https://library.gapcreation.space';
 
@@ -15,7 +15,7 @@ function mountPublicMemberGateway(){
 
   const login=document.createElement('a');
   login.id='learning-account-button';
-  login.href=HUB;
+  login.href=LOGIN_ROUTE;
   login.className='rounded-lg border border-amber-400/50 px-4 py-2 text-sm font-black text-amber-300';
   login.textContent='LOGIN';
   login.setAttribute('aria-label','Login to DELIONARYO member hub');
@@ -33,7 +33,7 @@ function mountPublicMemberGateway(){
           <p class="mt-4 max-w-3xl leading-7 text-stone-400">The public DELIONARYO app is your front door. Members enter the Integration Hub, then continue to the Learning Campus, Marketplace, Wallet, Library, Nation and other connected applications.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-          <a href="${HUB}" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / OPEN HUB →</a>
+          <a href="${LOGIN_ROUTE}" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / OPEN HUB →</a>
           <a href="${LIBRARY}" class="rounded-xl border border-amber-400/50 px-6 py-3 font-black text-amber-300">BROWSE STORE →</a>
         </div>
       </div>
