@@ -9,8 +9,24 @@
   ],
   "rewrites": [
     {
+      "source": "/start/manifest.webmanifest",
+      "destination": "/api/start-manifest"
+    },
+    {
+      "source": "/start/sw.js",
+      "destination": "/api/start-sw"
+    },
+    {
+      "source": "/start/icon.png",
+      "destination": "https://raw.githubusercontent.com/Delionaryo/Delionaryo/main/public/start/ChatGPT%20Image%20Sep%206%2C%202026%2C%2004_07_56%20PM.png"
+    },
+    {
+      "source": "/start/",
+      "destination": "/api/start-app"
+    },
+    {
       "source": "/start",
-      "destination": "/api/start"
+      "destination": "/api/start-app"
     }
   ]
 }
