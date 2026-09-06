@@ -2,7 +2,7 @@ const campus=document.createElement('section');
 campus.id='campus';
 campus.className='campus-shell';
 
-const learningCampus='https://delionaryo-learning-campus.vercel.app';
+const learningCampus='https://campus.gapcreation.space';
 const digitalLibrary='https://delionaryo-ebook-library.vercel.app';
 const marketplace='https://delionaryo-marketplace.vercel.app';
 const businessCalculator='https://delionaryo-business-calculator.vercel.app';
