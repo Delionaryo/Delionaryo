@@ -36,10 +36,11 @@ export default async function handler(req:any,res:any){
 </script>`;
     html=html.replace('</head>',pwaHead+'\n</head>').replace('</body>',pwaBoot+'\n</body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
-    res.setHeader('Cache-Control','public, max-age=120, s-maxage=300');
+    res.setHeader('Cache-Control','no-store, max-age=0');
     res.status(upstream.ok?200:upstream.status).send(html);
   }catch(error:any){
     res.setHeader('Content-Type','text/plain; charset=utf-8');
+    res.setHeader('Cache-Control','no-store, max-age=0');
     res.status(500).send(error?.message||'Unable to load DELIONARYO Start');
   }
 }
