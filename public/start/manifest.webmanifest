@@ -1,0 +1,37 @@
+{
+  "name": "DELIONARYO Start",
+  "short_name": "DELIONARYO",
+  "description": "Official public entry point to the DELIONARYO ecosystem.",
+  "id": "/start/",
+  "start_url": "/start/",
+  "scope": "/start/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#071015",
+  "theme_color": "#071015",
+  "icons": [
+    {
+      "src": "/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Public App",
+      "short_name": "Public App",
+      "url": "https://app.gapcreation.space/"
+    },
+    {
+      "name": "Store",
+      "short_name": "Store",
+      "url": "https://app.gapcreation.space/#store"
+    },
+    {
+      "name": "Member Portal",
+      "short_name": "Member Portal",
+      "url": "https://hub.gapcreation.space/"
+    }
+  ]
+}
