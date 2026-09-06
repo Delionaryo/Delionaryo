@@ -5,6 +5,16 @@
       "source": "/login",
       "destination": "https://hub.gapcreation.space",
       "permanent": false
+    },
+    {
+      "source": "/share",
+      "destination": "/start?source=meta-share-v2",
+      "permanent": false
+    },
+    {
+      "source": "/install",
+      "destination": "/start?source=install-v2",
+      "permanent": false
     }
   ],
   "rewrites": [
@@ -19,6 +29,10 @@
     {
       "source": "/start/icon.png",
       "destination": "https://raw.githubusercontent.com/Delionaryo/Delionaryo/main/public/start/ChatGPT%20Image%20Sep%206%2C%202026%2C%2004_07_56%20PM.png"
+    },
+    {
+      "source": "/start/index.html",
+      "destination": "/api/start-app"
     },
     {
       "source": "/start/",
