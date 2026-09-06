@@ -9,6 +9,18 @@
   ],
   "rewrites": [
     {
+      "source": "/open",
+      "destination": "/api/meta-gateway"
+    },
+    {
+      "source": "/fb",
+      "destination": "/api/meta-gateway"
+    },
+    {
+      "source": "/messenger",
+      "destination": "/api/meta-gateway"
+    },
+    {
       "source": "/delionaryo-app",
       "destination": "/api/start-app"
     },
