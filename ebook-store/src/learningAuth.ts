@@ -5,11 +5,13 @@ const supabase = createClient(
   'sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW'
 );
 
-const SITE_URL = 'https://delionaryo.vercel.app';
-const OFFICIAL_CAMPUS_URL = 'https://delionaryo-learning-campus.vercel.app/';
+const SITE_URL = 'https://app.gapcreation.space';
+const PUBLIC_CAMPUS_URL = 'https://campus.gapcreation.space/';
+const MEMBER_CAMPUS_URL = 'https://campus.gapcreation.space/?member=1';
 let currentUser: any = null;
 
-function goToOfficialCampus(){ window.location.href=OFFICIAL_CAMPUS_URL; }
+function goToPublicCampus(){ window.location.href=PUBLIC_CAMPUS_URL; }
+function goToMemberCampus(){ window.location.href=MEMBER_CAMPUS_URL; }
 
 function initAuth() {
   const headerRow = document.querySelector<HTMLElement>('header > div');
@@ -19,16 +21,16 @@ function initAuth() {
   const button = document.createElement('button');
   button.id = 'learning-login-top';
   button.className = 'rounded-xl border border-amber-400 px-4 py-2 text-sm font-black text-amber-400';
-  button.textContent = 'LOGIN';
-  button.addEventListener('click', () => currentUser ? goToOfficialCampus() : openModal('login'));
+  button.textContent = 'OPEN CAMPUS';
+  button.addEventListener('click', goToPublicCampus);
   headerRow.querySelector('div:last-child')?.appendChild(button);
 
   const section = document.createElement('section');
   section.id = 'my-learning';
   section.className = 'border-y border-amber-500/20 bg-stone-900';
-  section.innerHTML = `<div class="max-w-7xl mx-auto px-5 py-14"><p class="text-amber-400 font-black tracking-widest text-sm">DELIONARYO LEARNING CAMPUS</p><div class="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-5"><div><h2 class="text-4xl md:text-5xl font-black">My Learning</h2><p id="learning-copy" class="mt-3 text-stone-400">Login or create an account to access your official Learning Campus.</p></div><div class="flex gap-3"><button id="learning-login" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">LOGIN / REGISTER</button></div></div><div id="learning-grid" class="mt-8 grid md:grid-cols-3 gap-4"><article class="rounded-2xl border border-stone-800 bg-stone-950 p-6"><p class="text-amber-400 font-black text-sm">MEMBER ACCESS</p><h3 class="mt-2 text-xl font-black">One official Learning Campus.</h3><p class="mt-2 text-stone-400 text-sm">Courses, Journey, Nation, AI Coach and financial execution tools are centralized in the official DELIONARYO Learning Campus.</p></article></div></div>`;
+  section.innerHTML = `<div class="max-w-7xl mx-auto px-5 py-14"><p class="text-amber-400 font-black tracking-widest text-sm">DELIONARYO MEMBER LEARNING</p><div class="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-5"><div><h2 class="text-4xl md:text-5xl font-black">My Learning Access</h2><p id="learning-copy" class="mt-3 text-stone-400">The public Campus is open to everyone. Sign in only to access your purchased learning, saved progress and private member tools.</p></div><div class="flex gap-3"><button id="learning-login" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">MY LEARNING ACCESS</button></div></div><div id="learning-grid" class="mt-8 grid md:grid-cols-3 gap-4"><article class="rounded-2xl border border-stone-800 bg-stone-950 p-6"><p class="text-amber-400 font-black text-sm">PRIVATE MEMBER ACCESS</p><h3 class="mt-2 text-xl font-black">Your owned learning stays protected.</h3><p class="mt-2 text-stone-400 text-sm">Purchased courses, ebooks, workbooks, progress and member records open only through authenticated learning access.</p></article></div></div>`;
   books.parentElement?.insertBefore(section, books);
-  document.querySelector('#learning-login')?.addEventListener('click', () => currentUser ? goToOfficialCampus() : openModal('login'));
+  document.querySelector('#learning-login')?.addEventListener('click', () => currentUser ? goToMemberCampus() : openModal('login'));
   createModal();
   boot();
   return true;
@@ -71,11 +73,11 @@ function openModal(mode: 'login'|'register'|'forgot') {
   const message = document.querySelector<HTMLElement>('#auth-message');
   if (message) { message.textContent=''; message.classList.add('hidden'); message.classList.remove('text-red-300','text-emerald-300'); }
   if (mode === 'login') {
-    if(title) title.textContent='Login'; if(help) help.textContent='Enter your email and password to continue to the official Learning Campus.'; if(submit) submit.textContent='LOGIN';
+    if(title) title.textContent='Login'; if(help) help.textContent='Sign in to open your private learning access. The public Campus does not require login.'; if(submit) submit.textContent='LOGIN';
     passWrap?.classList.remove('hidden'); confirmWrap?.classList.add('hidden'); if(sw) sw.textContent='Create account'; forgot?.classList.remove('hidden');
   }
   if (mode === 'register') {
-    if(title) title.textContent='Create Account'; if(help) help.textContent='Create your secure learner account. Your purchases and progress will be connected to this email.'; if(submit) submit.textContent='CREATE MY ACCOUNT';
+    if(title) title.textContent='Create Account'; if(help) help.textContent='Create your secure learner account. Your verified purchases and progress will be connected to this email.'; if(submit) submit.textContent='CREATE MY ACCOUNT';
     passWrap?.classList.remove('hidden'); confirmWrap?.classList.remove('hidden'); if(sw) sw.textContent='Already registered? Login'; forgot?.classList.add('hidden');
   }
   if (mode === 'forgot') {
@@ -111,13 +113,13 @@ async function submitAuth(e:SubmitEvent){
     if(mode==='register'){
       const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:`${SITE_URL}/`}});
       if(error) return showMessage(error.message);
-      if(data.session){ showMessage('Account created. Opening the official Learning Campus…','success'); setTimeout(()=>goToOfficialCampus(),700); return; }
-      showMessage('Account created. Confirm your email, then login to enter the Learning Campus.','success'); return;
+      if(data.session){ showMessage('Account created. Opening My Learning Access…','success'); setTimeout(()=>goToMemberCampus(),700); return; }
+      showMessage('Account created. Confirm your email, then login to open My Learning Access.','success'); return;
     }
     const {error}=await supabase.auth.signInWithPassword({email,password});
     if(error)return showMessage(error.message);
-    showMessage('Login successful. Opening the official Learning Campus…','success');
-    setTimeout(()=>goToOfficialCampus(),500);
+    showMessage('Login successful. Opening My Learning Access…','success');
+    setTimeout(()=>goToMemberCampus(),500);
   } catch { showMessage('Unable to connect right now. Please check your internet connection and try again.'); }
   finally { setBusy(false); }
 }
@@ -125,7 +127,7 @@ async function submitAuth(e:SubmitEvent){
 async function openMemberPortal(){
   const {data:{session}} = await supabase.auth.getSession();
   if(!session?.user){ openModal('login'); return; }
-  goToOfficialCampus();
+  goToMemberCampus();
 }
 
 async function render(user:any){
@@ -135,9 +137,9 @@ async function render(user:any){
   const top=document.querySelector<HTMLButtonElement>('#learning-login-top');
   const copy=document.querySelector<HTMLElement>('#learning-copy');
   const entry=document.querySelector<HTMLButtonElement>('#learning-login');
-  if(top) top.textContent=user?'OPEN CAMPUS':'LOGIN';
-  if(entry) entry.textContent=user?'OPEN LEARNING CAMPUS':'LOGIN / REGISTER';
-  if(copy) copy.textContent=user?'Your account is active. Continue in the official DELIONARYO Learning Campus.':'Login or create an account to access the official Learning Campus.';
+  if(top) top.textContent='OPEN CAMPUS';
+  if(entry) entry.textContent=user?'OPEN MY LEARNING ACCESS':'MY LEARNING ACCESS';
+  if(copy) copy.textContent=user?'Your member session is active. Open your purchased learning and saved progress.':'The public Campus is open without login. Sign in only for purchased learning and private progress.';
 }
 
 async function boot(){const {data}=await supabase.auth.getSession();await render(data.session?.user||null);supabase.auth.onAuthStateChange((_e,s)=>{currentUser=s?.user||null;render(currentUser);});}
