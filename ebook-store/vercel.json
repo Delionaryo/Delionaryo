@@ -5,19 +5,25 @@
       "source": "/login",
       "destination": "https://hub.gapcreation.space",
       "permanent": false
-    },
-    {
-      "source": "/share",
-      "destination": "/start?source=meta-share-v2",
-      "permanent": false
-    },
-    {
-      "source": "/install",
-      "destination": "/start?source=install-v2",
-      "permanent": false
     }
   ],
   "rewrites": [
+    {
+      "source": "/delionaryo-app",
+      "destination": "/api/start-app"
+    },
+    {
+      "source": "/open-delionaryo",
+      "destination": "/api/start-app"
+    },
+    {
+      "source": "/share",
+      "destination": "/api/start-app"
+    },
+    {
+      "source": "/install",
+      "destination": "/api/start-app"
+    },
     {
       "source": "/start/manifest.webmanifest",
       "destination": "/api/start-manifest"
