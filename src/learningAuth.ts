@@ -17,7 +17,7 @@ function mountPublicMemberGateway(){
   login.href=LOGIN_ROUTE;
   login.className='rounded-lg border border-amber-400/50 px-4 py-2 text-sm font-black text-amber-300';
   login.textContent='MEMBER LOGIN';
-  login.setAttribute('aria-label','Login to DELIONARYO Integration Hub');
+  login.setAttribute('aria-label','Login to DELIONARYO Member Portal');
   navInner.insertBefore(login,navInner.lastElementChild);
 
   const section=document.createElement('section');
@@ -27,17 +27,17 @@ function mountPublicMemberGateway(){
     <div class="mx-auto max-w-6xl px-5 py-20">
       <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <p class="text-xs font-black tracking-[.25em] text-amber-400">PRIVATE APP ACCESS</p>
-          <h2 class="mt-4 text-4xl font-black md:text-5xl">Purchase one product to unlock your DELIONARYO member portal.</h2>
-          <p class="mt-4 max-w-3xl leading-7 text-stone-400">New members first purchase at least one DELIONARYO product from the public Store. After payment is verified, use the 6-digit activation code to create your account in the Integration Hub. The Hub is the portal to the private DELIONARYO apps.</p>
+          <p class="text-xs font-black tracking-[.25em] text-amber-400">MEMBER ACCOUNT ACCESS</p>
+          <h2 class="mt-4 text-4xl font-black md:text-5xl">Create your DELIONARYO account for free.</h2>
+          <p class="mt-4 max-w-3xl leading-7 text-stone-400">No activation code is required. Install or open the public DELIONARYO app, create your account, and continue learning. When you purchase a product, verified purchases are connected automatically to the same account. Paid and private content remains protected by ownership and eligibility.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-          <a href="${STORE_ROUTE}" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">GO TO STORE →</a>
-          <a href="${LOGIN_ROUTE}" class="rounded-xl border border-amber-400/50 px-6 py-3 font-black text-amber-300">I HAVE A CODE / MEMBER LOGIN →</a>
+          <a href="${LOGIN_ROUTE}" class="rounded-xl bg-amber-400 px-6 py-3 font-black text-stone-950">CREATE ACCOUNT / LOGIN →</a>
+          <a href="${STORE_ROUTE}" class="rounded-xl border border-amber-400/50 px-6 py-3 font-black text-amber-300">GO TO STORE →</a>
         </div>
       </div>
       <div class="mt-8 rounded-2xl border border-white/10 bg-stone-950 p-5 text-sm leading-7 text-stone-300">
-        <b class="text-amber-300">OFFICIAL ACCESS FLOW</b><br>Landing Page → Public DELIONARYO App → Store → Purchase 1 Product → Receive 6-Digit Activation Code → Create Account / Sign In at Integration Hub → Private DELIONARYO Apps.
+        <b class="text-amber-300">OFFICIAL ACCESS FLOW</b><br>Landing Page → Install / Open Public DELIONARYO App → Create Free Account → Learn / Explore Store → Verified Purchases Connect Automatically → Member Portal & Eligible Private Apps.
       </div>
     </div>`;
   store.parentElement?.insertBefore(section,store);
