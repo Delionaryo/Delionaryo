@@ -23,7 +23,7 @@ export default function handler(_req:any,res:any){
 <h1>Learn. Apply.<br><span>Build. Steward.</span></h1>
 <p class="lead">DELIONARYO is a connected transformation ecosystem built to help people move from financial survival into understanding, disciplined action, income creation, multiplication and responsible stewardship.</p>
 <p class="mission">Be One in a Million. <span>Graduate From Poverty.</span></p>
-<div class="actions"><a class="primary" href="https://app.gapcreation.space/">ENTER DELIONARYO →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
+<div class="actions"><a class="primary" href="https://app.gapcreation.space/">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
 </div>
 <aside class="panel"><small>OFFICIAL ACCESS FLOW</small><h2>Free install. Free account. Protected ownership.</h2><div class="flow">
 <div class="step"><div class="num">1</div><div><b>Install or Open DELIONARYO</b><span>The public app is free to install and explore.</span></div></div>
@@ -94,7 +94,7 @@ export default function handler(_req:any,res:any){
 <div class="kicker">START THE JOURNEY</div>
 <h2>From Mind to Steward starts with one step.</h2>
 <p>Install or open the public DELIONARYO App and create your account for free. No activation code is required. Learn the system, explore the Store and unlock owned content automatically after verified purchases.</p>
-<div class="actions" style="justify-content:center"><a class="primary" href="https://app.gapcreation.space/">ENTER DELIONARYO →</a><a class="secondary" href="https://app.gapcreation.space/#store">GO TO STORE →</a><a class="secondary" href="https://app.gapcreation.space/login">MEMBER LOGIN →</a></div>
+<div class="actions" style="justify-content:center"><a class="primary" href="https://app.gapcreation.space/">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="https://app.gapcreation.space/#store">GO TO STORE →</a><a class="secondary" href="https://app.gapcreation.space/login">MEMBER LOGIN →</a></div>
 </section>
 </main>
 <footer class="footer"><span>© 2026 DELIONARYO</span><span>Education → Execution → Transformation → Stewardship</span></footer>
