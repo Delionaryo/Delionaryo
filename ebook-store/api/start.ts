@@ -25,12 +25,12 @@ export default function handler(_req:any,res:any){
 <p class="mission">Be One in a Million. <span>Graduate From Poverty.</span></p>
 <div class="actions"><a class="primary" href="https://app.gapcreation.space/">ENTER DELIONARYO →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
 </div>
-<aside class="panel"><small>OFFICIAL MEMBER ACCESS FLOW</small><h2>Public first. Private after verified purchase.</h2><div class="flow">
-<div class="step"><div class="num">1</div><div><b>Enter the Public DELIONARYO App</b><span>Explore the public learning and transformation environment.</span></div></div>
-<div class="step"><div class="num">2</div><div><b>Purchase 1 Product</b><span>Choose one DELIONARYO product from the Store.</span></div></div>
-<div class="step"><div class="num">3</div><div><b>Receive Your Activation Code</b><span>After payment verification, receive your 6-digit activation code.</span></div></div>
-<div class="step"><div class="num">4</div><div><b>Create Your Hub Account</b><span>Use the code to create your DELIONARYO member account.</span></div></div>
-<div class="step"><div class="num">5</div><div><b>Enter the Private Ecosystem</b><span>The Integration Hub becomes your portal to the connected private apps.</span></div></div>
+<aside class="panel"><small>OFFICIAL ACCESS FLOW</small><h2>Free install. Free account. Protected ownership.</h2><div class="flow">
+<div class="step"><div class="num">1</div><div><b>Install or Open DELIONARYO</b><span>The public app is free to install and explore.</span></div></div>
+<div class="step"><div class="num">2</div><div><b>Create Your Free Account</b><span>Register with your identity details, email and password. No activation code is required.</span></div></div>
+<div class="step"><div class="num">3</div><div><b>Learn and Explore</b><span>Use public learning and browse DELIONARYO products and services.</span></div></div>
+<div class="step"><div class="num">4</div><div><b>Purchase When Ready</b><span>Verified purchases connect automatically to the same DELIONARYO account.</span></div></div>
+<div class="step"><div class="num">5</div><div><b>Open Your Member Access</b><span>Your owned learning, progress and eligible private tools stay protected inside the member ecosystem.</span></div></div>
 </div></aside>
 </section>
 
@@ -93,7 +93,7 @@ export default function handler(_req:any,res:any){
 <section class="cta">
 <div class="kicker">START THE JOURNEY</div>
 <h2>From Mind to Steward starts with one step.</h2>
-<p>Enter the public DELIONARYO App. Learn the system, explore the Store and begin the official path into the private member ecosystem.</p>
+<p>Install or open the public DELIONARYO App and create your account for free. No activation code is required. Learn the system, explore the Store and unlock owned content automatically after verified purchases.</p>
 <div class="actions" style="justify-content:center"><a class="primary" href="https://app.gapcreation.space/">ENTER DELIONARYO →</a><a class="secondary" href="https://app.gapcreation.space/#store">GO TO STORE →</a><a class="secondary" href="https://app.gapcreation.space/login">MEMBER LOGIN →</a></div>
 </section>
 </main>
