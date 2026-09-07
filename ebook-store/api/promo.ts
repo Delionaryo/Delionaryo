@@ -27,13 +27,11 @@ export default function handler(_req:any,res:any){
     <p class="sub">The product, price and checkout destination are verified from the DELIONARYO system before you continue.</p>
     <div class="price" id="productPrice">PHP --</div>
     <div class="priceNote">Official DELIONARYO price. Affiliates cannot change the checkout amount.</div>
-
     <div class="steps">
       <div class="step"><div class="num">1</div><div><b>Review the official product</b><span>Confirm the product name and price shown on this page.</span></div></div>
       <div class="step"><div class="num">2</div><div><b>Continue to secure checkout</b><span>You will be transferred to pay.gapcreation.space for payment submission.</span></div></div>
       <div class="step"><div class="num">3</div><div><b>Payment verification</b><span>DELIONARYO verifies the submitted payment before product access is released.</span></div></div>
     </div>
-
     <a class="cta" id="checkoutBtn" href="#" aria-disabled="true">CONTINUE TO SECURE CHECKOUT</a>
     <div class="error" id="errorBox"></div>
     <div class="safe"><b>Anti-phishing reminder:</b> DELIONARYO will never ask for your GCash MPIN or GCash OTP on this promotion page or the official payment page. Check the domain before continuing.</div>

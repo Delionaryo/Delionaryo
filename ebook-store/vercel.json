@@ -37,6 +37,10 @@
       "destination": "/api/start-app"
     },
     {
+      "source": "/promo",
+      "destination": "/api/promo"
+    },
+    {
       "source": "/start/manifest.webmanifest",
       "destination": "/api/start-manifest"
     },
