@@ -15,7 +15,7 @@ export default function handler(_req:any,res:any){
 </head>
 <body>
 <div class="wrap">
-<nav class="nav"><div class="brand"><span class="mark">D</span><span>DELIONARYO</span></div><a href="https://app.gapcreation.space/login">MEMBER LOGIN</a></nav>
+<nav class="nav"><div class="brand"><span class="mark">D</span><span>DELIONARYO</span></div><a href="https://hub.gapcreation.space/">MEMBER LOGIN</a></nav>
 <main>
 <section class="hero">
 <div>
@@ -23,14 +23,13 @@ export default function handler(_req:any,res:any){
 <h1>Learn. Apply.<br><span>Build. Steward.</span></h1>
 <p class="lead">DELIONARYO is a connected transformation ecosystem built to help people move from financial survival into understanding, disciplined action, income creation, multiplication and responsible stewardship.</p>
 <p class="mission">Be One in a Million. <span>Graduate From Poverty.</span></p>
-<div class="actions"><a class="primary" href="https://app.gapcreation.space/">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
+<div class="actions"><a class="primary" href="https://hub.gapcreation.space/?signup=1">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
 </div>
-<aside class="panel"><small>OFFICIAL ACCESS FLOW</small><h2>Free install. Free account. Protected ownership.</h2><div class="flow">
-<div class="step"><div class="num">1</div><div><b>Install or Open DELIONARYO</b><span>The public app is free to install and explore.</span></div></div>
-<div class="step"><div class="num">2</div><div><b>Create Your Free Account</b><span>Register with your identity details, email and password. No activation code is required.</span></div></div>
-<div class="step"><div class="num">3</div><div><b>Learn and Explore</b><span>Use public learning and browse DELIONARYO products and services.</span></div></div>
-<div class="step"><div class="num">4</div><div><b>Purchase When Ready</b><span>Verified purchases connect automatically to the same DELIONARYO account.</span></div></div>
-<div class="step"><div class="num">5</div><div><b>Open Your Member Access</b><span>Your owned learning, progress and eligible private tools stay protected inside the member ecosystem.</span></div></div>
+<aside class="panel"><small>OFFICIAL ACCESS FLOW</small><h2>Free account. One Hub. Protected ownership.</h2><div class="flow">
+<div class="step"><div class="num">1</div><div><b>Create Your Free Account</b><span>Tap the button and register directly in the DELIONARYO Hub. No activation code is required.</span></div></div>
+<div class="step"><div class="num">2</div><div><b>Enter Your Member Hub</b><span>Your Hub is the single gateway to the connected DELIONARYO ecosystem.</span></div></div>
+<div class="step"><div class="num">3</div><div><b>Open Learning Campus</b><span>Your free eBook is already available there under Your Free eBook.</span></div></div>
+<div class="step"><div class="num">4</div><div><b>Grow Your Access</b><span>Verified purchases connect automatically to the same account and unlock eligible paid content and features.</span></div></div>
 </div></aside>
 </section>
 
@@ -63,7 +62,7 @@ export default function handler(_req:any,res:any){
 <section class="section">
 <div class="kicker">LEARN · EXECUTE · MEASURE · GROW</div>
 <h2>A system that gives the learner somewhere to go next.</h2>
-<p class="intro">Learning Campus provides the education. Financial tools help diagnose and plan. DPBS supports resource control and multiplication. Marketplace provides a place to execute. Wallet records movement. Tracker provides evidence. The Hub connects the private ecosystem into one member portal.</p>
+<p class="intro">Learning Campus provides the education. Financial tools help diagnose and plan. DPBS supports resource control and multiplication. Marketplace provides a place to execute. Wallet records movement. Tracker provides evidence. The Hub connects the ecosystem into one member portal.</p>
 <div class="grid">
 <article class="card"><b>Learn</b><p>Understand the principles and the reason behind each financial decision.</p></article>
 <article class="card"><b>Execute</b><p>Apply the lesson through selling, earning, building, promoting and managing real resources.</p></article>
@@ -92,9 +91,9 @@ export default function handler(_req:any,res:any){
 
 <section class="cta">
 <div class="kicker">START THE JOURNEY</div>
-<h2>From Mind to Steward starts with one step.</h2>
-<p>Install or open the public DELIONARYO App and create your account for free. No activation code is required. Learn the system, explore the Store and unlock owned content automatically after verified purchases.</p>
-<div class="actions" style="justify-content:center"><a class="primary" href="https://app.gapcreation.space/">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="https://app.gapcreation.space/#store">GO TO STORE →</a><a class="secondary" href="https://app.gapcreation.space/login">MEMBER LOGIN →</a></div>
+<h2>From Mind to Steward starts with one account.</h2>
+<p>Create your free DELIONARYO account directly in the Hub. From there, open the Learning Campus and access Your Free eBook. Verified purchases will connect automatically to the same member account.</p>
+<div class="actions" style="justify-content:center"><a class="primary" href="https://hub.gapcreation.space/?signup=1">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="https://hub.gapcreation.space/">MEMBER LOGIN →</a></div>
 </section>
 </main>
 <footer class="footer"><span>© 2026 DELIONARYO</span><span>Education → Execution → Transformation → Stewardship</span></footer>
