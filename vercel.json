@@ -11,10 +11,6 @@
     {
       "source": "/start",
       "destination": "/api/start"
-    },
-    {
-      "source": "/promo",
-      "destination": "/api/promo"
     }
   ]
 }
