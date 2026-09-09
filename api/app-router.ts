@@ -3,7 +3,8 @@ const APPS: Record<string, string> = {
   campus: 'https://delionaryo-learning-campus.vercel.app',
   marketplace: 'https://delionaryo-marketplace.vercel.app',
   wallet: 'https://delionaryo-wallet.vercel.app',
-  income: 'https://delionaryo-income-generator.vercel.app',
+  income: 'https://income.gapcreation.space',
+  approver: 'https://income.gapcreation.space/pending-approver-v4',
   payment: 'https://delionaryo-payment-center.vercel.app',
   nation: 'https://delionaryo-nation.vercel.app',
   dpbs: 'https://delionaryo-dpbs.vercel.app',
@@ -17,6 +18,17 @@ const APPS: Record<string, string> = {
   ai: 'https://delionaryo-ai.vercel.app'
 };
 
+const CORE_SYSTEM = {
+  locked: true,
+  version: 1,
+  roles: {
+    income: 'Owner command, settlement, treasury and system control',
+    approver: 'Independent pending verification and approval control',
+    wallet: 'Authenticated member value, consent and execution layer'
+  },
+  rule: 'No value release bypass: owner/system approval and member-side execution remain separate where two-party control is required.'
+};
+
 export default function handler(req: any, res: any) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   const key = String(req.query?.to || '').trim().toLowerCase();
@@ -25,7 +37,8 @@ export default function handler(req: any, res: any) {
     return res.status(200).json({
       ok: true,
       service: 'DELIONARYO Integration Hub',
-      version: 1,
+      version: 2,
+      core: CORE_SYSTEM,
       routes: Object.keys(APPS)
     });
   }
