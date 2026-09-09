@@ -84,7 +84,17 @@ export default function handler(_req:any,res:any){
   var btn=document.getElementById('startCreateBtn');
   var msg=document.getElementById('startAccountMsg');
   function setMsg(text,type){msg.textContent=text||'';msg.className='formMsg '+(type||'');}
-  function mobile(value){var raw=String(value||'').trim();var digits=raw.replace(/\D/g,'');if(/^09\d{9}$/.test(digits))return '+63'+digits.slice(1);if(/^9\d{9}$/.test(digits))return '+63'+digits;if(/^63\d{10}$/.test(digits))return '+'+digits;if(raw.charAt(0)==='+'&&/^[1-9]\d{7,14}$/.test(digits))return '+'+digits;return '';}
+  function mobile(value){
+    var raw=String(value||'').trim();
+    var chars=raw.split('');
+    var digits='';
+    for(var i=0;i<chars.length;i++){if(chars[i]>='0'&&chars[i]<='9')digits+=chars[i];}
+    if(digits.length===11&&digits.slice(0,2)==='09')return '+63'+digits.slice(1);
+    if(digits.length===10&&digits.charAt(0)==='9')return '+63'+digits;
+    if(digits.length===12&&digits.slice(0,2)==='63')return '+'+digits;
+    if(raw.charAt(0)==='+'&&digits.length>=8&&digits.length<=15&&digits.charAt(0)!=='0')return '+'+digits;
+    return '';
+  }
   async function captureLead(firstName,email){
     var q=new URLSearchParams(location.search);var campaign=q.get('utm_campaign')||q.get('campaign')||'';var src=q.get('utm_source')||'delionaryo-start';var source=campaign?src+':'+campaign:src;
     var r=await fetch(SUPABASE+'/functions/v1/capture-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({first_name:firstName,email:email,source:source})});
@@ -106,8 +116,8 @@ export default function handler(_req:any,res:any){
     if(password!==confirm)return setMsg('Passwords do not match.','error');
     btn.disabled=true;btn.textContent='CREATING ACCOUNT…';
     try{
-      var full=(first+' '+last).replace(/\s+/g,' ').trim();
-      var signup=await fetch(SUPABASE+'/auth/v1/signup',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({email:email,password:password,data:{first_name:first,last_name:last,full_name:full,phone:phone,registration_source:'app.gapcreation.space/start',registration_version:5,buyer_source:'free-account'}})});
+      var full=(first+' '+last).trim();
+      var signup=await fetch(SUPABASE+'/auth/v1/signup',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({email:email,password:password,data:{first_name:first,last_name:last,full_name:full,phone:phone,registration_source:'app.gapcreation.space/start',registration_version:6,buyer_source:'free-account'}})});
       var payload={};try{payload=await signup.json();}catch(_e){}
       if(!signup.ok)throw new Error(payload.msg||payload.message||payload.error_description||'Unable to create account.');
       try{await captureLead(first,email);}catch(syncError){console.error(syncError);}
