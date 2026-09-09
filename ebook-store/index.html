@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="delionaryo-build" content="public-live-payment-center-button">
+    <meta name="delionaryo-build" content="start-page-account-capture">
     <title>DELIONARYO · From Mind to Steward</title>
     <link rel="stylesheet" href="./src/styles.css">
     <style>
@@ -20,5 +20,21 @@
     <script type="module" src="./src/expenseTrackerStewardship.ts"></script>
     <script type="module" src="./src/financialToolFormFix.ts"></script>
     <script type="module" src="./src/campusSidebarScroll.ts"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded',()=>{
+        const oldButton=document.getElementById('lead-submit');
+        const form=oldButton?.closest('form');
+        if(!form)return;
+        form.innerHTML=`
+          <div class="rounded-2xl border border-amber-500/30 bg-amber-400/10 p-5">
+            <p class="font-black text-amber-300">Account creation has moved to DELIONARYO Start.</p>
+            <p class="mt-2 text-sm leading-6 text-stone-400">For security and a cleaner member flow, registration and DELIONARYO educational nurturing now begin only from the official Start Page.</p>
+            <button id="open-start-registration" type="button" class="mt-4 w-full rounded-xl bg-amber-400 px-6 py-4 font-black text-stone-950 hover:bg-amber-300 transition">CREATE FREE ACCOUNT →</button>
+          </div>`;
+        document.getElementById('open-start-registration')?.addEventListener('click',()=>{
+          window.location.href='https://app.gapcreation.space/start#create-account';
+        });
+      });
+    </script>
 </body>
 </html>
