@@ -1,6 +1,6 @@
 export default function handler(_req:any,res:any){
   res.setHeader('Content-Type','text/html; charset=utf-8');
-  res.setHeader('Cache-Control','public, max-age=300, s-maxage=600');
+  res.setHeader('Cache-Control','no-store, max-age=0');
   res.status(200).send(`<!doctype html>
 <html lang="en">
 <head>
@@ -8,14 +8,21 @@ export default function handler(_req:any,res:any){
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="theme-color" content="#071015"/>
 <title>DELIONARYO — From Mind to Steward</title>
-<meta name="description" content="DELIONARYO is a connected financial-transformation ecosystem that moves people from learning to execution, growth and stewardship."/>
+<meta name="description" content="Official DELIONARYO public entry and account creation page."/>
+<link rel="manifest" href="/start/manifest.webmanifest" />
+<link rel="icon" type="image/png" href="/start/icon.png" />
+<link rel="apple-touch-icon" href="/start/icon.png" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="DELIONARYO" />
 <style>
-:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#071015;color:#f7f4ec;--gold:#d9aa3c;--muted:#aebdc0;--card:#0b171c;--line:rgba(255,255,255,.08)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,rgba(217,170,60,.13),transparent 35rem),linear-gradient(180deg,#071015,#08141a 55%,#050b0e)}a{text-decoration:none}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:12px}.brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.15em}.mark{width:44px;height:44px;border:1px solid #b68a31;border-radius:14px;display:grid;place-items:center;color:#e0b75c;font-size:22px}.nav a{color:#f7f4ec;font-weight:850;border:1px solid rgba(217,170,60,.35);padding:11px 15px;border-radius:11px}.hero{padding:72px 0 54px;display:grid;grid-template-columns:1.12fr .88fr;gap:28px;align-items:center}.eyebrow,.kicker{color:var(--gold);font-weight:900;letter-spacing:.2em;font-size:12px}.hero h1{font-size:clamp(48px,8vw,86px);line-height:.94;letter-spacing:-.045em;margin:18px 0}.hero h1 span{color:var(--gold)}.lead{font-size:clamp(18px,2.4vw,23px);line-height:1.65;color:#c4ced0;max-width:760px}.mission{font-size:clamp(20px,3vw,30px);font-weight:900;line-height:1.2;margin:22px 0 0}.mission span{color:var(--gold)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.primary,.secondary{display:inline-block;padding:15px 20px;border-radius:13px;font-weight:950}.primary{background:var(--gold);color:#0e1215}.secondary{border:1px solid rgba(217,170,60,.45);color:#f4d99e}.panel{border:1px solid rgba(217,170,60,.28);background:rgba(9,24,29,.82);border-radius:24px;padding:24px;box-shadow:0 26px 70px rgba(0,0,0,.28)}.panel small{color:var(--gold);font-weight:900;letter-spacing:.15em}.panel h2{margin:10px 0 16px;font-size:27px}.flow{display:grid;gap:10px}.step{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;padding:12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.num{width:34px;height:34px;border-radius:10px;background:#112126;color:var(--gold);display:grid;place-items:center;font-weight:950}.step b{display:block}.step span{display:block;color:#96a7aa;font-size:14px;margin-top:3px;line-height:1.5}.section{padding:56px 0}.section+.section{border-top:1px solid var(--line)}.section h2{font-size:clamp(32px,5vw,52px);margin:8px 0 12px;letter-spacing:-.025em}.section .intro{color:var(--muted);line-height:1.75;font-size:18px;max-width:860px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}.card{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:21px}.card b{font-size:19px}.card p{margin:9px 0 0;color:#9eafb2;font-size:15px;line-height:1.65}.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}.journey .stage{border:1px solid rgba(217,170,60,.18);background:linear-gradient(180deg,rgba(217,170,60,.07),rgba(255,255,255,.02));border-radius:16px;padding:18px}.stage strong{display:block;color:var(--gold);font-size:14px;letter-spacing:.08em}.stage b{display:block;font-size:20px;margin-top:7px}.stage p{color:#9eafb2;line-height:1.55;font-size:14px}.principles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px}.principle{border:1px solid var(--line);border-radius:16px;padding:18px;background:#0a151a}.principle strong{font-size:29px;color:var(--gold);display:block}.principle b{display:block;margin-top:6px}.principle span{display:block;color:#94a6a9;font-size:13px;margin-top:4px;line-height:1.45}.notice{border:1px solid rgba(217,170,60,.28);background:rgba(217,170,60,.055);border-radius:18px;padding:20px;color:#cbd4d5;line-height:1.65;margin-top:26px}.cta{padding:62px 0;text-align:center}.cta h2{font-size:clamp(34px,6vw,58px);margin:8px auto 14px;max-width:850px}.cta p{color:#aebdc0;line-height:1.7;max-width:760px;margin:0 auto 24px}.footer{border-top:1px solid var(--line);padding:26px 0 34px;color:#809195;font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}@media(max-width:900px){.hero{grid-template-columns:1fr}.journey{grid-template-columns:repeat(2,1fr)}.principles{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.hero{padding-top:40px}.grid,.journey,.principles{grid-template-columns:1fr}.nav{align-items:flex-start}.brand{letter-spacing:.08em}.nav a{font-size:12px;padding:10px 12px}.hero h1{font-size:clamp(46px,14vw,68px)}.section{padding:44px 0}}
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#071015;color:#f7f4ec;--gold:#d9aa3c;--muted:#aebdc0;--card:#0b171c;--line:rgba(255,255,255,.08)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,rgba(217,170,60,.13),transparent 35rem),linear-gradient(180deg,#071015,#08141a 55%,#050b0e)}a{text-decoration:none}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:12px}.brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.15em}.mark{width:44px;height:44px;border:1px solid #b68a31;border-radius:14px;overflow:hidden;display:grid;place-items:center}.mark img{width:100%;height:100%;object-fit:cover;display:block}.navActions{display:flex;align-items:center;gap:9px;justify-content:flex-end;flex-wrap:wrap}.nav a,.installAppBtn{color:#f7f4ec;font-weight:850;border:1px solid rgba(217,170,60,.35);padding:11px 15px;border-radius:11px;background:transparent;font:inherit;cursor:pointer}.installAppBtn{background:var(--gold);color:#0e1215;border-color:var(--gold)}.hero{padding:60px 0 42px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}.eyebrow,.kicker{color:var(--gold);font-weight:900;letter-spacing:.2em;font-size:12px}.hero h1{font-size:clamp(48px,8vw,86px);line-height:.94;letter-spacing:-.045em;margin:18px 0}.hero h1 span{color:var(--gold)}.lead{font-size:clamp(18px,2.4vw,23px);line-height:1.65;color:#c4ced0;max-width:760px}.mission{font-size:clamp(20px,3vw,30px);font-weight:900;line-height:1.2;margin:22px 0 0}.mission span{color:var(--gold)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.primary,.secondary{display:inline-block;padding:15px 20px;border-radius:13px;font-weight:950;border:0;cursor:pointer;font:inherit}.primary{background:var(--gold);color:#0e1215}.secondary{border:1px solid rgba(217,170,60,.45);color:#f4d99e;background:transparent}.panel{border:1px solid rgba(217,170,60,.28);background:rgba(9,24,29,.82);border-radius:24px;padding:24px;box-shadow:0 26px 70px rgba(0,0,0,.28)}.panel small{color:var(--gold);font-weight:900;letter-spacing:.15em}.panel h2{margin:10px 0 16px;font-size:27px}.flow{display:grid;gap:10px}.step{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;padding:12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.num{width:34px;height:34px;border-radius:10px;background:#112126;color:var(--gold);display:grid;place-items:center;font-weight:950}.step b{display:block}.step span{display:block;color:#96a7aa;font-size:14px;margin-top:3px;line-height:1.5}.register{padding:20px 0 58px}.registerShell{display:grid;grid-template-columns:.88fr 1.12fr;gap:22px;align-items:start;border:1px solid rgba(217,170,60,.28);background:#0a171c;border-radius:24px;padding:24px}.registerInfo h2{font-size:clamp(32px,5vw,48px);margin:8px 0 12px}.registerInfo p{color:var(--muted);line-height:1.7}.registerInfo strong{color:var(--gold)}.accountForm{display:grid;gap:12px;background:#071015;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px}.field{display:grid;gap:7px}.field span{font-size:12px;font-weight:900;color:#cbd5d8}.field input{width:100%;border:1px solid rgba(255,255,255,.13);background:#0d1c21;color:#fff;border-radius:12px;padding:14px 13px;font:inherit;outline:none}.field input:focus{border-color:var(--gold)}.formNote{margin:0;color:#8da0a4;font-size:12px;line-height:1.55}.formMsg{min-height:20px;margin:0;font-size:13px;font-weight:800;color:#9fb0b3}.formMsg.error{color:#ff8f8f}.formMsg.success{color:#f2cf7b}.accountForm button{width:100%}.accountForm button:disabled{opacity:.65;cursor:wait}.section{padding:56px 0}.section+.section{border-top:1px solid var(--line)}.section h2{font-size:clamp(32px,5vw,52px);margin:8px 0 12px;letter-spacing:-.025em}.section .intro{color:var(--muted);line-height:1.75;font-size:18px;max-width:860px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}.card{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:21px}.card b{font-size:19px}.card p{margin:9px 0 0;color:#9eafb2;font-size:15px;line-height:1.65}.notice{border:1px solid rgba(217,170,60,.28);background:rgba(217,170,60,.055);border-radius:18px;padding:20px;color:#cbd4d5;line-height:1.65;margin-top:26px}.footer{border-top:1px solid var(--line);padding:26px 0 34px;color:#809195;font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}@media(max-width:900px){.hero,.registerShell{grid-template-columns:1fr}}@media(max-width:700px){.hero{padding-top:38px}.grid{grid-template-columns:1fr}.nav{align-items:flex-start}.brand{letter-spacing:.08em}.nav a,.installAppBtn{font-size:12px;padding:10px 12px}.hero h1{font-size:clamp(46px,14vw,68px)}.section{padding:44px 0}.registerShell{padding:17px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<nav class="nav"><div class="brand"><span class="mark">D</span><span>DELIONARYO</span></div><a href="https://hub.gapcreation.space/">MEMBER LOGIN</a></nav>
+<nav class="nav"><div class="brand"><span class="mark"><img src="/start/icon.png" alt="DELIONARYO"></span><span>DELIONARYO</span></div><div class="navActions"><button id="installApp" class="installAppBtn" type="button">INSTALL APP</button><a href="https://hub.gapcreation.space/">MEMBER LOGIN</a></div></nav>
 <main>
 <section class="hero">
 <div>
@@ -23,81 +30,104 @@ export default function handler(_req:any,res:any){
 <h1>Learn. Apply.<br><span>Build. Steward.</span></h1>
 <p class="lead">DELIONARYO is a connected transformation ecosystem built to help people move from financial survival into understanding, disciplined action, income creation, multiplication and responsible stewardship.</p>
 <p class="mission">Be One in a Million. <span>Graduate From Poverty.</span></p>
-<div class="actions"><a class="primary" href="https://hub.gapcreation.space/?signup=1">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
+<div class="actions"><a class="primary" href="#create-account">CREATE FREE ACCOUNT →</a><a class="secondary" href="#ecosystem">EXPLORE THE ECOSYSTEM</a></div>
 </div>
-<aside class="panel"><small>OFFICIAL ACCESS FLOW</small><h2>Free account. One Hub. Protected ownership.</h2><div class="flow">
-<div class="step"><div class="num">1</div><div><b>Create Your Free Account</b><span>Tap the button and register directly in the DELIONARYO Hub. No activation code is required.</span></div></div>
-<div class="step"><div class="num">2</div><div><b>Enter Your Member Hub</b><span>Your Hub is the single gateway to the connected DELIONARYO ecosystem.</span></div></div>
-<div class="step"><div class="num">3</div><div><b>Open Learning Campus</b><span>Your free eBook is already available there under Your Free eBook.</span></div></div>
-<div class="step"><div class="num">4</div><div><b>Grow Your Access</b><span>Verified purchases connect automatically to the same account and unlock eligible paid content and features.</span></div></div>
+<aside class="panel"><small>OFFICIAL ACCESS FLOW</small><h2>One public registration point.</h2><div class="flow">
+<div class="step"><div class="num">1</div><div><b>Create Account Here</b><span>DELIONARYO Start is now the official public account-registration page.</span></div></div>
+<div class="step"><div class="num">2</div><div><b>Lead & Nurturing Connection</b><span>Your new registration is recorded in DELIONARYO and sent to the educational nurturing flow.</span></div></div>
+<div class="step"><div class="num">3</div><div><b>Member Login</b><span>The Hub is for member sign-in and private ecosystem access.</span></div></div>
+<div class="step"><div class="num">4</div><div><b>Learn & Grow</b><span>Open Campus, use the tools, and unlock eligible paid content after verified purchases.</span></div></div>
 </div></aside>
+</section>
+
+<section id="create-account" class="register">
+<div class="registerShell">
+<div class="registerInfo">
+<div class="kicker">OFFICIAL ACCOUNT CREATION</div>
+<h2>Create your DELIONARYO account.</h2>
+<p>This Start Page is now the single public registration point. Your <strong>mobile number is the primary identity</strong>. Your email is used for login, account communication and DELIONARYO educational nurturing.</p>
+<p>Already registered? <a href="https://hub.gapcreation.space/" style="color:#f2cf7b;font-weight:900">Go to Member Login →</a></p>
+</div>
+<form id="startAccountForm" class="accountForm" novalidate>
+<label class="field"><span>FIRST NAME</span><input id="startFirstName" maxlength="80" autocomplete="given-name" required placeholder="First name"></label>
+<label class="field"><span>SURNAME</span><input id="startLastName" maxlength="80" autocomplete="family-name" required placeholder="Surname"></label>
+<label class="field"><span>MOBILE NUMBER · PRIMARY IDENTITY</span><input id="startMobile" type="tel" inputmode="tel" maxlength="18" autocomplete="tel" required placeholder="09XXXXXXXXX"></label>
+<label class="field"><span>EMAIL ADDRESS</span><input id="startEmail" type="email" maxlength="320" autocomplete="email" required placeholder="you@example.com"></label>
+<label class="field"><span>CREATE PASSWORD</span><input id="startPassword" type="password" minlength="6" autocomplete="new-password" required placeholder="At least 6 characters"></label>
+<label class="field"><span>CONFIRM PASSWORD</span><input id="startConfirm" type="password" minlength="6" autocomplete="new-password" required placeholder="Repeat password"></label>
+<p class="formNote">By creating an account, you may receive DELIONARYO account, learning and educational messages. Marketing emails include an unsubscribe option.</p>
+<button id="startCreateBtn" class="primary" type="submit">CREATE FREE ACCOUNT →</button>
+<p id="startAccountMsg" class="formMsg" role="status" aria-live="polite"></p>
+</form>
+</div>
 </section>
 
 <section class="section" id="ecosystem">
 <div class="kicker">THE DELIONARYO ECOSYSTEM</div>
 <h2>Education must lead to execution.</h2>
-<p class="intro">DELIONARYO is not designed to stop at information. The system connects learning, financial diagnostics, resource control, marketplace execution, measurement and community so a member has a practical path after learning.</p>
+<p class="intro">DELIONARYO connects learning, financial diagnostics, resource control, marketplace execution, measurement and community so a member has a practical path after learning.</p>
 <div class="grid">
-<article class="card"><b>Money Transformation</b><p>Build the foundation from Mind to Steward: truth, commitment, disciplined execution, results and responsible stewardship.</p></article>
-<article class="card"><b>Learning Campus</b><p>Turn principles into structured lessons, guided application and continuing financial transformation.</p></article>
-<article class="card"><b>Financial Tools</b><p>Use diagnostics, calculators, trackers and guided systems to understand money flow and make better decisions.</p></article>
-<article class="card"><b>DPBS</b><p>Build controlled resources for multiplication and financial sovereignty instead of leaving resources without direction.</p></article>
-<article class="card"><b>Marketplace Execution</b><p>Apply what you learn through real selling, promotion, service and economic activity inside the ecosystem.</p></article>
-<article class="card"><b>DELIONARYO Nation</b><p>Connect with members, communicate, learn together and build a community around transformation and stewardship.</p></article>
+<article class="card"><b>Learning Campus</b><p>Turn principles into structured lessons and guided application.</p></article>
+<article class="card"><b>Financial Tools</b><p>Use diagnostics, calculators and trackers to understand money flow and make better decisions.</p></article>
+<article class="card"><b>Marketplace Execution</b><p>Apply what you learn through real selling, promotion, service and economic activity.</p></article>
 </div>
-</section>
-
-<section class="section">
-<div class="kicker">THE TRANSFORMATION JOURNEY</div>
-<h2>From survival to stewardship.</h2>
-<p class="intro">The goal is not simply to know more about money. The goal is to transform the way a person thinks, acts, measures progress and manages resources until learning becomes real financial capability.</p>
-<div class="journey">
-<div class="stage"><strong>STAGE 01</strong><b>Survival</b><p>Recognize the financial reality, money patterns and root problems that keep resources unstable.</p></div>
-<div class="stage"><strong>STAGE 02</strong><b>Stability</b><p>Build control, discipline, structure and dependable money-flow habits.</p></div>
-<div class="stage"><strong>STAGE 03</strong><b>Growth</b><p>Create, earn, sell, promote and multiply resources through practical execution.</p></div>
-<div class="stage"><strong>STAGE 04</strong><b>Stewardship</b><p>Use resources with purpose, responsibility, measurement and long-term direction.</p></div>
-</div>
-</section>
-
-<section class="section">
-<div class="kicker">LEARN · EXECUTE · MEASURE · GROW</div>
-<h2>A system that gives the learner somewhere to go next.</h2>
-<p class="intro">Learning Campus provides the education. Financial tools help diagnose and plan. DPBS supports resource control and multiplication. Marketplace provides a place to execute. Wallet records movement. Tracker provides evidence. The Hub connects the ecosystem into one member portal.</p>
-<div class="grid">
-<article class="card"><b>Learn</b><p>Understand the principles and the reason behind each financial decision.</p></article>
-<article class="card"><b>Execute</b><p>Apply the lesson through selling, earning, building, promoting and managing real resources.</p></article>
-<article class="card"><b>Measure</b><p>Use records, balances, transaction history and tracking to see actual evidence of progress.</p></article>
-</div>
-</section>
-
-<section class="section">
-<div class="kicker">D.E.L.I.O. CORE PRINCIPLES</div>
-<h2>Transformation requires character, not information alone.</h2>
-<div class="principles">
-<div class="principle"><strong>D</strong><b>Discipline</b><span>Do what must be done consistently.</span></div>
-<div class="principle"><strong>E</strong><b>Excellence</b><span>Raise the quality of thinking and execution.</span></div>
-<div class="principle"><strong>L</strong><b>Leadership</b><span>Take responsibility and create direction.</span></div>
-<div class="principle"><strong>I</strong><b>Integrity</b><span>Build trust through truthful stewardship.</span></div>
-<div class="principle"><strong>O</strong><b>Obedience</b><span>Follow sound principles even before results appear.</span></div>
-</div>
-</section>
-
-<section class="section">
-<div class="kicker">THE MISSION</div>
-<h2>Help 1,000,000 people move toward financial transformation.</h2>
-<p class="intro">DELIONARYO exists to create a practical bridge from education to execution. The mission is bigger than a lesson, an ebook or an app. It is a connected path where a person can learn, apply, build, earn, measure, grow and steward.</p>
-<div class="notice"><b>Financial education notice:</b> DELIONARYO provides educational tools, learning frameworks and ecosystem utilities. It does not guarantee income, profit, investment returns or financial outcomes. Results depend on each member's decisions, effort, circumstances and responsible use of the system.</div>
-</section>
-
-<section class="cta">
-<div class="kicker">START THE JOURNEY</div>
-<h2>From Mind to Steward starts with one account.</h2>
-<p>Create your free DELIONARYO account directly in the Hub. From there, open the Learning Campus and access Your Free eBook. Verified purchases will connect automatically to the same member account.</p>
-<div class="actions" style="justify-content:center"><a class="primary" href="https://hub.gapcreation.space/?signup=1">CREATE ACCOUNT AND GET YOUR FREE EBOOK →</a><a class="secondary" href="https://hub.gapcreation.space/">MEMBER LOGIN →</a></div>
+<div class="notice"><b>Financial education notice:</b> DELIONARYO provides educational tools, learning frameworks and ecosystem utilities. It does not guarantee income, profit, investment returns or financial outcomes.</div>
 </section>
 </main>
 <footer class="footer"><span>© 2026 DELIONARYO</span><span>Education → Execution → Transformation → Stewardship</span></footer>
 </div>
+<script>
+(function(){
+  var SUPABASE='https://tordvwlrtwxlbuuzgklt.supabase.co';
+  var KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
+  var form=document.getElementById('startAccountForm');
+  var btn=document.getElementById('startCreateBtn');
+  var msg=document.getElementById('startAccountMsg');
+  function setMsg(text,type){msg.textContent=text||'';msg.className='formMsg '+(type||'');}
+  function mobile(value){var raw=String(value||'').trim();var digits=raw.replace(/\D/g,'');if(/^09\d{9}$/.test(digits))return '+63'+digits.slice(1);if(/^9\d{9}$/.test(digits))return '+63'+digits;if(/^63\d{10}$/.test(digits))return '+'+digits;if(raw.charAt(0)==='+'&&/^[1-9]\d{7,14}$/.test(digits))return '+'+digits;return '';}
+  async function captureLead(firstName,email){
+    var q=new URLSearchParams(location.search);var campaign=q.get('utm_campaign')||q.get('campaign')||'';var src=q.get('utm_source')||'delionaryo-start';var source=campaign?src+':'+campaign:src;
+    var r=await fetch(SUPABASE+'/functions/v1/capture-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({first_name:firstName,email:email,source:source})});
+    if(!r.ok)throw new Error('Lead nurturing connection failed');
+  }
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();setMsg('','');
+    var first=document.getElementById('startFirstName').value.trim();
+    var last=document.getElementById('startLastName').value.trim();
+    var phone=mobile(document.getElementById('startMobile').value);
+    var email=document.getElementById('startEmail').value.trim().toLowerCase();
+    var password=document.getElementById('startPassword').value;
+    var confirm=document.getElementById('startConfirm').value;
+    if(!first)return setMsg('Enter your first name.','error');
+    if(!last)return setMsg('Enter your surname.','error');
+    if(!phone)return setMsg('Enter a valid mobile number, for example 09XXXXXXXXX.','error');
+    if(!email||!document.getElementById('startEmail').checkValidity())return setMsg('Enter a valid email address.','error');
+    if(password.length<6)return setMsg('Password must be at least 6 characters.','error');
+    if(password!==confirm)return setMsg('Passwords do not match.','error');
+    btn.disabled=true;btn.textContent='CREATING ACCOUNT…';
+    try{
+      var full=(first+' '+last).replace(/\s+/g,' ').trim();
+      var signup=await fetch(SUPABASE+'/auth/v1/signup',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify({email:email,password:password,data:{first_name:first,last_name:last,full_name:full,phone:phone,registration_source:'app.gapcreation.space/start',registration_version:5,buyer_source:'free-account'}})});
+      var payload={};try{payload=await signup.json();}catch(_e){}
+      if(!signup.ok)throw new Error(payload.msg||payload.message||payload.error_description||'Unable to create account.');
+      try{await captureLead(first,email);}catch(syncError){console.error(syncError);}
+      setMsg('Account created. Use Member Login to enter your DELIONARYO Hub.','success');
+      btn.textContent='ACCOUNT CREATED';
+      btn.disabled=true;
+      setTimeout(function(){window.location.href='https://hub.gapcreation.space/';},1200);
+    }catch(err){
+      var raw=String(err&&err.message||'Unable to create account.');
+      if(/duplicate|already registered|already exists|user already registered/i.test(raw))setMsg('This email or mobile number is already registered. Use Member Login.','error');
+      else setMsg(raw,'error');
+      btn.disabled=false;btn.textContent='CREATE FREE ACCOUNT →';
+    }
+  });
+  var installBtn=document.getElementById('installApp');var deferred=null;
+  window.addEventListener('beforeinstallprompt',function(event){event.preventDefault();deferred=event;installBtn.hidden=false;});
+  installBtn.addEventListener('click',async function(){if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;return;}alert('Use your browser menu and choose Add to Home screen or Install app.');});
+  if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/start/sw.js',{scope:'/start/'}).catch(console.error);});}
+})();
+</script>
 </body>
 </html>`)
 }
