@@ -14,12 +14,12 @@
   <div class="brand"><div class="mark">D</div><span>DELIONARYO START</span></div>
   <section class="card">
     <div class="eyebrow">OFFICIAL MEMBER ACCESS</div>
-    <h1>Sign in from Start.</h1>
-    <p>Your account access begins here. After successful sign in, DELIONARYO will securely hand your active session to the Integration Hub.</p>
+    <h1>Sign in to DELIONARYO.</h1>
+    <p>Use your DELIONARYO account to continue to your private member experience.</p>
     <form id="signinForm">
       <label class="field"><span>EMAIL ADDRESS</span><input id="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
       <label class="field"><span>PASSWORD</span><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Your password"></label>
-      <button id="submitBtn" class="btn" type="submit">SIGN IN & OPEN HUB →</button>
+      <button id="submitBtn" class="btn" type="submit">SIGN IN →</button>
       <p id="msg" class="msg" role="status" aria-live="polite"></p>
     </form>
     <div class="links"><a href="/start/#create-account">Create free account</a><a href="/start/">Back to Start</a></div>
@@ -29,13 +29,13 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
-const HUB='https://hub.gapcreation.space/';
+const MEMBER_ACCESS='https://hub.gapcreation.space/';
 const supabase=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const form=document.getElementById('signinForm');const btn=document.getElementById('submitBtn');const msg=document.getElementById('msg');
 function setMsg(text,type=''){msg.textContent=text;msg.className='msg '+type}
-function openHub(session){if(!session?.access_token||!session?.refresh_token)return;const handoff=new URLSearchParams({dl_start_session:'1',access_token:session.access_token,refresh_token:session.refresh_token});location.replace(`${HUB}#${handoff.toString()}`)}
-const existing=(await supabase.auth.getSession()).data.session;if(existing)openHub(existing);
-form.addEventListener('submit',async e=>{e.preventDefault();setMsg('');btn.disabled=true;btn.textContent='SIGNING IN…';try{const email=document.getElementById('email').value.trim().toLowerCase();const password=document.getElementById('password').value;const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;setMsg('Opening your DELIONARYO Hub…');openHub(data.session)}catch(err){setMsg(err?.message||'Unable to sign in.','error');btn.disabled=false;btn.textContent='SIGN IN & OPEN HUB →'}});
+function openMemberAccess(session){if(!session?.access_token||!session?.refresh_token)return;const handoff=new URLSearchParams({dl_start_session:'1',access_token:session.access_token,refresh_token:session.refresh_token});location.replace(`${MEMBER_ACCESS}#${handoff.toString()}`)}
+const existing=(await supabase.auth.getSession()).data.session;if(existing)openMemberAccess(existing);
+form.addEventListener('submit',async e=>{e.preventDefault();setMsg('');btn.disabled=true;btn.textContent='SIGNING IN…';try{const email=document.getElementById('email').value.trim().toLowerCase();const password=document.getElementById('password').value;const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;setMsg('Opening your DELIONARYO member access…');openMemberAccess(data.session)}catch(err){setMsg(err?.message||'Unable to sign in.','error');btn.disabled=false;btn.textContent='SIGN IN →'}});
 </script>
 </body>
 </html>
