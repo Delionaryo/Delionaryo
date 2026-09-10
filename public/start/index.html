@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DELIONARYO" />
   <title>DELIONARYO Start</title>
-  <meta name="description" content="Official public entry point to the DELIONARYO ecosystem. Install the public app for free, create a free account, and connect verified purchases automatically to your member access." />
+  <meta name="description" content="Official public entry point to DELIONARYO. Install the public app for free, create a free account, and connect verified purchases automatically to your member access." />
   <link rel="manifest" href="/start/manifest.webmanifest" />
   <link rel="icon" type="image/png" href="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" />
   <link rel="apple-touch-icon" href="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" />
@@ -25,7 +25,7 @@
 </head>
 <body>
   <div class="wrap">
-    <nav class="nav"><div class="brand"><span class="mark"><img src="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" alt="DELIONARYO Start" /></span><span>DELIONARYO</span></div><div class="navActions"><button id="installApp" class="installBtn" type="button" hidden>INSTALL APP</button><a href="https://hub.gapcreation.space/">MEMBER LOGIN</a></div></nav>
+    <nav class="nav"><div class="brand"><span class="mark"><img src="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" alt="DELIONARYO Start" /></span><span>DELIONARYO</span></div><div class="navActions"><button id="installApp" class="installBtn" type="button" hidden>INSTALL APP</button><a href="/start/login.html">MEMBER LOGIN</a></div></nav>
     <main>
       <section class="hero">
         <div>
@@ -39,7 +39,7 @@
           <div class="flow">
             <div class="step"><div class="num">1</div><div><b>Create Your Free Account</b><span>Register here on DELIONARYO Start with your name, mobile number, email and password.</span></div></div>
             <div class="step"><div class="num">2</div><div><b>Lead & Learning Connection</b><span>Your registration is recorded in DELIONARYO and connected to the educational nurturing system.</span></div></div>
-            <div class="step"><div class="num">3</div><div><b>Enter the Member Hub</b><span>Use the Hub for member sign-in and access to the private ecosystem.</span></div></div>
+            <div class="step"><div class="num">3</div><div><b>Member Access</b><span>Sign in once from DELIONARYO Start to continue to your private member experience.</span></div></div>
             <div class="step"><div class="num">4</div><div><b>Learn and Explore</b><span>Use public learning and browse DELIONARYO products and services.</span></div></div>
             <div class="step"><div class="num">5</div><div><b>Purchase When Ready</b><span>Verified purchases connect automatically to your DELIONARYO account.</span></div></div>
           </div>
@@ -52,7 +52,7 @@
             <div class="eyebrow">OFFICIAL ACCOUNT CREATION</div>
             <h2>Create your DELIONARYO account.</h2>
             <p>This Start Page is now the official public registration point. Your <strong>mobile number is your primary identity</strong>, while your email is used for account access and DELIONARYO educational nurturing.</p>
-            <p>Already registered? Use <a href="https://hub.gapcreation.space/" style="color:#f2cf7b;font-weight:900">Member Login</a>.</p>
+            <p>Already registered? Use <a href="/start/login.html" style="color:#f2cf7b;font-weight:900">Member Login</a>.</p>
           </div>
           <form id="startAccountForm" class="accountForm" novalidate>
             <label class="field"><span>FIRST NAME</span><input id="startFirstName" autocomplete="given-name" maxlength="80" required placeholder="First name"></label>
@@ -85,6 +85,8 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
+    const MEMBER_LOGIN='https://app.gapcreation.space/start/login.html';
+    const MEMBER_ACCESS='https://hub.gapcreation.space/';
     const supabase=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     const form=document.getElementById('startAccountForm');
     const btn=document.getElementById('startCreateBtn');
@@ -97,6 +99,11 @@
       if(/^63\d{10}$/.test(digits))return `+${digits}`;
       if(raw.startsWith('+')&&/^[1-9]\d{7,14}$/.test(digits))return `+${digits}`;
       return '';
+    }
+    function openMemberAccess(session){
+      if(!session?.access_token||!session?.refresh_token){location.href=MEMBER_LOGIN;return;}
+      const handoff=new URLSearchParams({dl_start_session:'1',access_token:session.access_token,refresh_token:session.refresh_token});
+      location.replace(`${MEMBER_ACCESS}#${handoff.toString()}`);
     }
     async function syncLead(firstName,email){
       const qp=new URLSearchParams(location.search);
@@ -125,14 +132,14 @@
       try{
         await supabase.auth.signOut();
         const fullName=`${firstName} ${lastName}`.replace(/\s+/g,' ').trim();
-        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:firstName,last_name:lastName,full_name:fullName,phone:mobile,registration_source:'app.gapcreation.space/start',registration_version:4,buyer_source:'free-account'},emailRedirectTo:'https://hub.gapcreation.space/'}});
+        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:firstName,last_name:lastName,full_name:fullName,phone:mobile,registration_source:'app.gapcreation.space/start',registration_version:4,buyer_source:'free-account'},emailRedirectTo:MEMBER_LOGIN}});
         if(error)throw error;
         try{await syncLead(firstName,email)}catch(syncError){console.error(syncError)}
         if(data.session){
-          setMsg('Account created. Opening your DELIONARYO Hub…','success');
-          setTimeout(()=>location.href='https://hub.gapcreation.space/',700);
+          setMsg('Account created. Opening your DELIONARYO member access…','success');
+          setTimeout(()=>openMemberAccess(data.session),500);
         }else{
-          setMsg('Account created. Check your email if confirmation is required, then use Member Login.','success');
+          setMsg('Account created. Check your email if confirmation is required, then sign in from DELIONARYO Start.','success');
           btn.textContent='ACCOUNT CREATED';
           return;
         }
