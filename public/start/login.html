@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#071015" />
+<title>DELIONARYO Start · Member Sign In</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#071015;color:#f7f4ec}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,rgba(217,170,60,.13),transparent 35rem),linear-gradient(180deg,#071015,#08141a 60%,#050b0e);display:grid;place-items:center;padding:20px}.shell{width:min(430px,100%)}.brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;font-weight:950;letter-spacing:.12em}.mark{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#d9aa3c;color:#101418;font-size:24px}.card{border:1px solid rgba(217,170,60,.28);background:#0a171c;border-radius:22px;padding:24px;box-shadow:0 26px 70px rgba(0,0,0,.28)}.eyebrow{color:#d9aa3c;font-weight:900;letter-spacing:.18em;font-size:11px}.card h1{font-size:32px;line-height:1.05;margin:10px 0 8px}.card p{color:#9fb0b3;line-height:1.6;font-size:14px}.field{display:grid;gap:7px;margin-top:12px}.field span{font-size:11px;font-weight:900;color:#cbd5d8}.field input{width:100%;border:1px solid rgba(255,255,255,.13);background:#0d1c21;color:#fff;border-radius:12px;padding:14px 13px;font:inherit;outline:none}.field input:focus{border-color:#d9aa3c}.btn{width:100%;margin-top:16px;border:0;border-radius:12px;padding:14px;background:#d9aa3c;color:#0e1215;font:inherit;font-weight:950;cursor:pointer}.btn:disabled{opacity:.65;cursor:wait}.msg{min-height:20px;margin:12px 0 0;font-size:13px;font-weight:800;color:#9fb0b3}.msg.error{color:#ff9b9b}.links{display:flex;justify-content:space-between;gap:12px;margin-top:18px;flex-wrap:wrap}.links a{color:#f2cf7b;text-decoration:none;font-size:13px;font-weight:850}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="brand"><div class="mark">D</div><span>DELIONARYO START</span></div>
+  <section class="card">
+    <div class="eyebrow">OFFICIAL MEMBER ACCESS</div>
+    <h1>Sign in from Start.</h1>
+    <p>Your account access begins here. After successful sign in, DELIONARYO will securely hand your active session to the Integration Hub.</p>
+    <form id="signinForm">
+      <label class="field"><span>EMAIL ADDRESS</span><input id="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+      <label class="field"><span>PASSWORD</span><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Your password"></label>
+      <button id="submitBtn" class="btn" type="submit">SIGN IN & OPEN HUB →</button>
+      <p id="msg" class="msg" role="status" aria-live="polite"></p>
+    </form>
+    <div class="links"><a href="/start/#create-account">Create free account</a><a href="/start/">Back to Start</a></div>
+  </section>
+</div>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
+const HUB='https://hub.gapcreation.space/';
+const supabase=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const form=document.getElementById('signinForm');const btn=document.getElementById('submitBtn');const msg=document.getElementById('msg');
+function setMsg(text,type=''){msg.textContent=text;msg.className='msg '+type}
+function openHub(session){if(!session?.access_token||!session?.refresh_token)return;const handoff=new URLSearchParams({dl_start_session:'1',access_token:session.access_token,refresh_token:session.refresh_token});location.replace(`${HUB}#${handoff.toString()}`)}
+const existing=(await supabase.auth.getSession()).data.session;if(existing)openHub(existing);
+form.addEventListener('submit',async e=>{e.preventDefault();setMsg('');btn.disabled=true;btn.textContent='SIGNING IN…';try{const email=document.getElementById('email').value.trim().toLowerCase();const password=document.getElementById('password').value;const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;setMsg('Opening your DELIONARYO Hub…');openHub(data.session)}catch(err){setMsg(err?.message||'Unable to sign in.','error');btn.disabled=false;btn.textContent='SIGN IN & OPEN HUB →'}});
+</script>
+</body>
+</html>
