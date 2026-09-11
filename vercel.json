@@ -3,8 +3,16 @@
   "redirects": [
     {
       "source": "/login",
-      "destination": "https://hub.gapcreation.space",
+      "destination": "/start/login.html",
       "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/start/login.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, max-age=0" }
+      ]
     }
   ],
   "rewrites": [
