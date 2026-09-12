@@ -9,6 +9,24 @@
   ],
   "headers": [
     {
+      "source": "/start",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/start/",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/start/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=86400" }
+      ]
+    },
+    {
       "source": "/start/icon.png",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400" }
@@ -56,15 +74,14 @@
     { "source": "/open", "destination": "/api/meta-gateway" },
     { "source": "/fb", "destination": "/api/meta-gateway" },
     { "source": "/messenger", "destination": "/api/meta-gateway" },
-    { "source": "/delionaryo-app", "destination": "/api/start-app" },
-    { "source": "/open-delionaryo", "destination": "/api/start-app" },
-    { "source": "/share", "destination": "/api/start-app" },
-    { "source": "/install", "destination": "/api/start-app" },
+    { "source": "/delionaryo-app", "destination": "/start/index.html" },
+    { "source": "/open-delionaryo", "destination": "/start/index.html" },
+    { "source": "/share", "destination": "/start/index.html" },
+    { "source": "/install", "destination": "/start/index.html" },
     { "source": "/promo", "destination": "/api/promo" },
     { "source": "/start/manifest.webmanifest", "destination": "/api/start-manifest" },
     { "source": "/start/sw.js", "destination": "/api/start-sw" },
-    { "source": "/start/index.html", "destination": "/api/start-app" },
-    { "source": "/start/", "destination": "/api/start-app" },
-    { "source": "/start", "destination": "/api/start-app" }
+    { "source": "/start/", "destination": "/start/index.html" },
+    { "source": "/start", "destination": "/start/index.html" }
   ]
 }
