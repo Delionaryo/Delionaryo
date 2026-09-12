@@ -30,8 +30,11 @@
   var form=document.getElementById('signinForm');
   var btn=document.getElementById('submitBtn');
   var msg=document.getElementById('msg');
+  var allowed=new Set([
+    'https://app.gapcreation.space','https://hub.gapcreation.space','https://campus.gapcreation.space','https://library.gapcreation.space','https://wallet.gapcreation.space','https://market.gapcreation.space','https://marketplace.gapcreation.space','https://nation.gapcreation.space','https://moneyflow.gapcreation.space','https://business.gapcreation.space','https://dpbs.gapcreation.space','https://tracker.gapcreation.space','https://consultant.gapcreation.space','https://pay.gapcreation.space','https://watch.gapcreation.space'
+  ]);
   function setMsg(text,type){msg.textContent=text||'';msg.className='msg '+(type||'')}
-  function returnTarget(){var q=new URLSearchParams(location.search);var raw=q.get('returnTo')||'https://hub.gapcreation.space/';try{var u=new URL(raw);if(u.protocol==='https:'&&(u.origin==='https://hub.gapcreation.space'||u.origin==='https://app.gapcreation.space'))return u.toString()}catch(_e){}return 'https://hub.gapcreation.space/'}
+  function returnTarget(){var q=new URLSearchParams(location.search);var raw=q.get('returnTo')||'https://hub.gapcreation.space/';try{var u=new URL(raw);if(u.protocol==='https:'&&allowed.has(u.origin))return u.toString()}catch(_e){}return 'https://hub.gapcreation.space/'}
   async function hasSession(){try{var r=await fetch('/api/auth-session',{credentials:'include',cache:'no-store'});return r.ok&&(await r.json()).authenticated===true}catch(_e){return false}}
   hasSession().then(function(ok){if(ok)location.replace(returnTarget())});
   form.addEventListener('submit',async function(e){
