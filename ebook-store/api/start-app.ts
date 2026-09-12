@@ -4,8 +4,6 @@ export default function handler(req:any,res:any){
   const originalSetHeader=res.setHeader.bind(res);
   const originalSend=res.send.bind(res);
 
-  // The public Start shell contains no user/session-specific data. Keep it
-  // edge-cacheable while auth/login routes remain explicitly uncached.
   res.setHeader=(name:any,value:any)=>{
     if(String(name).toLowerCase()==='cache-control'){
       return originalSetHeader('Cache-Control','public, max-age=0, s-maxage=300, stale-while-revalidate=86400');
@@ -13,9 +11,6 @@ export default function handler(req:any,res:any){
     return originalSetHeader(name,value);
   };
 
-  // Preserve the existing enhanced PWA install UX, but inject it into the
-  // Start HTML rendered in this same function process. This avoids the old
-  // /start -> /api/start-app -> HTTP /api/start round-trip entirely.
   res.send=(body:any)=>{
     if(typeof body!=='string'||!body.includes('</head>')||!body.includes('</body>')){
       return originalSend(body);
@@ -41,10 +36,9 @@ export default function handler(req:any,res:any){
   var mark=document.querySelector('.mark');
   if(mark)mark.innerHTML='<img src="'+icon+'" alt="DELIONARYO Start">';
   var nav=document.querySelector('.nav');
-  var member=nav?nav.querySelector('a'):null;
   var button=document.createElement('button');
   button.id='installApp';button.className='installAppBtn';button.type='button';button.textContent='INSTALL DELIONARYO';button.hidden=false;
-  if(nav&&member){var actions=document.createElement('div');actions.className='appNavActions';nav.appendChild(actions);actions.appendChild(button);actions.appendChild(member);}
+  if(nav){var actions=document.createElement('div');actions.className='appNavActions';nav.appendChild(actions);actions.appendChild(button);}
   var guide=document.createElement('div');
   guide.id='installGuide';guide.className='installGuideModal';guide.hidden=true;
   guide.innerHTML='<div class="installGuideCard"><button class="installGuideClose" type="button" aria-label="Close">×</button><div style="color:#d9aa3c;font-size:11px;font-weight:900;letter-spacing:.16em">INSTALL DELIONARYO</div><h2>Add DELIONARYO to your phone</h2><p id="installGuideIntro">Use Google Chrome for the best install experience.</p><div class="installGuideSteps" id="installGuideSteps"></div><button class="installGuideDone" type="button">GOT IT</button></div>';
@@ -61,10 +55,7 @@ export default function handler(req:any,res:any){
   setGuide();
   var deferred=null;
   window.addEventListener('beforeinstallprompt',function(event){event.preventDefault();deferred=event;button.hidden=false;});
-  button.addEventListener('click',async function(){
-    if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;return;}
-    guide.hidden=false;
-  });
+  button.addEventListener('click',async function(){if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;return;}guide.hidden=false;});
   guide.querySelector('.installGuideClose').addEventListener('click',function(){guide.hidden=true;});
   guide.querySelector('.installGuideDone').addEventListener('click',function(){guide.hidden=true;});
   guide.addEventListener('click',function(event){if(event.target===guide)guide.hidden=true;});
@@ -74,7 +65,18 @@ export default function handler(req:any,res:any){
 })();
 </script>`;
 
-    const html=body.replace('</head>',pwaHead+'\n</head>').replace('</body>',pwaBoot+'\n</body>');
+    let html=body.replace('</head>',pwaHead+'\n</head>').replace('</body>',pwaBoot+'\n</body>');
+
+    // Temporary Start isolation: no Hub button, no Start-to-Hub redirect,
+    // and no direct Hub URL is allowed to remain in the rendered Start page.
+    html=html
+      .replace('<a href="https://hub.gapcreation.space/">MEMBER LOGIN</a>','')
+      .replace('<p>Already registered? <a href="https://hub.gapcreation.space/" style="color:#f2cf7b;font-weight:900">Go to Member Login →</a></p>','<p>Private member applications are temporarily detached while stability testing is in progress.</p>')
+      .replace('<b>Member Login</b><span>The Hub is for member sign-in and private ecosystem access.</span>','<b>Private Apps Isolated</b><span>Private member applications are temporarily detached while stability testing is in progress.</span>')
+      .replace("setMsg('Account created. Use Member Login to enter your DELIONARYO Hub.','success');","setMsg('Account created successfully. Private member access is temporarily isolated for stability testing.','success');")
+      .replace("setTimeout(function(){window.location.href='https://hub.gapcreation.space/';},1200);",'')
+      .split('https://hub.gapcreation.space/').join('#');
+
     return originalSend(html);
   };
 
