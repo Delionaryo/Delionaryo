@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "mkdir -p public/start && cp \"../public/start/ChatGPT Image Sep 6, 2026, 04_07_56 PM.png\" public/start/icon.png && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
