@@ -1,5 +1,6 @@
 const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
+const PERSISTENT_REFRESH_AGE=60*60*24*400;
 
 function noStore(res:any){res.setHeader('Cache-Control','private, no-store, max-age=0');res.setHeader('Pragma','no-cache');res.setHeader('Vary','Cookie')}
 function parseCookies(req:any){const out:any={};String(req.headers?.cookie||'').split(';').forEach((part:string)=>{const i=part.indexOf('=');if(i<0)return;const k=part.slice(0,i).trim();const v=part.slice(i+1).trim();try{out[k]=decodeURIComponent(v)}catch(_){out[k]=v}});return out}
@@ -28,7 +29,7 @@ export default async function handler(req:any,res:any){
     const accessAge=Math.max(300,Math.min(Number(payload.expires_in)||3600,3600));
     res.setHeader('Set-Cookie',[
       cookie('dl_sso_access',payload.access_token,{domain:'.gapcreation.space',maxAge:accessAge}),
-      cookie('dl_sso_refresh',payload.refresh_token,{maxAge:60*60*24*30})
+      cookie('dl_sso_refresh',payload.refresh_token,{maxAge:PERSISTENT_REFRESH_AGE})
     ]);
     return res.status(200).json({authenticated:true});
   }catch(_){
