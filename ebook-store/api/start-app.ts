@@ -1,4 +1,4 @@
-import startHandler from './start';
+import startHandler from './start.js';
 
 export default function handler(req:any,res:any){
   // The public Start shell contains no user/session-specific data, so it can be
