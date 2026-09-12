@@ -1,7 +1,23 @@
 const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
 const DEFAULT_RETURN='https://hub.gapcreation.space/';
-const ALLOWED_RETURN_ORIGINS=new Set(['https://app.gapcreation.space','https://hub.gapcreation.space']);
+const ALLOWED_RETURN_ORIGINS=new Set([
+  'https://app.gapcreation.space',
+  'https://hub.gapcreation.space',
+  'https://campus.gapcreation.space',
+  'https://library.gapcreation.space',
+  'https://wallet.gapcreation.space',
+  'https://market.gapcreation.space',
+  'https://marketplace.gapcreation.space',
+  'https://nation.gapcreation.space',
+  'https://moneyflow.gapcreation.space',
+  'https://business.gapcreation.space',
+  'https://dpbs.gapcreation.space',
+  'https://tracker.gapcreation.space',
+  'https://consultant.gapcreation.space',
+  'https://pay.gapcreation.space',
+  'https://watch.gapcreation.space'
+]);
 
 function noStore(res:any){
   res.setHeader('Cache-Control','private, no-store, max-age=0');
