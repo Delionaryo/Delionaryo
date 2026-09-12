@@ -1,6 +1,7 @@
 const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
 const DEFAULT_RETURN='https://hub.gapcreation.space/';
+const PERSISTENT_REFRESH_AGE=60*60*24*400;
 const ALLOWED_RETURN_ORIGINS=new Set([
   'https://app.gapcreation.space',
   'https://hub.gapcreation.space',
@@ -58,7 +59,7 @@ export default async function handler(req:any,res:any){
     const accessAge=Math.max(300,Math.min(Number(payload.expires_in)||3600,3600));
     res.setHeader('Set-Cookie',[
       cookie('dl_sso_access',payload.access_token,{domain:'.gapcreation.space',maxAge:accessAge}),
-      cookie('dl_sso_refresh',payload.refresh_token,{maxAge:60*60*24*30})
+      cookie('dl_sso_refresh',payload.refresh_token,{maxAge:PERSISTENT_REFRESH_AGE})
     ]);
     return res.status(200).json({ok:true,returnTo:safeReturn(body.returnTo)});
   }catch(_){
