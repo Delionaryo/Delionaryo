@@ -77,7 +77,6 @@
     { "source": "/delionaryo-app", "destination": "/start/index.html" },
     { "source": "/open-delionaryo", "destination": "/start/index.html" },
     { "source": "/share", "destination": "/start/index.html" },
-    { "source": "/install", "destination": "/start/index.html" },
     { "source": "/promo", "destination": "/api/promo" },
     { "source": "/start/manifest.webmanifest", "destination": "/api/start-manifest" },
     { "source": "/start/sw.js", "destination": "/api/start-sw" },
