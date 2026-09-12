@@ -9,23 +9,23 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DELIONARYO" />
   <title>DELIONARYO Start</title>
-  <meta name="description" content="Official public entry point to DELIONARYO. Install the public app for free, create a free account, and connect verified purchases automatically to your member access." />
+  <meta name="description" content="Official public entry point to DELIONARYO. Install the public app for free and create a free account." />
   <link rel="manifest" href="/start/manifest.webmanifest" />
   <link rel="icon" type="image/png" href="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" />
   <link rel="apple-touch-icon" href="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" />
   <style>
     :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#071015;color:#f7f4ec}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,rgba(217,170,60,.13),transparent 35rem),linear-gradient(180deg,#071015,#08141a 60%,#050b0e)}
-    .wrap{width:min(1120px,calc(100% - 32px));margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:14px}.brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.15em}.mark{width:46px;height:46px;border:1px solid #b68a31;border-radius:14px;overflow:hidden;background:#071015;display:grid;place-items:center}.mark img{width:100%;height:100%;object-fit:cover;display:block}.navActions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.nav a,.installBtn{color:#f7f4ec;text-decoration:none;font-weight:850;border:1px solid rgba(217,170,60,.35);padding:11px 15px;border-radius:11px;background:transparent;font:inherit;cursor:pointer}.installBtn{background:#d9aa3c;color:#0e1215;border-color:#d9aa3c}.installBtn[hidden]{display:none}
+    .wrap{width:min(1120px,calc(100% - 32px));margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:14px}.brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.15em}.mark{width:46px;height:46px;border:1px solid #b68a31;border-radius:14px;overflow:hidden;background:#071015;display:grid;place-items:center}.mark img{width:100%;height:100%;object-fit:cover;display:block}.navActions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.installBtn{color:#0e1215;text-decoration:none;font-weight:850;border:1px solid #d9aa3c;padding:11px 15px;border-radius:11px;background:#d9aa3c;font:inherit;cursor:pointer}.installBtn[hidden]{display:none}
     .hero{padding:70px 0 48px;display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}.eyebrow{color:#d9aa3c;font-weight:900;letter-spacing:.2em;font-size:12px}.hero h1{font-size:clamp(46px,8vw,82px);line-height:.94;letter-spacing:-.045em;margin:18px 0}.hero h1 span{color:#d9aa3c}.lead{font-size:clamp(18px,2.4vw,23px);line-height:1.65;color:#c4ced0;max-width:760px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.primary,.secondary{display:inline-block;text-decoration:none;padding:15px 20px;border-radius:13px;font-weight:950;border:0;cursor:pointer;font:inherit}.primary{background:#d9aa3c;color:#0e1215}.secondary{border:1px solid rgba(217,170,60,.45);color:#f4d99e;background:transparent}.panel{border:1px solid rgba(217,170,60,.28);background:rgba(9,24,29,.82);border-radius:24px;padding:24px;box-shadow:0 26px 70px rgba(0,0,0,.28)}.panel small{color:#d9aa3c;font-weight:900;letter-spacing:.15em}.panel h2{margin:10px 0 16px;font-size:26px}.flow{display:grid;gap:10px}.step{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;padding:12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.num{width:34px;height:34px;border-radius:10px;background:#112126;color:#d9aa3c;display:grid;place-items:center;font-weight:950}.step b{display:block}.step span{display:block;color:#96a7aa;font-size:14px;margin-top:3px;line-height:1.5}
     .register{padding:26px 0 58px}.registerShell{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:start;border:1px solid rgba(217,170,60,.28);background:#0a171c;border-radius:24px;padding:24px}.registerInfo h2{font-size:clamp(30px,5vw,46px);margin:8px 0 12px}.registerInfo p{color:#aebdc0;line-height:1.7}.registerInfo strong{color:#d9aa3c}.accountForm{display:grid;gap:12px;background:#071015;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px}.field{display:grid;gap:7px}.field span{font-size:12px;font-weight:900;color:#cbd5d8}.field input{width:100%;border:1px solid rgba(255,255,255,.13);background:#0d1c21;color:#fff;border-radius:12px;padding:14px 13px;font:inherit;outline:none}.field input:focus{border-color:#d9aa3c}.formNote{margin:0;color:#8da0a4;font-size:12px;line-height:1.55}.formMsg{min-height:20px;margin:0;font-size:13px;font-weight:800;color:#9fb0b3}.formMsg.error{color:#ff8f8f}.formMsg.success{color:#f2cf7b}.accountForm button{width:100%}.accountForm button:disabled{opacity:.65;cursor:wait}
     .section{padding:44px 0}.section h2{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.section p{color:#aebdc0;line-height:1.7}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}.card{border:1px solid rgba(255,255,255,.08);background:#0b171c;border-radius:18px;padding:20px}.card b{font-size:18px}.card p{margin-bottom:0;font-size:14px}.footer{border-top:1px solid rgba(255,255,255,.08);margin-top:32px;padding:26px 0 34px;color:#809195;font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    @media(max-width:780px){.hero,.registerShell{grid-template-columns:1fr}.hero{padding-top:42px}.cards{grid-template-columns:1fr}.nav{align-items:flex-start}.navActions{max-width:55%}.nav a,.installBtn{font-size:12px;padding:9px 10px}.brand{letter-spacing:.08em}.hero h1{font-size:clamp(44px,14vw,68px)}.registerShell{padding:17px}}
+    @media(max-width:780px){.hero,.registerShell{grid-template-columns:1fr}.hero{padding-top:42px}.cards{grid-template-columns:1fr}.nav{align-items:flex-start}.brand{letter-spacing:.08em}.hero h1{font-size:clamp(44px,14vw,68px)}.registerShell{padding:17px}}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="nav"><div class="brand"><span class="mark"><img src="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" alt="DELIONARYO Start" /></span><span>DELIONARYO</span></div><div class="navActions"><button id="installApp" class="installBtn" type="button" hidden>INSTALL APP</button><a href="/start/login.html">MEMBER LOGIN</a></div></nav>
+    <nav class="nav"><div class="brand"><span class="mark"><img src="/start/ChatGPT%20Image%20Sep%206,%202026,%2004_07_56%20PM.png" alt="DELIONARYO Start" /></span><span>DELIONARYO</span></div><div class="navActions"><button id="installApp" class="installBtn" type="button" hidden>INSTALL APP</button></div></nav>
     <main>
       <section class="hero">
         <div>
@@ -39,9 +39,8 @@
           <div class="flow">
             <div class="step"><div class="num">1</div><div><b>Create Your Free Account</b><span>Register here on DELIONARYO Start with your name, mobile number, email and password.</span></div></div>
             <div class="step"><div class="num">2</div><div><b>Lead & Learning Connection</b><span>Your registration is recorded in DELIONARYO and connected to the educational nurturing system.</span></div></div>
-            <div class="step"><div class="num">3</div><div><b>Member Access</b><span>Sign in once from DELIONARYO Start to continue to your private member experience.</span></div></div>
-            <div class="step"><div class="num">4</div><div><b>Learn and Explore</b><span>Use public learning and browse DELIONARYO products and services.</span></div></div>
-            <div class="step"><div class="num">5</div><div><b>Purchase When Ready</b><span>Verified purchases connect automatically to your DELIONARYO account.</span></div></div>
+            <div class="step"><div class="num">3</div><div><b>Learn and Explore</b><span>Use public learning and browse DELIONARYO products and services.</span></div></div>
+            <div class="step"><div class="num">4</div><div><b>Purchase When Ready</b><span>Verified purchases connect automatically to your DELIONARYO account.</span></div></div>
           </div>
         </aside>
       </section>
@@ -51,8 +50,8 @@
           <div class="registerInfo">
             <div class="eyebrow">OFFICIAL ACCOUNT CREATION</div>
             <h2>Create your DELIONARYO account.</h2>
-            <p>This Start Page is now the official public registration point. Your <strong>mobile number is your primary identity</strong>, while your email is used for account access and DELIONARYO educational nurturing.</p>
-            <p>Already registered? Use <a href="/start/login.html" style="color:#f2cf7b;font-weight:900">Member Login</a>.</p>
+            <p>This Start Page is the official public registration point. Your <strong>mobile number is your primary identity</strong>, while your email is used for account access and DELIONARYO educational nurturing.</p>
+            <p>Private member applications are temporarily detached while stability testing is in progress.</p>
           </div>
           <form id="startAccountForm" class="accountForm" novalidate>
             <label class="field"><span>FIRST NAME</span><input id="startFirstName" autocomplete="given-name" maxlength="80" required placeholder="First name"></label>
@@ -68,7 +67,7 @@
         </div>
       </section>
 
-      <section class="section"><h2>One ecosystem. Clear progression.</h2><p>The public app and account registration are open. Purchases are optional until a member wants paid learning or ownership-based access. Verified purchases are connected automatically to the account, while paid and private content remains protected.</p><div class="cards"><article class="card"><b>Learn</b><p>Build financial understanding and transformation principles.</p></article><article class="card"><b>Execute</b><p>Apply learning through connected tools and real marketplace activity.</p></article><article class="card"><b>Steward</b><p>Measure progress, manage resources and multiply responsibly.</p></article></div></section>
+      <section class="section"><h2>One ecosystem. Clear progression.</h2><p>The public app and account registration remain open while private applications are isolated for stability testing.</p><div class="cards"><article class="card"><b>Learn</b><p>Build financial understanding and transformation principles.</p></article><article class="card"><b>Execute</b><p>Apply learning through public tools and marketplace activity as available.</p></article><article class="card"><b>Steward</b><p>Measure progress, manage resources and multiply responsibly.</p></article></div></section>
     </main>
     <footer class="footer"><span>© 2026 DELIONARYO</span><span>Official public entry point · Education → Execution → Transformation</span></footer>
   </div>
@@ -85,8 +84,7 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
-    const MEMBER_LOGIN='https://app.gapcreation.space/start/login.html';
-    const MEMBER_ACCESS='https://hub.gapcreation.space/';
+    const START_URL='https://app.gapcreation.space/start/';
     const supabase=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     const form=document.getElementById('startAccountForm');
     const btn=document.getElementById('startCreateBtn');
@@ -99,11 +97,6 @@
       if(/^63\d{10}$/.test(digits))return `+${digits}`;
       if(raw.startsWith('+')&&/^[1-9]\d{7,14}$/.test(digits))return `+${digits}`;
       return '';
-    }
-    function openMemberAccess(session){
-      if(!session?.access_token||!session?.refresh_token){location.href=MEMBER_LOGIN;return;}
-      const handoff=new URLSearchParams({dl_start_session:'1',access_token:session.access_token,refresh_token:session.refresh_token});
-      location.replace(`${MEMBER_ACCESS}#${handoff.toString()}`);
     }
     async function syncLead(firstName,email){
       const qp=new URLSearchParams(location.search);
@@ -132,20 +125,19 @@
       try{
         await supabase.auth.signOut();
         const fullName=`${firstName} ${lastName}`.replace(/\s+/g,' ').trim();
-        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:firstName,last_name:lastName,full_name:fullName,phone:mobile,registration_source:'app.gapcreation.space/start',registration_version:4,buyer_source:'free-account'},emailRedirectTo:MEMBER_LOGIN}});
+        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:firstName,last_name:lastName,full_name:fullName,phone:mobile,registration_source:'app.gapcreation.space/start',registration_version:5,buyer_source:'free-account'},emailRedirectTo:START_URL}});
         if(error)throw error;
         try{await syncLead(firstName,email)}catch(syncError){console.error(syncError)}
         if(data.session){
-          setMsg('Account created. Opening your DELIONARYO member access…','success');
-          setTimeout(()=>openMemberAccess(data.session),500);
+          setMsg('Account created successfully. Private member access is temporarily isolated for stability testing.','success');
         }else{
-          setMsg('Account created. Check your email if confirmation is required, then sign in from DELIONARYO Start.','success');
-          btn.textContent='ACCOUNT CREATED';
-          return;
+          setMsg('Account created. Check your email if confirmation is required.','success');
         }
+        btn.textContent='ACCOUNT CREATED';
+        return;
       }catch(error){
         const raw=String(error?.message||'Unable to create account.');
-        if(/duplicate|already registered|already exists/i.test(raw))setMsg('This email or mobile number is already registered. Use Member Login.','error');
+        if(/duplicate|already registered|already exists/i.test(raw))setMsg('This email or mobile number is already registered.','error');
         else setMsg(raw,'error');
       }finally{
         if(btn.textContent!=='ACCOUNT CREATED'){btn.disabled=false;btn.textContent='CREATE FREE ACCOUNT →'}
