@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/login",
-      "destination": "https://hub.gapcreation.space",
+      "destination": "/start",
       "permanent": false
     }
   ],
