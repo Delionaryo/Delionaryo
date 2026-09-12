@@ -15,7 +15,7 @@
   <section class="card">
     <div class="eyebrow">OFFICIAL MEMBER ACCESS</div>
     <h1>Sign in to DELIONARYO.</h1>
-    <p>Use your DELIONARYO account to continue to your private member experience.</p>
+    <p>Start is the single secure sign-in point for the DELIONARYO ecosystem.</p>
     <form id="signinForm">
       <label class="field"><span>EMAIL ADDRESS</span><input id="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
       <label class="field"><span>PASSWORD</span><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Your password"></label>
@@ -25,17 +25,28 @@
     <div class="links"><a href="/start/#create-account">Create free account</a><a href="/start/">Back to Start</a></div>
   </section>
 </div>
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
-const MEMBER_ACCESS='https://hub.gapcreation.space/';
-const supabase=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const form=document.getElementById('signinForm');const btn=document.getElementById('submitBtn');const msg=document.getElementById('msg');
-function setMsg(text,type=''){msg.textContent=text;msg.className='msg '+type}
-function openMemberAccess(session){if(!session?.access_token||!session?.refresh_token)return;const handoff=new URLSearchParams({dl_start_session:'1',access_token:session.access_token,refresh_token:session.refresh_token});location.replace(`${MEMBER_ACCESS}#${handoff.toString()}`)}
-const existing=(await supabase.auth.getSession()).data.session;if(existing)openMemberAccess(existing);
-form.addEventListener('submit',async e=>{e.preventDefault();setMsg('');btn.disabled=true;btn.textContent='SIGNING IN…';try{const email=document.getElementById('email').value.trim().toLowerCase();const password=document.getElementById('password').value;const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;setMsg('Opening your DELIONARYO member access…');openMemberAccess(data.session)}catch(err){setMsg(err?.message||'Unable to sign in.','error');btn.disabled=false;btn.textContent='SIGN IN →'}});
+<script>
+(function(){
+  var form=document.getElementById('signinForm');
+  var btn=document.getElementById('submitBtn');
+  var msg=document.getElementById('msg');
+  function setMsg(text,type){msg.textContent=text||'';msg.className='msg '+(type||'')}
+  function returnTarget(){var q=new URLSearchParams(location.search);var raw=q.get('returnTo')||'https://hub.gapcreation.space/';try{var u=new URL(raw);if(u.protocol==='https:'&&(u.origin==='https://hub.gapcreation.space'||u.origin==='https://app.gapcreation.space'))return u.toString()}catch(_e){}return 'https://hub.gapcreation.space/'}
+  async function hasSession(){try{var r=await fetch('/api/auth-session',{credentials:'include',cache:'no-store'});return r.ok&&(await r.json()).authenticated===true}catch(_e){return false}}
+  hasSession().then(function(ok){if(ok)location.replace(returnTarget())});
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();setMsg('','');btn.disabled=true;btn.textContent='SIGNING IN…';
+    try{
+      var email=document.getElementById('email').value.trim().toLowerCase();
+      var password=document.getElementById('password').value;
+      var r=await fetch('/api/auth-login',{method:'POST',credentials:'include',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,password:password,returnTo:returnTarget()})});
+      var data=await r.json().catch(function(){return {}});
+      if(!r.ok)throw new Error(data.error||'Unable to sign in.');
+      setMsg('Signed in securely. Opening your member access…','');
+      location.replace(data.returnTo||returnTarget());
+    }catch(err){setMsg(String(err&&err.message||'Unable to sign in.'),'error');btn.disabled=false;btn.textContent='SIGN IN →'}
+  });
+})();
 </script>
 </body>
 </html>
