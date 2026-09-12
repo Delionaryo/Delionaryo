@@ -27,11 +27,6 @@
       "name": "Store",
       "short_name": "Store",
       "url": "https://app.gapcreation.space/#store"
-    },
-    {
-      "name": "Member Portal",
-      "short_name": "Member Portal",
-      "url": "https://hub.gapcreation.space/"
     }
   ]
 }
