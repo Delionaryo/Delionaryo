@@ -18,11 +18,6 @@ const APPS: Record<string, string> = {
   ai: 'https://delionaryo-ai.vercel.app'
 };
 
-// Emergency isolation switch.
-// Keep every standalone app and its URL intact, but do not allow the Hub
-// to launch or redirect into any app until each app has passed health checks.
-const HUB_APPS_DETACHED = true;
-
 const CORE_SYSTEM = {
   locked: true,
   version: 1,
@@ -38,45 +33,11 @@ export default function handler(req: any, res: any) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   const key = String(req.query?.to || '').trim().toLowerCase();
 
-  if (HUB_APPS_DETACHED) {
-    if (!key) {
-      return res.status(200).json({
-        ok: true,
-        service: 'DELIONARYO Integration Hub',
-        version: 3,
-        mode: 'ISOLATED',
-        appsDetached: true,
-        core: CORE_SYSTEM,
-        routes: [],
-        detachedApps: Object.keys(APPS),
-        message: 'All standalone apps are temporarily detached from the Hub for stability testing. No app code or data has been deleted.'
-      });
-    }
-
-    if (!APPS[key]) {
-      return res.status(404).json({
-        ok: false,
-        error: 'APP_ROUTE_NOT_FOUND',
-        requested: key
-      });
-    }
-
-    return res.status(503).json({
-      ok: false,
-      error: 'APP_TEMPORARILY_DETACHED',
-      requested: key,
-      hubMode: 'ISOLATED',
-      message: 'This app is temporarily detached from the DELIONARYO Hub while stability checks are in progress.'
-    });
-  }
-
   if (!key) {
     return res.status(200).json({
       ok: true,
       service: 'DELIONARYO Integration Hub',
-      version: 3,
-      mode: 'CONNECTED',
-      appsDetached: false,
+      version: 2,
       core: CORE_SYSTEM,
       routes: Object.keys(APPS)
     });
