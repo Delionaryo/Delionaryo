@@ -74,13 +74,13 @@
     { "source": "/open", "destination": "/api/meta-gateway" },
     { "source": "/fb", "destination": "/api/meta-gateway" },
     { "source": "/messenger", "destination": "/api/meta-gateway" },
-    { "source": "/delionaryo-app", "destination": "/start/index.html" },
-    { "source": "/open-delionaryo", "destination": "/start/index.html" },
-    { "source": "/share", "destination": "/start/index.html" },
+    { "source": "/delionaryo-app", "destination": "/api/start-v2" },
+    { "source": "/open-delionaryo", "destination": "/api/start-v2" },
+    { "source": "/share", "destination": "/api/start-v2" },
     { "source": "/promo", "destination": "/api/promo" },
     { "source": "/start/manifest.webmanifest", "destination": "/api/start-manifest" },
     { "source": "/start/sw.js", "destination": "/api/start-sw" },
-    { "source": "/start/", "destination": "/start/index.html" },
-    { "source": "/start", "destination": "/start/index.html" }
+    { "source": "/start/", "destination": "/api/start-v2" },
+    { "source": "/start", "destination": "/api/start-v2" }
   ]
 }
