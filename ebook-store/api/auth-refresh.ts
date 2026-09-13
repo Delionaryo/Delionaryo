@@ -1,11 +1,9 @@
 const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
-const DEFAULT_RETURN='https://hub.gapcreation.space/';
-const HUB_ORIGIN='https://hub.gapcreation.space';
+const DEFAULT_RETURN='https://app.gapcreation.space/start/';
 const PERSISTENT_REFRESH_AGE=60*60*24*400;
 const ALLOWED_RETURN_ORIGINS=new Set([
   'https://app.gapcreation.space',
-  'https://hub.gapcreation.space',
   'https://campus.gapcreation.space',
   'https://library.gapcreation.space',
   'https://wallet.gapcreation.space',
@@ -21,8 +19,7 @@ const ALLOWED_RETURN_ORIGINS=new Set([
   'https://watch.gapcreation.space'
 ]);
 
-function noStore(res:any){res.setHeader('Cache-Control','private, no-store, max-age=0');res.setHeader('Pragma','no-cache');res.setHeader('Vary','Cookie, Origin')}
-function allowHubCors(req:any,res:any){if(String(req.headers?.origin||'')===HUB_ORIGIN){res.setHeader('Access-Control-Allow-Origin',HUB_ORIGIN);res.setHeader('Access-Control-Allow-Credentials','true');res.setHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type')}}
+function noStore(res:any){res.setHeader('Cache-Control','private, no-store, max-age=0');res.setHeader('Pragma','no-cache');res.setHeader('Vary','Cookie')}
 function parseCookies(req:any){const out:any={};String(req.headers?.cookie||'').split(';').forEach((part:string)=>{const i=part.indexOf('=');if(i<0)return;const k=part.slice(0,i).trim();const v=part.slice(i+1).trim();try{out[k]=decodeURIComponent(v)}catch(_){out[k]=v}});return out}
 function safeReturn(value:any){try{const u=new URL(String(value||DEFAULT_RETURN));if(u.protocol==='https:'&&ALLOWED_RETURN_ORIGINS.has(u.origin))return u.toString()}catch(_){ }return DEFAULT_RETURN}
 function cookie(name:string,value:string,opts:{domain?:string;maxAge:number}){const parts=[`${name}=${encodeURIComponent(value)}`,'Path=/','HttpOnly','Secure','SameSite=Lax',`Max-Age=${opts.maxAge}`];if(opts.domain)parts.push(`Domain=${opts.domain}`);return parts.join('; ')}
@@ -30,7 +27,7 @@ function clearCookies(){return [cookie('dl_sso_access','',{domain:'.gapcreation.
 function startUrl(target:string){return `/start?returnTo=${encodeURIComponent(target)}#create-account`}
 
 export default async function handler(req:any,res:any){
-  noStore(res);allowHubCors(req,res);
+  noStore(res);
   if(req.method==='OPTIONS')return res.status(204).end();
   if(req.method!=='GET'&&req.method!=='POST'){res.setHeader('Allow','GET, POST, OPTIONS');return res.status(405).end()}
   const target=safeReturn(req.query?.returnTo);
