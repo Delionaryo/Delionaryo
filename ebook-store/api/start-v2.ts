@@ -2,7 +2,7 @@ export default async function handler(req:any,res:any){
   try{
     const host=String(req.headers?.host||'app.gapcreation.space');
     const proto=host.includes('localhost')?'http':'https';
-    const source=await fetch(`${proto}://${host}/start/index.html`,{headers:{'User-Agent':'DELIONARYO-Start-V2'}});
+    const source=await fetch(`${proto}://${host}/legacy-start.html`,{headers:{'User-Agent':'DELIONARYO-Start-V2'}});
     if(!source.ok) throw new Error(`Start source unavailable: ${source.status}`);
     let html=await source.text();
 
@@ -29,7 +29,7 @@ export default async function handler(req:any,res:any){
     res.status(200).send(html);
   }catch(error:any){
     console.error('start-v2',error);
-    res.setHeader('Location','/start/index.html');
+    res.setHeader('Location','/legacy-start.html');
     res.status(307).end();
   }
 }
