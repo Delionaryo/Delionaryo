@@ -1,10 +1,9 @@
 const SUPABASE_URL='https://tordvwlrtwxlbuuzgklt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
-const DEFAULT_RETURN='https://hub.gapcreation.space/';
+const DEFAULT_RETURN='https://app.gapcreation.space/start/';
 const PERSISTENT_REFRESH_AGE=60*60*24*400;
 const ALLOWED_RETURN_ORIGINS=new Set([
   'https://app.gapcreation.space',
-  'https://hub.gapcreation.space',
   'https://campus.gapcreation.space',
   'https://library.gapcreation.space',
   'https://wallet.gapcreation.space',
