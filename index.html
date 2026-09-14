@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DELIONARYO · From Mind to Steward</title>
+    <script>(function(){if(window.__DLR)return;const A='start',K='dlr:'+A+':',S=Date.now()+'-'+Math.random().toString(36).slice(2,7);let R=false,L=performance.now();const rd=(k,f)=>{try{return JSON.parse(localStorage.getItem(K+k)||'null')??f}catch{return f}},wr=(k,v)=>{try{localStorage.setItem(K+k,JSON.stringify(v))}catch{}},log=(t,d={})=>{const e=rd('events',[]);e.push({at:new Date().toISOString(),type:t,...d});wr('events',e.slice(-30))},p=rd('boot',null);if(p&&!p.clean)log('unclean_previous',p);const boot=(s,c=false)=>wr('boot',{app:A,session:S,status:s,clean:c,at:Date.now()});boot('booting');addEventListener('error',e=>log('error',{message:String(e.message||'Unknown'),file:String(e.filename||'')}),true);addEventListener('unhandledrejection',e=>log('rejection',{message:String(e.reason?.message||e.reason||'Unknown')}),true);addEventListener('load',()=>{R=true;boot('ready');log('ready')},{once:true});addEventListener('pagehide',()=>boot('closed',true));setInterval(()=>{const n=performance.now(),g=n-L;if(g>5000)log('stall',{gapMs:Math.round(g)});L=n},1000);setTimeout(()=>{if(!R)log('boot_timeout')},15000);window.__DLR=window.__DELIONARYO_APP_HEALTH__={status:()=>({app:A,ready:R,session:S,boot:rd('boot',null),events:rd('events',[])})}})();</script>
     <link rel="stylesheet" href="./src/styles.css">
 </head>
 <body>
