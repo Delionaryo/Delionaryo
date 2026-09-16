@@ -78,8 +78,8 @@ export default function handler(_req:any,res:any){
 </div>
 <script>
 (function(){
-  var SUPABASE='https://tordvwlrtwxlbuuzgklt.supabase.co';
-  var KEY='sb_publishable_s_trbtJvrqcTxDBs_7yyTg_57wHs3sW';
+  var SUPABASE='https://haobyqmpgrtmmjotjzpd.supabase.co';
+  var KEY='sb_publishable_uHn6cOZGe2zQq3QHg_rEdw_M_pU0URb';
   var form=document.getElementById('startAccountForm');
   var btn=document.getElementById('startCreateBtn');
   var msg=document.getElementById('startAccountMsg');
