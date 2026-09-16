@@ -36,10 +36,10 @@
         <aside class="panel">
           <small>OFFICIAL ACCESS FLOW</small><h2>Start here. One public registration point.</h2>
           <div class="flow">
-            <div class="step"><div class="num">1</div><div><b>Create Your Free Account</b><span>Register here on DELIONARYO Start with your name, mobile number, email and password.</span></div></div>
-            <div class="step"><div class="num">2</div><div><b>Lead & Learning Connection</b><span>Your registration is recorded in DELIONARYO and connected to the educational nurturing system.</span></div></div>
-            <div class="step"><div class="num">3</div><div><b>Learn and Explore</b><span>Use public learning and browse DELIONARYO products and services.</span></div></div>
-            <div class="step"><div class="num">4</div><div><b>Purchase When Ready</b><span>Verified purchases connect automatically to your DELIONARYO account.</span></div></div>
+            <div class="step"><div class="num">1</div><div><b>Create Your Free Account</b><span>Register with your name, mobile number, email and password.</span></div></div>
+            <div class="step"><div class="num">2</div><div><b>Verify Your Primary Mobile</b><span>Your mobile number becomes active only after the SMS OTP is verified.</span></div></div>
+            <div class="step"><div class="num">3</div><div><b>One Member · One Wallet</b><span>Verified identity is linked to one permanent Core member and one Wallet account.</span></div></div>
+            <div class="step"><div class="num">4</div><div><b>Use the Ecosystem</b><span>The same identity is used across DELIONARYO applications.</span></div></div>
           </div>
         </aside>
       </section>
@@ -49,8 +49,8 @@
           <div class="registerInfo">
             <div class="eyebrow">OFFICIAL ACCOUNT CREATION</div>
             <h2>Create your DELIONARYO account.</h2>
-            <p>This Start Page is the official public registration point. Your <strong>mobile number is your primary identity</strong>, while your email is used for account access and DELIONARYO educational nurturing.</p>
-            <p>If you already have a DELIONARYO account, use <strong>Recover Existing Account</strong> instead of creating a duplicate account.</p>
+            <p>This Start Page is the official public registration point. Your <strong>verified mobile number is your primary access identity</strong>. Your permanent Core member ID and Wallet account remain the same even if your mobile number changes later through an approved recovery flow.</p>
+            <p>If you already have a DELIONARYO account, use <strong>Existing Account / Verify Phone</strong>. Do not create another account.</p>
           </div>
           <form id="startAccountForm" class="accountForm" novalidate>
             <label class="field"><span>FIRST NAME</span><input id="startFirstName" autocomplete="given-name" maxlength="80" required placeholder="First name"></label>
@@ -59,11 +59,33 @@
             <label class="field"><span>EMAIL ADDRESS</span><input id="startEmail" type="email" autocomplete="email" maxlength="320" required placeholder="you@example.com"></label>
             <label class="field"><span>CREATE PASSWORD</span><input id="startPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="At least 6 characters"></label>
             <label class="field"><span>CONFIRM PASSWORD</span><input id="startConfirm" type="password" autocomplete="new-password" minlength="6" required placeholder="Repeat password"></label>
-            <p class="formNote">By creating an account, you may receive DELIONARYO account, learning and educational messages. You can unsubscribe from marketing emails at any time.</p>
+            <p class="formNote">The mobile number is not treated as verified until the SMS OTP succeeds. By creating an account, you may receive DELIONARYO account, learning and educational messages.</p>
             <button id="startCreateBtn" class="primary" type="submit">CREATE FREE ACCOUNT →</button>
             <p id="startAccountMsg" class="formMsg" role="status" aria-live="polite"></p>
+
+            <div id="phoneVerifyBox" class="recoveryBox" hidden>
+              <p class="recoveryTitle">Verify your primary mobile number.</p>
+              <p class="recoveryText">We will send an SMS code to the mobile number you enter. Verification links the current authenticated account to the Core member and its single Wallet account. It does not create a second Wallet.</p>
+              <label class="field"><span>MOBILE NUMBER</span><input id="verifyPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="18" placeholder="09XXXXXXXXX"></label>
+              <button id="sendPhoneOtpBtn" class="primary" type="button">SEND SMS CODE</button>
+              <label id="phoneOtpField" class="field" hidden><span>6-DIGIT SMS CODE</span><input id="phoneOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></label>
+              <button id="verifyPhoneOtpBtn" class="primary" type="button" hidden>VERIFY PRIMARY MOBILE</button>
+              <p id="phoneMsg" class="formMsg" role="status" aria-live="polite"></p>
+            </div>
+
             <div class="recoveryDivider">EXISTING ACCOUNT</div>
-            <button id="openRecoveryBtn" class="secondary" type="button">RECOVER EXISTING ACCOUNT</button>
+            <button id="openExistingBtn" class="secondary" type="button">EXISTING ACCOUNT / VERIFY PHONE</button>
+            <div id="existingLoginBox" class="recoveryBox" hidden>
+              <p class="recoveryTitle">Use the account you already have.</p>
+              <p class="recoveryText">Sign in first. We will then attach and verify your primary mobile on this same Auth user, Core member and Wallet account.</p>
+              <label class="field"><span>ACCOUNT EMAIL</span><input id="existingEmail" type="email" autocomplete="email" maxlength="320" placeholder="you@example.com"></label>
+              <label class="field"><span>PASSWORD</span><input id="existingPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Your current password"></label>
+              <label class="field"><span>PRIMARY MOBILE</span><input id="existingPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="18" placeholder="09XXXXXXXXX"></label>
+              <button id="existingLoginBtn" class="primary" type="button">SIGN IN & VERIFY PHONE</button>
+              <p id="existingMsg" class="formMsg" role="status" aria-live="polite"></p>
+              <button id="openRecoveryBtn" class="secondary" type="button">FORGOT PASSWORD / RECOVER ACCOUNT</button>
+            </div>
+
             <div id="recoveryRequestBox" class="recoveryBox" hidden>
               <p class="recoveryTitle">Recover or activate your existing DELIONARYO account.</p>
               <p class="recoveryText">Enter the email already attached to the account. We will send a secure password recovery link. This keeps the same account ID and existing data.</p>
@@ -73,20 +95,19 @@
             </div>
             <div id="passwordResetBox" class="recoveryBox" hidden>
               <p class="recoveryTitle">Set a new DELIONARYO password.</p>
-              <p class="recoveryText">The secure recovery link has verified this existing account. Set the password you will use to sign in to DELIONARYO Economy.</p>
+              <p class="recoveryText">The secure recovery link has verified this existing account. Set your password, then verify your primary mobile on the same account.</p>
               <label class="field"><span>NEW PASSWORD</span><input id="recoveryPassword" type="password" autocomplete="new-password" minlength="6" placeholder="At least 6 characters"></label>
               <label class="field"><span>CONFIRM NEW PASSWORD</span><input id="recoveryConfirm" type="password" autocomplete="new-password" minlength="6" placeholder="Repeat password"></label>
-              <button id="saveRecoveryPasswordBtn" class="primary" type="button">ACTIVATE ACCOUNT & SAVE PASSWORD</button>
+              <button id="saveRecoveryPasswordBtn" class="primary" type="button">SAVE PASSWORD & VERIFY PHONE</button>
               <p id="resetMsg" class="formMsg" role="status" aria-live="polite"></p>
-              <a class="economyLink" href="https://economy.gapcreation.space/">OPEN DELIONARYO ECONOMY →</a>
             </div>
           </form>
         </div>
       </section>
 
-      <section class="section"><h2>One ecosystem. Clear progression.</h2><p>The public app and account registration remain open while private applications are isolated for stability testing.</p><div class="cards"><article class="card"><b>Learn</b><p>Build financial understanding and transformation principles.</p></article><article class="card"><b>Execute</b><p>Apply learning through public tools and marketplace activity as available.</p></article><article class="card"><b>Steward</b><p>Measure progress, manage resources and multiply responsibly.</p></article></div></section>
+      <section class="section"><h2>One ecosystem. One identity. One Wallet integrity.</h2><p>DELIONARYO applications remain integrated while the Wallet Core is the single financial authority.</p><div class="cards"><article class="card"><b>Identity</b><p>Verified primary mobile maps to one permanent member identity.</p></article><article class="card"><b>Wallet</b><p>One Wallet account is the financial integrity backbone across apps.</p></article><article class="card"><b>Scale</b><p>Apps share Core identity without creating duplicate balances.</p></article></div></section>
     </main>
-    <footer class="footer"><span>© 2026 DELIONARYO</span><span>Official public entry point · Education → Execution → Transformation</span></footer>
+    <footer class="footer"><span>© 2026 DELIONARYO</span><span>Official public entry point · Identity → Wallet → Ecosystem</span></footer>
   </div>
   <script>
     if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/start/sw.js',{scope:'/start/'}).catch(console.error));}
@@ -104,9 +125,24 @@
     const START_URL='https://app.gapcreation.space/start/';
     const RECOVERY_REDIRECT=`${START_URL}?mode=recovery`;
     const supabase=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+
     const form=document.getElementById('startAccountForm');
     const btn=document.getElementById('startCreateBtn');
     const msg=document.getElementById('startAccountMsg');
+    const phoneVerifyBox=document.getElementById('phoneVerifyBox');
+    const verifyPhone=document.getElementById('verifyPhone');
+    const sendPhoneOtpBtn=document.getElementById('sendPhoneOtpBtn');
+    const phoneOtpField=document.getElementById('phoneOtpField');
+    const phoneOtp=document.getElementById('phoneOtp');
+    const verifyPhoneOtpBtn=document.getElementById('verifyPhoneOtpBtn');
+    const phoneMsg=document.getElementById('phoneMsg');
+    const openExistingBtn=document.getElementById('openExistingBtn');
+    const existingLoginBox=document.getElementById('existingLoginBox');
+    const existingEmail=document.getElementById('existingEmail');
+    const existingPassword=document.getElementById('existingPassword');
+    const existingPhone=document.getElementById('existingPhone');
+    const existingLoginBtn=document.getElementById('existingLoginBtn');
+    const existingMsg=document.getElementById('existingMsg');
     const openRecoveryBtn=document.getElementById('openRecoveryBtn');
     const recoveryRequestBox=document.getElementById('recoveryRequestBox');
     const passwordResetBox=document.getElementById('passwordResetBox');
@@ -117,11 +153,14 @@
     const recoveryConfirm=document.getElementById('recoveryConfirm');
     const saveRecoveryPasswordBtn=document.getElementById('saveRecoveryPasswordBtn');
     const resetMsg=document.getElementById('resetMsg');
+    let pendingPhone='';
+
     const setMsg=(text,type='')=>{msg.textContent=text;msg.className='formMsg '+type};
+    const setPhoneMsg=(text,type='')=>{phoneMsg.textContent=text;phoneMsg.className='formMsg '+type};
+    const setExistingMsg=(text,type='')=>{existingMsg.textContent=text;existingMsg.className='formMsg '+type};
     const setRecoveryMsg=(text,type='')=>{recoveryMsg.textContent=text;recoveryMsg.className='formMsg '+type};
     const setResetMsg=(text,type='')=>{resetMsg.textContent=text;resetMsg.className='formMsg '+type};
-    function showRecoveryRequest(){recoveryRequestBox.hidden=false;passwordResetBox.hidden=true;recoveryRequestBox.scrollIntoView({behavior:'smooth',block:'center'});}
-    function showPasswordReset(){recoveryRequestBox.hidden=true;passwordResetBox.hidden=false;openRecoveryBtn.hidden=true;passwordResetBox.scrollIntoView({behavior:'smooth',block:'center'});}
+
     function normalizePHMobile(value){
       const raw=String(value||'').trim();const digits=raw.replace(/\D/g,'');
       if(/^09\d{9}$/.test(digits))return `+63${digits.slice(1)}`;
@@ -130,6 +169,16 @@
       if(raw.startsWith('+')&&/^[1-9]\d{7,14}$/.test(digits))return `+${digits}`;
       return '';
     }
+    function localPHDisplay(phone){return phone?.startsWith('+63')?`0${phone.slice(3)}`:phone||'';}
+    function showPhoneVerification(phone=''){
+      phoneVerifyBox.hidden=false;
+      if(phone)verifyPhone.value=localPHDisplay(phone);
+      phoneVerifyBox.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    function showExistingLogin(){existingLoginBox.hidden=false;existingLoginBox.scrollIntoView({behavior:'smooth',block:'center'});}
+    function showRecoveryRequest(){recoveryRequestBox.hidden=false;passwordResetBox.hidden=true;recoveryRequestBox.scrollIntoView({behavior:'smooth',block:'center'});}
+    function showPasswordReset(){recoveryRequestBox.hidden=true;passwordResetBox.hidden=false;passwordResetBox.scrollIntoView({behavior:'smooth',block:'center'});}
+
     async function syncLead(firstName,email){
       const qp=new URLSearchParams(location.search);
       const campaign=qp.get('utm_campaign')||qp.get('campaign')||'';
@@ -139,6 +188,82 @@
       if(!response.ok)throw new Error('Lead nurturing connection failed');
       return response;
     }
+
+    async function confirmCoreProvisioning(){
+      const {data:{user}}=await supabase.auth.getUser();
+      if(!user?.id)throw new Error('Verified session unavailable. Please sign in again.');
+      const {data:member,error:memberError}=await supabase.from('core_members').select('id').eq('auth_user_id',user.id).maybeSingle();
+      if(memberError)throw memberError;
+      if(!member?.id)throw new Error('Phone verified, but Core member provisioning is still pending. Please refresh in a moment.');
+      const {data:wallet,error:walletError}=await supabase.from('wallet_accounts').select('id,status').eq('member_id',member.id).maybeSingle();
+      if(walletError)throw walletError;
+      if(!wallet?.id)throw new Error('Phone verified, but Wallet provisioning is still pending. Please refresh in a moment.');
+      return {member,wallet};
+    }
+
+    async function beginPhoneVerification(inputPhone){
+      const phone=normalizePHMobile(inputPhone);
+      if(!phone)throw new Error('Enter a valid Philippine mobile number, for example 09XXXXXXXXX.');
+      const {data:{session}}=await supabase.auth.getSession();
+      if(!session)throw new Error('Sign in to the existing account first. Phone verification never creates a second account.');
+      const {data:{user}}=await supabase.auth.getUser();
+      if(user?.phone===phone&&user?.phone_confirmed_at){
+        pendingPhone='';
+        showPhoneVerification(phone);
+        phoneOtpField.hidden=true;verifyPhoneOtpBtn.hidden=true;
+        const core=await confirmCoreProvisioning();
+        setPhoneMsg(`Primary mobile is already verified. Core member and Wallet are active (${core.wallet.status}).`,'success');
+        return;
+      }
+      const {error}=await supabase.auth.updateUser({phone});
+      if(error)throw error;
+      pendingPhone=phone;
+      showPhoneVerification(phone);
+      phoneOtpField.hidden=false;verifyPhoneOtpBtn.hidden=false;
+      setPhoneMsg('SMS code sent. Enter the 6-digit code to verify this mobile on the same account.','success');
+      phoneOtp.focus();
+    }
+
+    sendPhoneOtpBtn.addEventListener('click',async()=>{
+      sendPhoneOtpBtn.disabled=true;setPhoneMsg('');
+      try{await beginPhoneVerification(verifyPhone.value)}catch(error){setPhoneMsg(String(error?.message||'Unable to send SMS code.'),'error')}
+      finally{sendPhoneOtpBtn.disabled=false}
+    });
+    verifyPhoneOtpBtn.addEventListener('click',async()=>{
+      const token=phoneOtp.value.replace(/\D/g,'');
+      const phone=pendingPhone||normalizePHMobile(verifyPhone.value);
+      if(!phone)return setPhoneMsg('Send the SMS code first.','error');
+      if(!/^\d{6}$/.test(token))return setPhoneMsg('Enter the 6-digit SMS code.','error');
+      verifyPhoneOtpBtn.disabled=true;verifyPhoneOtpBtn.textContent='VERIFYING…';setPhoneMsg('');
+      try{
+        const {error}=await supabase.auth.verifyOtp({phone,token,type:'phone_change'});
+        if(error)throw error;
+        const core=await confirmCoreProvisioning();
+        pendingPhone='';phoneOtp.value='';phoneOtpField.hidden=true;verifyPhoneOtpBtn.hidden=true;
+        setPhoneMsg(`Primary mobile verified. This same member is linked to one active Wallet account (${core.wallet.status}).`,'success');
+      }catch(error){setPhoneMsg(String(error?.message||'Unable to verify the SMS code.'),'error')}
+      finally{verifyPhoneOtpBtn.disabled=false;verifyPhoneOtpBtn.textContent='VERIFY PRIMARY MOBILE'}
+    });
+
+    openExistingBtn.addEventListener('click',showExistingLogin);
+    existingLoginBtn.addEventListener('click',async()=>{
+      const email=existingEmail.value.trim().toLowerCase();
+      const password=existingPassword.value;
+      const phone=normalizePHMobile(existingPhone.value);
+      if(!email||!existingEmail.checkValidity())return setExistingMsg('Enter the email attached to your existing account.','error');
+      if(password.length<6)return setExistingMsg('Enter your current password.','error');
+      if(!phone)return setExistingMsg('Enter your primary mobile number.','error');
+      existingLoginBtn.disabled=true;existingLoginBtn.textContent='SIGNING IN…';setExistingMsg('');
+      try{
+        await supabase.auth.signOut();
+        const {error}=await supabase.auth.signInWithPassword({email,password});
+        if(error)throw error;
+        setExistingMsg('Existing account confirmed. Sending phone verification on this same account…','success');
+        await beginPhoneVerification(phone);
+      }catch(error){setExistingMsg(String(error?.message||'Unable to sign in.'),'error')}
+      finally{existingLoginBtn.disabled=false;existingLoginBtn.textContent='SIGN IN & VERIFY PHONE'}
+    });
+
     openRecoveryBtn.addEventListener('click',showRecoveryRequest);
     sendRecoveryBtn.addEventListener('click',async()=>{
       const email=recoveryEmail.value.trim().toLowerCase();
@@ -147,12 +272,9 @@
       try{
         const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:RECOVERY_REDIRECT});
         if(error)throw error;
-        setRecoveryMsg('Recovery link sent. Open the email and use the secure link to set your new DELIONARYO password.','success');
-      }catch(error){
-        setRecoveryMsg(String(error?.message||'Unable to send recovery link.'),'error');
-      }finally{
-        sendRecoveryBtn.disabled=false;sendRecoveryBtn.textContent='SEND RECOVERY LINK';
-      }
+        setRecoveryMsg('Recovery link sent. Open the email and use the secure link to reset your password.','success');
+      }catch(error){setRecoveryMsg(String(error?.message||'Unable to send recovery link.'),'error')}
+      finally{sendRecoveryBtn.disabled=false;sendRecoveryBtn.textContent='SEND RECOVERY LINK'}
     });
     saveRecoveryPasswordBtn.addEventListener('click',async()=>{
       const password=recoveryPassword.value;
@@ -165,24 +287,23 @@
         if(!session)throw new Error('Recovery session expired. Request a new recovery link.');
         const {error}=await supabase.auth.updateUser({password,data:{account_recovered_via:'delionaryo-start',account_recovered_at:new Date().toISOString()}});
         if(error)throw error;
-        setResetMsg('Password saved. Your existing DELIONARYO account is activated for Economy login.','success');
+        setResetMsg('Password saved. Verify your primary mobile below on this same account.','success');
         recoveryPassword.value='';recoveryConfirm.value='';
-        await supabase.auth.signOut();
-      }catch(error){
-        setResetMsg(String(error?.message||'Unable to save the new password.'),'error');
-      }finally{
-        saveRecoveryPasswordBtn.disabled=false;saveRecoveryPasswordBtn.textContent='ACTIVATE ACCOUNT & SAVE PASSWORD';
-      }
+        showPhoneVerification();
+      }catch(error){setResetMsg(String(error?.message||'Unable to save the new password.'),'error')}
+      finally{saveRecoveryPasswordBtn.disabled=false;saveRecoveryPasswordBtn.textContent='SAVE PASSWORD & VERIFY PHONE'}
     });
+
     supabase.auth.onAuthStateChange((event,session)=>{
-      if(event==='PASSWORD_RECOVERY'&&session){showPasswordReset();setResetMsg('Account verified. Set your new password.','success');}
+      if(event==='PASSWORD_RECOVERY'&&session){showPasswordReset();setResetMsg('Account verified. Set your new password, then verify your primary mobile.','success');}
     });
     const mode=new URLSearchParams(location.search).get('mode');
     if(mode==='recovery'){
       const {data:{session}}=await supabase.auth.getSession();
-      if(session){showPasswordReset();setResetMsg('Account verified. Set your new password.','success');}
+      if(session){showPasswordReset();setResetMsg('Account verified. Set your new password, then verify your primary mobile.','success');}
       else{showRecoveryRequest();setRecoveryMsg('Recovery session is not active yet. Open the secure link from your recovery email, or request a new link.','error');}
     }
+
     form.addEventListener('submit',async event=>{
       event.preventDefault();setMsg('');
       const firstName=document.getElementById('startFirstName').value.trim();
@@ -201,24 +322,32 @@
       try{
         await supabase.auth.signOut();
         const fullName=`${firstName} ${lastName}`.replace(/\s+/g,' ').trim();
-        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:firstName,last_name:lastName,full_name:fullName,phone:mobile,registration_source:'app.gapcreation.space/start',registration_version:6,buyer_source:'free-account'},emailRedirectTo:START_URL}});
+        const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:firstName,last_name:lastName,full_name:fullName,submitted_phone_e164:mobile,phone_verification_status:'PENDING',registration_source:'app.gapcreation.space/start',registration_version:7,buyer_source:'free-account'},emailRedirectTo:START_URL}});
         if(error)throw error;
         try{await syncLead(firstName,email)}catch(syncError){console.error(syncError)}
         if(data.session){
-          setMsg('Account created successfully. You can now use the same account to sign in to DELIONARYO Economy.','success');
+          setMsg('Account created. Complete SMS verification now to activate your primary identity and Core Wallet link.','success');
+          btn.textContent='ACCOUNT CREATED';
+          await beginPhoneVerification(mobile);
         }else{
-          setMsg('Account created. Check your email if confirmation is required.','success');
+          setMsg('Account created. Confirm your email if required, then use Existing Account / Verify Phone to complete SMS verification. Core Wallet provisioning waits for verified phone identity.','success');
+          btn.textContent='ACCOUNT CREATED';
+          existingEmail.value=email;existingPhone.value=localPHDisplay(mobile);showExistingLogin();
         }
-        btn.textContent='ACCOUNT CREATED';
-        return;
       }catch(error){
         const raw=String(error?.message||'Unable to create account.');
-        if(/duplicate|already registered|already exists/i.test(raw))setMsg('This email is already registered. Use Recover Existing Account below instead of creating a duplicate.','error');
+        if(/duplicate|already registered|already exists/i.test(raw)){setMsg('This account already exists. Use Existing Account / Verify Phone instead of creating a duplicate.','error');existingEmail.value=email;existingPhone.value=localPHDisplay(mobile);showExistingLogin();}
         else setMsg(raw,'error');
-      }finally{
-        if(btn.textContent!=='ACCOUNT CREATED'){btn.disabled=false;btn.textContent='CREATE FREE ACCOUNT →'}
-      }
+      }finally{if(btn.textContent!=='ACCOUNT CREATED'){btn.disabled=false;btn.textContent='CREATE FREE ACCOUNT →'}}
     });
+
+    const {data:{session:initialSession}}=await supabase.auth.getSession();
+    if(initialSession){
+      const {data:{user}}=await supabase.auth.getUser();
+      if(user?.phone&&user?.phone_confirmed_at){
+        try{const core=await confirmCoreProvisioning();showPhoneVerification(user.phone);setPhoneMsg(`Signed in. Primary mobile verified and Wallet is ${core.wallet.status}.`,'success')}catch(error){console.error(error)}
+      }
+    }
   </script>
 </body>
 </html>
