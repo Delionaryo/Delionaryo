@@ -83,7 +83,7 @@ export default async function handler(req:any,res:any){
     html=html.replace("  window.addEventListener('beforeinstallprompt',function(event){event.preventDefault();});",recoveryScript+"\n  window.addEventListener('beforeinstallprompt',function(event){event.preventDefault();});");
 
     res.setHeader('Content-Type','text/html; charset=utf-8');
-    res.setHeader('Cache-Control','public, max-age=30, s-maxage=60, stale-while-revalidate=300');
+    res.setHeader('Cache-Control','private, no-store, max-age=0');
     res.status(200).send(html);
   }catch(error:any){
     console.error('start-v2',error);
