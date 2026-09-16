@@ -1,0 +1,51 @@
+{
+  "campaign_id": "module1_carousel_2026_09",
+  "campaign_name": "DELIONARYO Module 1 - Economic & Financial Intelligence",
+  "format": "messaging_ads_carousel",
+  "status": "READY_FOR_META_UPLOAD",
+  "landing_page": "https://app.gapcreation.space/start",
+  "attribution_rule": "Start captures utm_source and utm_campaign during account creation so every card uses a unique campaign value.",
+  "flow": "Carousel Card -> Create Free Account -> DELIONARYO Start -> DELIONARYO Economy -> Academy Module 1",
+  "cards": [
+    {
+      "card": 1,
+      "role": "ATTENTION",
+      "headline": "HINDI SAPAT NA KUMITA.",
+      "message": "Kailangan marunong kang magdesisyon sa pera.",
+      "cta": "LEARN MORE",
+      "destination": "https://app.gapcreation.space/start?utm_source=meta&utm_campaign=module1_carousel_c1_attention"
+    },
+    {
+      "card": 2,
+      "role": "INTEREST",
+      "headline": "BAKIT NAWAWALA AGAD ANG PERA?",
+      "message": "Cash flow, opportunity cost, inflation at financial risk affect everyday money decisions.",
+      "cta": "LEARN MORE",
+      "destination": "https://app.gapcreation.space/start?utm_source=meta&utm_campaign=module1_carousel_c2_problem"
+    },
+    {
+      "card": 3,
+      "role": "INTEREST",
+      "headline": "MODULE 1 - ECONOMIC & FINANCIAL INTELLIGENCE",
+      "message": "Money and value, opportunity cost, inflation, cash flow, budgeting, assets, liabilities, liquidity, savings, credit and unit economics.",
+      "cta": "VIEW MODULE 1",
+      "destination": "https://app.gapcreation.space/start?utm_source=meta&utm_campaign=module1_carousel_c3_learning"
+    },
+    {
+      "card": 4,
+      "role": "DESIRE",
+      "headline": "BUILD YOUR FINANCIAL FOUNDATION.",
+      "message": "Build clearer cash flow, stronger financial decision-making, savings discipline and a 90-Day Financial Stability Plan.",
+      "cta": "START LEARNING",
+      "destination": "https://app.gapcreation.space/start?utm_source=meta&utm_campaign=module1_carousel_c4_desire"
+    },
+    {
+      "card": 5,
+      "role": "ACTION",
+      "headline": "START WITH MODULE 1.",
+      "message": "Create your free DELIONARYO account. Module 1 may be eligible for DELIONARYO Credit, subject to approved Credit availability and account rules.",
+      "cta": "CREATE FREE ACCOUNT",
+      "destination": "https://app.gapcreation.space/start?utm_source=meta&utm_campaign=module1_carousel_c5_action"
+    }
+  ]
+}
