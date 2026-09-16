@@ -1,4 +1,4 @@
-const CACHE='delionaryo-start-v2';
+const CACHE='delionaryo-start-v3';
 const CORE=[
   '/start/',
   '/start/index.html',
