@@ -108,6 +108,15 @@ function attributionParams(extra:Record<string,string|null|undefined>={}){
   return q;
 }
 
+async function bindMarketplaceAttribution(item:Partial<CartItem>|Product){
+  const listing=('listing_id'in item?item.listing_id:null)||null;
+  const ref=attribution.ref||'';
+  if(!listing||!/^DLR-[A-F0-9]{16}$/.test(ref))return;
+  try{
+    await fetch('/api/public-attribution',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({listing_id:listing,product_id:item.product_id||null,ref,source_video_id:'video_id'in item?item.video_id||attribution.video_id:attribution.video_id,campaign_id:'campaign_id'in item?item.campaign_id||attribution.campaign_id:attribution.campaign_id})});
+  }catch{}
+}
+
 function marketplaceUrl(item:Partial<CartItem>|Product){
   const q=attributionParams({
     campaign_id:'campaign_id'in item?item.campaign_id||null:null,
@@ -263,7 +272,12 @@ function openProduct(product:Product,campaign:Campaign|null=null){
   layer.querySelector('.pc-close')?.addEventListener('click',close);
   layer.addEventListener('mousedown',e=>{if(e.target===layer)close()});
   layer.querySelector('[data-modal-add]')?.addEventListener('click',()=>addToCart(product,campaign));
-  layer.querySelector('[data-marketplace-buy]')?.addEventListener('click',()=>track('CHECKOUT_STARTED',{product_id:product.product_id,campaign_id:campaign?.campaign_id,video_id:campaign?.video_id,store_id:product.store_id,metadata:{handoff:'MARKETPLACE',listing_id:product.listing_id}}));
+  layer.querySelector('[data-marketplace-buy]')?.addEventListener('click',async(event)=>{
+    event.preventDefault();
+    track('CHECKOUT_STARTED',{product_id:product.product_id,campaign_id:campaign?.campaign_id,video_id:campaign?.video_id,store_id:product.store_id,seller_affiliate_id:campaign?.seller_affiliate_id,metadata:{handoff:'MARKETPLACE',listing_id:product.listing_id}});
+    await bindMarketplaceAttribution({...product,campaign_id:campaign?.campaign_id||attribution.campaign_id,video_id:campaign?.video_id||attribution.video_id} as any);
+    location.href=marketplaceUrl({...product,campaign_id:campaign?.campaign_id||attribution.campaign_id,video_id:campaign?.video_id||attribution.video_id} as any);
+  });
   document.body.appendChild(layer);
 }
 
@@ -320,9 +334,12 @@ function openCart(){
   layer.querySelectorAll<HTMLElement>('[data-remove-cart]').forEach(btn=>btn.addEventListener('click',()=>{
     const i=Number(btn.dataset.removeCart);state.cart.splice(i,1);saveCart();openCart();
   }));
-  layer.querySelector('[data-cart-checkout]')?.addEventListener('click',()=>{
+  layer.querySelector('[data-cart-checkout]')?.addEventListener('click',async(event)=>{
+    event.preventDefault();
     const first=state.cart[0];if(!first)return;
     track('CHECKOUT_STARTED',{product_id:first.product_id,campaign_id:first.campaign_id,video_id:first.video_id,store_id:first.store_id,seller_affiliate_id:first.seller_affiliate_id,metadata:{handoff:'MARKETPLACE',cart_items:state.cart.length,listing_id:first.listing_id}});
+    await bindMarketplaceAttribution(first);
+    location.href=marketplaceUrl(first);
   });
   document.body.appendChild(layer);
 }
