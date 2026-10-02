@@ -419,6 +419,11 @@ export function mountPublicCommerce(){
       </div>
       <nav class="pc-nav" aria-label="DELIONARYO commerce navigation"><a class="active" href="${WATCH}">▶ Watch &amp; Earn</a><a href="${MARKET}">▣ Shop</a><a href="#public-categories">▦ Categories</a><a href="${MARKET}">◆ Deals</a><a href="${MARKET}">♥ For You</a><button type="button" data-public-cart>🛒 Cart</button></nav>
     </header>
+    <aside class="pc-watch-eligibility" aria-label="Watch and Earn eligibility">
+      <b>✓ WATCH &amp; EARN REWARDS</b>
+      <span>Eligible for verified DELIONARYO consumer member accounts.</span>
+      <small>Public visitors can watch and discover. Sign in or create an account to earn. Seller/store-owner accounts are not eligible for viewer rewards.</small>
+    </aside>
     <section class="pc-hero">
       <div class="pc-hero-copy"><span>DELIONARYO E-COMMERCE</span><h1>Watch. Discover.<br><em>Shop Real Products.</em></h1><p>Manood ng approved product videos, mag-discover ng tunay na DELIONARYO products, at mag-add to cart nang walang login wall. Sign in is requested only when checkout or another protected commerce action needs it.</p><div class="pc-hero-icons"><span><b>▶</b>Watch<small>Product Videos</small></span><span><b>▣</b>Discover<small>Real Products</small></span><span><b>◆</b>Buy<small>Marketplace Checkout</small></span></div><div class="pc-hero-actions"><a href="${WATCH}">Start Watching <b>›</b></a><a class="ghost" href="${MARKET}">Open Marketplace</a></div></div>
       <div id="pcHeroVisual" class="pc-hero-visual"><div class="pc-feature-empty"><b>Real products. Verified data.</b><span>No fake faces, ratings, sold counts or discounts are inserted into production.</span></div></div>
