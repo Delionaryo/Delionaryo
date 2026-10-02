@@ -402,11 +402,13 @@ async function load(){
 }
 
 export function mountPublicCommerce(){
-  const main=document.querySelector<HTMLElement>('main');
-  const legacyHero=document.querySelector<HTMLElement>('#top');
-  if(!main||!legacyHero||document.querySelector('#watch-and-earn'))return;
+  const app=document.querySelector<HTMLDivElement>('#app');
+  if(!app||document.querySelector('#watch-and-earn'))return;
   document.body.classList.add('pc-public-home');
-  legacyHero.dataset.secondaryAcquisition='true';
+  document.title='DELIONARYO · Watch · Discover · Shop';
+  const main=document.createElement('main');
+  main.className='pc-public-root';
+  app.replaceChildren(main);
   const section=document.createElement('section');
   section.id='watch-and-earn';section.className='pc-shell';
   section.innerHTML=`<header class="pc-app-header">
@@ -428,7 +430,7 @@ export function mountPublicCommerce(){
     <section id="public-deals" class="pc-section pc-deals"><header><div><small>DEALS</small><h2>Verified Deals for You</h2><p>Discount treatment appears only when verified source data exists</p></div></header><div id="pcDeals"></div></section>
     <footer class="pc-trust"><span><b>✓</b><strong>Published Products</strong><small>Real catalogue items only</small></span><span><b>▣</b><strong>Secure Checkout</strong><small>Existing Marketplace engine</small></span><span><b>✓</b><strong>Verified Metrics</strong><small>Buyer ratings and sold counts only when verified</small></span><span><b>●</b><strong>Seller Attribution</strong><small>Affiliate attribution preserved</small></span></footer>
     <nav class="pc-mobile-bottom" aria-label="Mobile commerce navigation"><a href="#watch-and-earn"><b>▶</b><span>Watch</span></a><a href="#public-shop"><b>▣</b><span>Shop</span></a><a href="#public-categories"><b>▦</b><span>Categories</span></a><button type="button" data-public-cart><b>🛒</b><span>Cart</span></button><a href="/start/login.html"><b>●</b><span>Account</span></a></nav>`;
-  legacyHero.before(section);
+  main.appendChild(section);
   syncCartBadge();
   wire();
   load();
