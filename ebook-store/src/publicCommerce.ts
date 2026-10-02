@@ -383,7 +383,7 @@ function wire(){
 function updateNav(){
   const navLinks=document.querySelector<HTMLElement>('header.sticky > div > div')||document.querySelector<HTMLElement>('nav > div > div');
   if(!navLinks)return;
-  navLinks.innerHTML=`<a href="#watch-and-earn">WATCH &amp; EARN</a><a href="#public-shop">SHOP</a><a href="#public-categories">CATEGORIES</a><a href="#public-deals">DEALS</a>`;
+  navLinks.innerHTML=`<a href="${WATCH}">WATCH &amp; EARN</a><a href="#public-shop">SHOP</a><a href="#public-categories">CATEGORIES</a><a href="#public-deals">DEALS</a>`;
 }
 
 async function load(){
@@ -417,10 +417,10 @@ export function mountPublicCommerce(){
         <label class="pc-main-search"><span>⌕</span><input id="pcSearch" placeholder="Search products, videos or categories…" autocomplete="off" aria-label="Search DELIONARYO"></label>
         <div class="pc-account-actions"><button type="button" class="pc-cart-button" data-public-cart>🛒 <span>Cart</span><i data-public-cart-count hidden>0</i></button><a class="pc-signin" href="/start/login.html">Sign In</a><a class="pc-create" href="/start#create-account">Create Account</a></div>
       </div>
-      <nav class="pc-nav" aria-label="DELIONARYO commerce navigation"><a class="active" href="#watch-and-earn">▶ Watch &amp; Earn</a><a href="${MARKET}">▣ Shop</a><a href="#public-categories">▦ Categories</a><a href="${MARKET}">◆ Deals</a><a href="${MARKET}">♥ For You</a><button type="button" data-public-cart>🛒 Cart</button></nav>
+      <nav class="pc-nav" aria-label="DELIONARYO commerce navigation"><a class="active" href="${WATCH}">▶ Watch &amp; Earn</a><a href="${MARKET}">▣ Shop</a><a href="#public-categories">▦ Categories</a><a href="${MARKET}">◆ Deals</a><a href="${MARKET}">♥ For You</a><button type="button" data-public-cart>🛒 Cart</button></nav>
     </header>
     <section class="pc-hero">
-      <div class="pc-hero-copy"><span>DELIONARYO E-COMMERCE</span><h1>Watch. Discover.<br><em>Shop Real Products.</em></h1><p>Manood ng approved product videos, mag-discover ng tunay na DELIONARYO products, at mag-add to cart nang walang login wall. Sign in is requested only when checkout or another protected commerce action needs it.</p><div class="pc-hero-icons"><span><b>▶</b>Watch<small>Product Videos</small></span><span><b>▣</b>Discover<small>Real Products</small></span><span><b>◆</b>Buy<small>Marketplace Checkout</small></span></div><div class="pc-hero-actions"><a href="#pcCampaigns">Start Shopping <b>›</b></a><a class="ghost" href="${MARKET}">Open Marketplace</a></div></div>
+      <div class="pc-hero-copy"><span>DELIONARYO E-COMMERCE</span><h1>Watch. Discover.<br><em>Shop Real Products.</em></h1><p>Manood ng approved product videos, mag-discover ng tunay na DELIONARYO products, at mag-add to cart nang walang login wall. Sign in is requested only when checkout or another protected commerce action needs it.</p><div class="pc-hero-icons"><span><b>▶</b>Watch<small>Product Videos</small></span><span><b>▣</b>Discover<small>Real Products</small></span><span><b>◆</b>Buy<small>Marketplace Checkout</small></span></div><div class="pc-hero-actions"><a href="${WATCH}">Start Watching <b>›</b></a><a class="ghost" href="${MARKET}">Open Marketplace</a></div></div>
       <div id="pcHeroVisual" class="pc-hero-visual"><div class="pc-feature-empty"><b>Real products. Verified data.</b><span>No fake faces, ratings, sold counts or discounts are inserted into production.</span></div></div>
     </section>
     <section id="public-categories" class="pc-category-strip"><div id="pcCategoryRail" class="pc-category-rail"><span class="pc-loading">Loading categories…</span></div></section>
@@ -429,7 +429,7 @@ export function mountPublicCommerce(){
     <section id="public-shop" class="pc-section"><header><div><small>SHOP</small><h2>Published Products</h2><p>One canonical Product ID across discovery and commerce</p></div><a href="${MARKET}">See All</a></header><div id="pcShopGrid" class="pc-shop-grid"><div class="pc-loading">Loading published products…</div></div></section>
     <section id="public-deals" class="pc-section pc-deals"><header><div><small>DEALS</small><h2>Verified Deals for You</h2><p>Discount treatment appears only when verified source data exists</p></div></header><div id="pcDeals"></div></section>
     <footer class="pc-trust"><span><b>✓</b><strong>Published Products</strong><small>Real catalogue items only</small></span><span><b>▣</b><strong>Secure Checkout</strong><small>Existing Marketplace engine</small></span><span><b>✓</b><strong>Verified Metrics</strong><small>Buyer ratings and sold counts only when verified</small></span><span><b>●</b><strong>Seller Attribution</strong><small>Affiliate attribution preserved</small></span></footer>
-    <nav class="pc-mobile-bottom" aria-label="Mobile commerce navigation"><a href="#watch-and-earn"><b>▶</b><span>Watch</span></a><a href="${MARKET}"><b>▣</b><span>Shop</span></a><a href="#public-categories"><b>▦</b><span>Categories</span></a><button type="button" data-public-cart><b>🛒</b><span>Cart</span></button><a href="/start/login.html"><b>●</b><span>Account</span></a></nav>`;
+    <nav class="pc-mobile-bottom" aria-label="Mobile commerce navigation"><a href="${WATCH}"><b>▶</b><span>Watch</span></a><a href="${MARKET}"><b>▣</b><span>Shop</span></a><a href="#public-categories"><b>▦</b><span>Categories</span></a><button type="button" data-public-cart><b>🛒</b><span>Cart</span></button><a href="/start/login.html"><b>●</b><span>Account</span></a></nav>`;
   main.appendChild(section);
   syncCartBadge();
   wire();
