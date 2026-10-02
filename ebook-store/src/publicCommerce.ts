@@ -363,9 +363,9 @@ function wire(){
 }
 
 function updateNav(){
-  const navLinks=document.querySelector<HTMLElement>('nav > div > div');
+  const navLinks=document.querySelector<HTMLElement>('header.sticky > div > div')||document.querySelector<HTMLElement>('nav > div > div');
   if(!navLinks)return;
-  navLinks.innerHTML=`<a href="#watch-and-earn">WATCH &amp; EARN</a><a href="#public-shop">SHOP</a><a href="#public-categories">CATEGORIES</a><a href="#public-deals">DEALS</a><a href="#learning">LEARN</a><a href="${NATION}">NATION</a>`;
+  navLinks.innerHTML=`<a href="#watch-and-earn">WATCH &amp; EARN</a><a href="#public-shop">SHOP</a><a href="#public-categories">CATEGORIES</a><a href="#public-deals">DEALS</a><a href="#free-training">LEARN</a><a href="${NATION}">NATION</a>`;
 }
 
 async function load(){
