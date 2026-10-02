@@ -20,6 +20,10 @@
   ],
   "rewrites": [
     {
+      "source": "/watch/:path*",
+      "destination": "/index.html"
+    },
+    {
       "source": "/start",
       "destination": "/start/index.html"
     }
