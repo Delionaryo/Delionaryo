@@ -220,6 +220,18 @@ function filteredCampaigns(){
   });
 }
 
+function categoryIcon(name:string){
+  const n=String(name||'').toLowerCase();
+  if(/home|living|kitchen/.test(n))return '⌂';
+  if(/mobile|electronic|tech/.test(n))return '◉';
+  if(/fashion|beauty/.test(n))return '✦';
+  if(/health|fitness|sport/.test(n))return '✚';
+  if(/pet/.test(n))return '●';
+  if(/auto|vehicle/.test(n))return '◆';
+  if(/business|creator|education/.test(n))return '▦';
+  return '◇';
+}
+
 function renderDynamic(){
   const campaigns=document.querySelector<HTMLElement>('#pcCampaigns');
   const shop=document.querySelector<HTMLElement>('#pcShopGrid');
@@ -238,8 +250,14 @@ function renderDynamic(){
   shop.innerHTML=ps.length?ps.slice(0,24).map(renderProductCard).join(''):'<div class="pc-empty"><b>No matching published products.</b><span>Try another category or search.</span></div>';
   const roots=d.categories.filter(x=>!x.parent_category_id||x.category_level===1);
   const names=[...new Set((roots.length?roots:d.categories).map(x=>x.name).filter(Boolean))];
-  categories.innerHTML=['All',...names].map(name=>`<button type="button" data-category="${esc(name==='All'?'':name)}" class="${state.category===(name==='All'?'':name)?'active':''}">${esc(name)}</button>`).join('');
+  categories.innerHTML=['All',...names].map(name=>`<button type="button" data-category="${esc(name==='All'?'':name)}" class="${state.category===(name==='All'?'':name)?'active':''}"><span>${name==='All'?'▦':categoryIcon(name)}</span><b>${esc(name)}</b></button>`).join('');
   deals.innerHTML=d.deals?.length?'<div class="pc-empty"><b>Verified deals available.</b><span>Deal details come only from published source data.</span></div>':'<div class="pc-empty"><b>No verified deals right now.</b><span>DELIONARYO never invents discounts, old prices, deadlines or stock urgency.</span></div>';
+  const heroVisual=document.querySelector<HTMLElement>('#pcHeroVisual');
+  if(heroVisual){
+    const featured=ps[0]||null;
+    const img=productImage(featured);
+    heroVisual.innerHTML=featured?`<div class="pc-feature-card">${img?`<img src="${esc(img)}" alt="${esc(featured.product_name)}" decoding="async">`:'<div class="pc-feature-placeholder">D</div>'}<div><small>FEATURED REAL PRODUCT</small><h3>${esc(featured.product_name)}</h3><strong>${esc(priceOf(featured))}</strong></div></div>`:'<div class="pc-feature-empty"><b>Real products will appear here.</b><span>Only published DELIONARYO catalogue data is shown.</span></div>';
+  }
 
   cs.forEach(c=>{
     if(state.impressions.has(c.campaign_id))return;
@@ -387,26 +405,28 @@ export function mountPublicCommerce(){
   const main=document.querySelector<HTMLElement>('main');
   const legacyHero=document.querySelector<HTMLElement>('#top');
   if(!main||!legacyHero||document.querySelector('#watch-and-earn'))return;
-  updateNav();
+  document.body.classList.add('pc-public-home');
   legacyHero.dataset.secondaryAcquisition='true';
   const section=document.createElement('section');
   section.id='watch-and-earn';section.className='pc-shell';
-  section.innerHTML=`<div class="pc-topline">
-      <div><span class="pc-crown">D</span><div><b>DELIONARYO</b><small>WATCH · DISCOVER · BUY · EARN</small></div></div>
-      <button type="button" class="pc-cart-button" data-public-cart>🛒 <span>Cart</span><i data-public-cart-count hidden>0</i></button>
-    </div>
-    <div class="pc-hero">
-      <div class="pc-hero-copy"><span>SECOND ACQUISITION PORTAL</span><h1>Watch &amp; Earn.<br><em>Real Products. Real Opportunities.</em></h1>
-      <p>Discover approved videos and published DELIONARYO products without a login wall. Account verification appears only when a protected action needs it.</p>
-      <div class="pc-hero-actions"><a href="#pcCampaigns">Start Watching →</a><a class="ghost" href="#public-shop">Browse Shop</a></div></div>
-      <div class="pc-hero-flow"><b>DELIONARYO → WATCH → DISCOVER → BUY</b><span>Seller Affiliate traffic stays connected to Product ID and Campaign ID where supplied.</span></div>
-    </div>
-    <div class="pc-search"><span>⌕</span><input id="pcSearch" placeholder="Search live videos, products or categories…" autocomplete="off"></div>
-    <section id="public-categories" class="pc-section"><header><div><small>DISCOVER</small><h2>Categories</h2></div></header><div id="pcCategoryRail" class="pc-category-rail"><span class="pc-loading">Loading categories…</span></div></section>
-    <section class="pc-section"><header><div><small>WATCH &amp; EARN</small><h2>Approved videos</h2></div><a href="${WATCH}">Full rewards experience ↗</a></header><div id="pcCampaigns" class="pc-video-rail"><div class="pc-loading">Loading live Watch &amp; Earn…</div></div></section>
-    <section id="public-shop" class="pc-section"><header><div><small>SHOP</small><h2>Published products</h2></div><a href="${MARKET}">Open Marketplace ↗</a></header><div id="pcShopGrid" class="pc-shop-grid"><div class="pc-loading">Loading published products…</div></div></section>
-    <section id="public-deals" class="pc-section"><header><div><small>DEALS</small><h2>Verified offers only</h2></div></header><div id="pcDeals"></div></section>
-    <div class="pc-trust"><span>✓ Published products only</span><span>✓ Verified buyer metrics only</span><span>✓ No fabricated demand</span><span>✓ No login for discovery</span></div>`;
+  section.innerHTML=`<header class="pc-app-header">
+      <div class="pc-brand-row">
+        <a class="pc-brand" href="#watch-and-earn" aria-label="DELIONARYO home"><span class="pc-brand-mark">D</span><span><b>DELIONARYO</b><small>WATCH · DISCOVER · BUY · EARN</small></span></a>
+        <label class="pc-main-search"><span>⌕</span><input id="pcSearch" placeholder="Search products, videos or categories…" autocomplete="off" aria-label="Search DELIONARYO"></label>
+        <div class="pc-account-actions"><button type="button" class="pc-cart-button" data-public-cart>🛒 <span>Cart</span><i data-public-cart-count hidden>0</i></button><a class="pc-signin" href="/start/login.html">Sign In</a><a class="pc-create" href="/start#create-account">Create Account</a></div>
+      </div>
+      <nav class="pc-nav" aria-label="Public DELIONARYO navigation"><a class="active" href="#watch-and-earn">▶ Watch &amp; Earn</a><a href="#public-shop">▣ Shop</a><a href="#public-categories">▦ Categories</a><a href="#public-deals">◆ Deals</a><a href="#public-shop">♥ For You</a><a href="#free-training">▰ Learn</a><a href="${NATION}">● Nation</a></nav>
+    </header>
+    <section class="pc-hero">
+      <div class="pc-hero-copy"><span>PUBLIC COMMERCE DISCOVERY</span><h1>Watch &amp; Earn.<br><em>Real Products.<br>Real Opportunities.</em></h1><p>Manood ng approved videos, mag-discover ng tunay na DELIONARYO products, at mag-shop nang walang login wall. Account is requested only when a protected action needs it.</p><div class="pc-hero-icons"><span><b>▶</b>Watch<small>Approved Videos</small></span><span><b>▣</b>Discover<small>Real Products</small></span><span><b>◆</b>Shop<small>Marketplace Checkout</small></span></div><div class="pc-hero-actions"><a href="#pcCampaigns">Start Watching <b>›</b></a><a class="ghost" href="#public-shop">Browse Shop</a></div></div>
+      <div id="pcHeroVisual" class="pc-hero-visual"><div class="pc-feature-empty"><b>Real products. Verified data.</b><span>No fake faces, ratings, sold counts or discounts are inserted into production.</span></div></div>
+    </section>
+    <section id="public-categories" class="pc-category-strip"><div id="pcCategoryRail" class="pc-category-rail"><span class="pc-loading">Loading categories…</span></div></section>
+    <section class="pc-section pc-trending"><header><div><small>WATCH &amp; EARN</small><h2>🔥 Trending Now</h2><p>Approved videos and real products available now</p></div><a href="${WATCH}">See All</a></header><div id="pcCampaigns" class="pc-video-rail"><div class="pc-loading">Loading live Watch &amp; Earn…</div></div></section>
+    <section class="pc-promo-band"><div><small>DELIONARYO PUBLIC COMMERCE</small><h2>Quality Products.<br><em>Real Solutions.</em></h2><p>Practical products connected to real DELIONARYO catalogue and marketplace data.</p></div><a href="#public-shop">Explore More ›</a></section>
+    <section id="public-shop" class="pc-section"><header><div><small>SHOP</small><h2>Published Products</h2><p>One canonical Product ID across discovery and commerce</p></div><a href="${MARKET}">See All</a></header><div id="pcShopGrid" class="pc-shop-grid"><div class="pc-loading">Loading published products…</div></div></section>
+    <section id="public-deals" class="pc-section pc-deals"><header><div><small>DEALS</small><h2>Verified Deals for You</h2><p>Discount treatment appears only when verified source data exists</p></div></header><div id="pcDeals"></div></section>
+    <footer class="pc-trust"><span><b>✓</b><strong>Secure &amp; Trusted</strong><small>Published products only</small></span><span><b>▣</b><strong>Marketplace Commerce</strong><small>Existing checkout engine</small></span><span><b>✓</b><strong>Buyer Protection</strong><small>Verified buyer metrics only</small></span><span><b>●</b><strong>Support the Economy</strong><small>Seller affiliate attribution preserved</small></span></footer>`;
   legacyHero.before(section);
   syncCartBadge();
   wire();
