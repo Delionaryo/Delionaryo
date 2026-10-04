@@ -2,6 +2,7 @@ type RequestBody = {
   product?: string;
   platform?: string;
   affiliateLink?: string;
+  sourcingMode?: 'LOCAL_PH_DROPSHIPPING';
 };
 
 const json = (res: any, status: number, body: unknown) => res.status(status).json(body);
@@ -30,8 +31,42 @@ export default async function handler(req: any, res: any) {
 
   const payload = {
     product,
-    platform: String(body.platform || 'TikTok Shop Affiliate'),
+    platform: String(body.platform || 'LOCAL PH'),
     affiliateLink: String(body.affiliateLink || '').trim(),
+    sourcingMode: 'LOCAL_PH_DROPSHIPPING',
+    market: 'PH',
+    fulfillmentCountry: 'PH',
+    inventoryModel: 'NO_STOCK_DROPSHIPPING',
+    sourcingPriority: [
+      'verified Philippine dropshipping supplier',
+      'local supplier with direct-to-customer fulfillment',
+      'local wholesaler/distributor supporting dropshipping'
+    ],
+    demandEvidenceSources: ['TikTok Shop PH', 'Shopee PH', 'Lazada PH'],
+    qualificationPolicy: {
+      localSupplierRequired: true,
+      directCustomerFulfillmentPreferred: true,
+      verifiedSupplierEvidenceRequired: true,
+      verifiedDemandEvidenceRequired: true,
+      exactSourceUrlRequired: true,
+      noFabricatedPrice: true,
+      noFabricatedShipping: true,
+      noFabricatedDeliveryTime: true,
+      calculateLandedCost: true,
+      includeAdsCostInProfitCheck: true,
+      requirePositiveProfitGateBeforePublishing: true,
+      preferHighDemandLowerSellerCompetition: true
+    },
+    requiredOutput: [
+      'productName', 'category', 'supplierName', 'supplierProductUrl',
+      'supplierLocation', 'supplierCost', 'shippingFee', 'landedCost',
+      'marketPriceEvidence', 'sellerCompetitionEvidence', 'estimatedAdsCost',
+      'regularPrice', 'sellingPrice', 'estimatedNetProfit', 'estimatedMargin',
+      'deliveryEstimate', 'dropshipCapability', 'verificationStatus',
+      'profitGate', 'publishRecommendation'
+    ],
+    destination: 'CANONICAL_PRODUCT_LIBRARY',
+    publishAuthority: 'OWNER_APPROVAL_REQUIRED',
     source: 'DELIONARYO_AI_COMMAND_PORTAL',
     requestId: `portal-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
   };
@@ -46,7 +81,12 @@ export default async function handler(req: any, res: any) {
     let data: any = {};
     try { data = JSON.parse(text); } catch { data = { raw: text }; }
     if (!upstream.ok) return json(res, upstream.status, { error: data?.error || 'Product Research Agent request failed.', upstream: data });
-    return json(res, 200, { success: true, record: data?.record || data });
+    return json(res, 200, {
+      success: true,
+      sourcingMode: 'LOCAL_PH_DROPSHIPPING',
+      market: 'PH',
+      record: data?.record || data
+    });
   } catch (error) {
     return json(res, 502, { error: error instanceof Error ? error.message : 'Unable to reach Product Research Agent.' });
   }
