@@ -8,8 +8,8 @@ portal.innerHTML = `
     <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
       <div>
         <p class="text-xs font-black tracking-[.25em] text-amber-400">DELIONARYO AI COMMAND PORTAL</p>
-        <h2 class="mt-4 text-4xl font-black md:text-5xl">One command center for the Video Factory.</h2>
-        <p class="mt-4 max-w-3xl text-lg leading-8 text-stone-400">Research products, create production records, and hand each Product ID to the next agent without leaving the portal.</p>
+        <h2 class="mt-4 text-4xl font-black md:text-5xl">Philippines-first local dropshipping command center.</h2>
+        <p class="mt-4 max-w-3xl text-lg leading-8 text-stone-400">Find PH-demand products from verified local dropshipping suppliers, validate profit after landed cost + ads, then send qualified products to the shared Product Library.</p>
       </div>
       <div id="agent-status" class="portal-status portal-status-pending"><span class="portal-dot"></span><span>AGENT CONNECTION: NOT CONFIGURED</span></div>
     </div>
@@ -23,7 +23,7 @@ portal.innerHTML = `
             <textarea id="product-input" rows="3" required placeholder="Example: Lavalier microphone\nhttps://vt.tiktok.com/..." class="portal-input"></textarea>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
-            <div><label for="platform-input">Platform</label><select id="platform-input" class="portal-input"><option>TikTok Shop Affiliate</option><option>TikTok</option><option>Shopee Affiliate</option><option>Other</option></select></div>
+            <div><label for="platform-input">Platform</label><select id="platform-input" class="portal-input"><option>Local PH Dropshipping</option><option>BidaBoss / Local Supplier</option><option>Shopee PH Market Evidence</option><option>TikTok Shop PH Market Evidence</option><option>Lazada PH Market Evidence</option></select></div>
             <div><label for="link-input">Affiliate/product link (optional)</label><input id="link-input" class="portal-input" placeholder="https://..." /></div>
           </div>
           <button id="research-btn" type="submit" class="portal-primary"><span>RESEARCH PRODUCT</span><span>→</span></button>
@@ -102,12 +102,12 @@ const mountPortal = () => {
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const product = productInput?.value.trim() || '';
-    const platform = platformInput?.value || 'TikTok Shop Affiliate';
+    const platform = platformInput?.value || 'Local PH Dropshipping';
     const affiliateLink = linkInput?.value.trim() || '';
     if (!product) return;
 
     if (button) { button.disabled = true; button.innerHTML = '<span>RESEARCHING…</span><span>⏳</span>'; }
-    setFeedback('Sending this product to the Product Research Agent…', 'info');
+    setFeedback('Checking PH demand, local supplier evidence, landed cost, competition, and profit gate…', 'info');
 
     try {
       const response = await fetch('/api/product-research', {
